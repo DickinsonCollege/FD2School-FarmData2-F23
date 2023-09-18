@@ -31,9 +31,9 @@ My Sample Harvest Report
                       
                        
             <label for= "comment">Title: </label>  
-            <input type="text" id="comment" name="comment" value="" />
+            <input type="text" id="comment" name="comment" value=""/>
             </br>
-            <input type="submit" value="Generate Report" />
+            
 
             </br>
            
@@ -46,11 +46,22 @@ My Sample Harvest Report
               
             </br>
 
-            <label for="field">Field: </label>
+            <label for="field">Area: </label>
             <select id="field" name="field">
                 <option>Chuau-1</option>
                 <option selected>All</option>
                 <option>SQ7</option>
               </select> 
+            
+            </br>
 
+            <label for="start">Start date:</label>
+            <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+
+            <label for="end">End date:</label>
+            <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+
+            </br>
+
+            <input type="submit" value="Generate Report" />
         </body>
