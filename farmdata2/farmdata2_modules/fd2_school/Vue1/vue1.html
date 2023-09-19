@@ -2,6 +2,19 @@
     <header>
         <title>Anonymous Button Example</title>
         <body>
+            <div id="test">
+                <input type="text" v-model="reportTitle" placeholder="Enter report title">
+                <h1 v-cloak>{{ reportTitle }}</h1>
+            </div>
+            <script src="https://unpkg.com/vue@2"></script>
+            <script>
+                var test = new Vue({
+                    el: "#test",
+                    data: {
+                     reportTitle:""
+                 }
+                })
+            </script>
             <title>Title Field Example</title>
             <h1>Harvest Report</h1>
             <p>This page is a <em>mockup</em> of a simplified harvest report</p>
