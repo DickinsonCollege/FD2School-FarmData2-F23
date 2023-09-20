@@ -2,9 +2,13 @@
     <head>
         <h1>Harvest Report</h1>
         <br>
+        
         <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-        <label for=”title”>Title:</label>
-        <input type="text" id="title" value="My Sample Harvest Report"/>
+        <div v-cloak id="reportTitle" >
+            <label for=”reportTitle”>Title:</label>
+            <input type="text" id="reportTitle" value="My Sample Harvest Report" v-model="reportTitle"/>
+            <h1>{{reportTitle}}</h1> 
+        </div>
         <br>
         <br>
         <label for="start">Start:</label>
@@ -34,7 +38,15 @@
     
     </head>
     <body>
-        <h1>My Sample Harvest Report</h1>
+        <script>
+            var title = new Vue({
+                el:'#reportTitle',
+                data: {
+                    reportTitle: "My Sample Harvest Report"
+                }
+    
+            });
+        </script>
         <p>Details:</p>
         <ul>
             <li><b>Farm:</b>Sample Farm</li>
