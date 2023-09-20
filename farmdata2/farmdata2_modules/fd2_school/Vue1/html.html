@@ -1,55 +1,90 @@
 <h1>
 Harvest Report
     </h1>
+
+    <head>
+       <style>
+            [v-cloak]{
+                display: none;
+            }
+            </style>
+        
+        
+    </head>
+
     <body>
+
+
         <p>
             This page is a <i>mockup</i> of a simplified harvest report.
         </p>
-        <label for= "comment">Title: </label>  
-            <input type="text" id="comment" name="comment" value=""/>
-            </br>
+
+        
+        
+
             
 
-            </br>
-           
-            <label for="crop">Crop: </label>
-            <select id="crop" name="crop">
-                <option>Peas</option>
-                <option selected>Kale</option>
-                <option>Broccoli</option>
-              </select>  
-              
+
+
+    
+        <div id="HarvestHeader" v-cloak>
+            
+            <label for="comment">Title:</label>
+            <input type="text"  v-model="header" />
+            
+        </br>
             
 
-            <label for="field">Area: </label>
-            <select id="field" name="field">
-                <option>Chuau-1</option>
-                <option selected>All</option>
-                <option>SQ7</option>
-              </select> 
-            
-            </br>
-            </br>
+    </br>
+   
+    <label for="crop">Crop: </label>
+    <select id="crop" name="crop">
+        <option>Peas</option>
+        <option selected>Kale</option>
+        <option>Broccoli</option>
+      </select>  
+      
+    
 
-            <label for="start">Start date:</label>
-            <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+    <label for="field">Area: </label>
+    <select id="field" name="field">
+        <option>Chuau-1</option>
+        <option selected>All</option>
+        <option>SQ7</option>
+      </select> 
+    
+    </br>
+    </br>
 
-            <label for="end">End date:</label>
-            <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+    <label for="start">Start date:</label>
+    <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
 
-            </br>
-            </br>
+    <label for="end">End date:</label>
+    <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
 
-            <input type="submit" value="Generate Report" />
-        </body>
+    </br>
+    </br>
+
+    <input type="submit" value="Generate Report" />
+
 
 <hr/>
-
-<h1>
-My Sample Harvest Report
-    </h1>
-
-    <body>
+            <h1>{{ header }}</h1>
+        </div>
+        
+        <script src="https://unpkg.com/vue@2"></script>
+    
+        <script>
+            var Vues = new Vue({
+                el: '#HarvestHeader',
+                data: {
+                    header: 'My Sample Harvest Report'
+                }
+            });
+        </script>
+    
+    
+        
         <p>
             Details:
             </p>
@@ -64,7 +99,7 @@ My Sample Harvest Report
 
                 </ul>
               
-        </body>
+        
 
         <head>
             <style>
@@ -77,7 +112,7 @@ My Sample Harvest Report
                 }
             </style>
         </head>
-        <body>
+        
             <table>
                 <tr>
                     <th>Date</th>
