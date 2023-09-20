@@ -5,6 +5,15 @@
             <div id="test">
                 <input type="text" v-model="reportTitle" placeholder="Enter report title">
                 <h1 v-cloak>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
+
+                <label for="crops">Crop:</label>
+                <select name="crops" id="crops" v-model="selectedCrop">
+                    <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+                </select>
+                <label for="area">Area:</label>
+                <select name="area" id="area">
+                    <option v-for="area in areas" :value="area">{{ area }}</option>
+                </select>
             </div>
             <script src="https://unpkg.com/vue@2"></script>
             <script>
@@ -14,7 +23,9 @@
                      reportTitle:"" ,
                      startDate:"2020-05-05",
                      endDate: "2020-05-15",
-                     selectedCrop: "kale"
+                     selectedCrop: "kale",
+                     crops: ["brocili", "kale", "peas"],
+                     areas: ["all", "chuahu-1", "sq7"],
                  }
                 })
             </script>
@@ -25,18 +36,6 @@
                 <input type="date" id="start" name="start-date" v-model="startDate" min="2014-01-01" max="2022-01-01"/>
             <label for="end">End Date:</label>
                 <input type="date" id="end" name="end-date" v-model="endDate" value="20202-05-15" min="2020-05-05" max="2022-01-01"/><br>
-            <label for="crops">Crop:</label>
-                <select name="crops" id="crops" v-model="selectedCrop">
-                    <option value="broccili">Broccili</option>
-                    <option value="kale">Kale</option>
-                    <option value="peas">Peas</option>
-                </select>
-            <label for="area">Area:</label>
-                <select name="area" id="area">
-                    <option value="all">All</option>
-                    <option value="chuahu-1">Chuau-1</option>
-                    <option value="sq7">SQ7</option>
-                </select>
             <hr />
             <h1>My Sample Harvest:</h1>
             <p>Details:</p>
