@@ -44,7 +44,7 @@
     
     <hr style="width:33%;margin-left:0">
     <div id="rHeader">
-    <h1>{{ rHeader }}</h1>
+    <h1>{{ (rHeader!="") ? rHeader:"Mock Harvest Report"}}</h1>
     <p><FONT COLOR="GREY"> Details:</FONT></p>
     <ul>
       <li><b>Farm:</b> Sample Farm</li>
@@ -96,10 +96,10 @@
   var pageInfo = new Vue({
       el: '#pageInfo',
       data: {
-          rHeader: 'My Sample Harvest Report',
-          rStartDate: '05-05-2020',
-          minStartDate: '2014-01-01',
-          maxStartDate: '2022-01-01',
+          rHeader: "",
+          rStartDate: "05-05-2020",
+          minStartDate: "2014-01-01",
+          maxStartDate: "2022-01-01",
           rEndDate:"05-15-2020",
           minEndDate:"05-05-2020",
           maxEndDate:"01-01-2022"
