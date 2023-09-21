@@ -7,27 +7,16 @@ Harvest Report
             [v-cloak]{
                 display: none;
             }
-            </style>
-        
-        
+            </style>      
     </head>
 
     <body>
 
-
         <p>
             This page is a <i>mockup</i> of a simplified harvest report.
-        </p>
-
-        
-        
-
-            
-
-
-
+        </p>     
     
-        <div id="HarvestHeader" v-cloak>
+<div id="HarvestHeader" v-cloak>
             
             <label for="comment">Title:</label>
             <input type="text"  v-model="header" />
@@ -38,7 +27,7 @@ Harvest Report
     </br>
    
     <label for="crop">Crop: </label>
-    <select id="crop" name="crop">
+    <select id="crop" name="crop" v-model ="crop">
         <option>Peas</option>
         <option selected>Kale</option>
         <option>Broccoli</option>
@@ -57,10 +46,10 @@ Harvest Report
     </br>
 
     <label for="start">Start date:</label>
-    <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+    <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="start"/>
 
     <label for="end">End date:</label>
-    <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+    <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01" v-model = "end"/>
 
     </br>
     </br>
@@ -70,18 +59,11 @@ Harvest Report
 
 <hr/>
             <h1>{{ header }}</h1>
-        </div>
+        
         
         <script src="https://unpkg.com/vue@2"></script>
     
-        <script>
-            var Vues = new Vue({
-                el: '#HarvestHeader',
-                data: {
-                    header: 'My Sample Harvest Report'
-                }
-            });
-        </script>
+        
     
     
         
@@ -93,9 +75,9 @@ Harvest Report
                 <li><strong>User: </strong>manager1</li>
                 <li><strong>Language: </strong>English</li>
             </br>
-                <li><strong>Start: </strong>05/01/2018</li>
-                <li><strong>End: </strong>05/15/2018</li>
-                <li><strong>Crop: </strong>Kale</li>
+                <li><strong>Start: </strong>{{ start }}</li>
+                <li><strong>End: </strong>{{ end }}</li>
+                <li><strong>Crop: </strong>{{ crop }}</li>
 
                 </ul>
               
@@ -138,4 +120,17 @@ Harvest Report
                 </tr>
                
             </table>
+</div>
+            <script>
+                var Vues = new Vue({
+                    el: '#HarvestHeader',
+                    data: {
+                        header: 'My Sample Harvest Report',
+                        start: '2020-05-01',
+                        end: '2020-05-15',
+                        crop: 'Kale'
+                    }
+                });
+            </script>
+
         </body>
