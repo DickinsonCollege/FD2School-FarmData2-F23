@@ -28,18 +28,16 @@ Harvest Report
    
     <label for="crop">Crop: </label>
     <select id="crop" name="crop" v-model ="crop">
-        <option>Peas</option>
-        <option selected>Kale</option>
-        <option>Broccoli</option>
+        
+        <option v-for="crop in crops"> {{ crop }}</option>
       </select>  
       
     
 
     <label for="field">Area: </label>
-    <select id="field" name="field">
-        <option>Chuau-1</option>
-        <option selected>All</option>
-        <option>SQ7</option>
+    <select id="field" name="field" v-mdoel="area">
+    <option v-for="area in areas"> {{ area }}</option>
+        
       </select> 
     
     </br>
@@ -128,7 +126,18 @@ Harvest Report
                         header: 'My Sample Harvest Report',
                         start: '2020-05-01',
                         end: '2020-05-15',
-                        crop: 'Kale'
+                        crop: 'Kale',
+                        crops: [
+                            'Kale',
+                            'Broccoli',
+                            'Peas'
+                        ],
+                        area: 'All',
+                        areas: [
+                            'All',
+                            'SQ7',
+                            'Chuau-1'
+                        ]
                     }
                 });
             </script>
