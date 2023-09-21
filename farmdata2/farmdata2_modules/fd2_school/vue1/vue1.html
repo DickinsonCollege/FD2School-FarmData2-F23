@@ -1,3 +1,5 @@
+<html>
+<body>
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="main.css">
@@ -10,7 +12,7 @@
 
 <h1>Harvest Report</h1>
 <p><FONT COLOR="GREY"> This page is a <i>mockup</i> of a simplfied Harvest Report</FONT></p>
-<div id="rHeader">
+<div id="pageInfo">
     <input type="text" value="Title:" v-model="rHeader"/>
     <body>
         <br>
@@ -29,25 +31,30 @@
       </select>
     <br>
     <label for="start">Start date:</label>
-    <input type="date" id="start" min="01-01-2014" value="05-05-2020" max="01-01-2022" />
+
+    <div id="startDate">
+    <input type="date" id="start" min="minStartDate" max="maxStartDate" v-model="rStartDate" />        
+    </div>
+
     <br>
     <label for="end">End date:</label>
-    <input type="date" id="end" min="05-05-2020" value="05-15-2020" max="01-01-2022" />
+    <input type="date" id="end" min="minEndDate" max="maxEndDate" v-model="rEndDate" />
     <br>
     <button type="submit">Generate Report</button>
     
     <hr style="width:33%;margin-left:0">
     <div id="rHeader">
     <h1>{{ rHeader }}</h1>
-     
-    <script>
-        var rHeader = new Vue({
-            el: '#rHeader',
-            data: {
-                rHeader: 'My Sample Harvest Report'
-            } 
-        });
-    </script>
+    <p><FONT COLOR="GREY"> Details:</FONT></p>
+    <ul>
+      <li><b>Farm:</b> Sample Farm</li>
+      <li><b>User:</b> manager1</li>
+      <li><b>Language:</b> English</li>
+<br>
+      <li><b>Start:</b> {{ rStartDate }}</li>
+      <li><b>End:</b> {{ rEndDate }}</li>
+      <li><b>Crop:</b> Kale</li>
+    </ul>
     </div>
 </div>
 
@@ -55,19 +62,6 @@
 
 
 
-</body>
-
-<body>
-<p><FONT COLOR="GREY"> Details:</FONT></p>
-<ul>
-    <li><b>Farm:</b> Sample Farm</li>
-    <li><b>User:</b> manager1</li>
-    <li><b>Language:</b> English</li>
-<br>
-    <li><b>Start:</b> 05/01/2018</li>
-    <li><b>End:</b> 05/01/2018</li>
-    <li><b>Crop:</b> Kale</li>
-</ul>
 <table>
     <style>
         table, th, td {
@@ -98,4 +92,20 @@
     </tr>
 </table>
 </body>
+<script>
+  var pageInfo = new Vue({
+      el: '#pageInfo',
+      data: {
+          rHeader: 'My Sample Harvest Report',
+          rStartDate: '05-05-2020',
+          minStartDate: '2014-01-01',
+          maxStartDate: '2022-01-01',
+          rEndDate:"05-15-2020",
+          minEndDate:"05-05-2020",
+          maxEndDate:"01-01-2022"
+      } 
+  });
+</script>
+</body>
+</html>
 
