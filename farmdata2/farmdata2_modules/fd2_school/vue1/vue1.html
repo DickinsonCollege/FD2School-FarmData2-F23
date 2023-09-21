@@ -11,16 +11,16 @@
             <br>
             <p>
                 <label for="startDate">Start:</label>
-                <input type="date" id="startDate" name="startDate" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+                <input type="date" id="startDate" name="startDate" min="2014-01-01" max="2022-01-01" v-model="startDate"/>
                 <label for="endDate">End:</label>
-                <input type="date" id="endDate" name="endDate" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+                <input type="date" id="endDate" name="endDate" min="2020-05-05" max="2022-01-01" v-model="endDate"/>
             </p>
             <br>
             <p>
                 <label for="crop">Crop:</label>
-                <select id="crop" name="crop">
+                <select id="crop" name="crop" v-model="crop">
                     <option>Broccoli</option>
-                    <option selected>Kale</option>
+                    <option>Kale</option>
                     <option>Peas</option>
                 </select>
                 <label for="field">Area:</label>
@@ -42,9 +42,9 @@
                         <li><strong>User:</strong> manager1</li>
                         <li><strong>Language:</strong> English</li>
                         <br>
-                        <li><strong>Start:</strong> 05/01/2018</li>
-                        <li><strong>End:</strong> 05/15/2018</li>
-                        <li><strong>Crop:</strong> Kale</li>
+                        <li><strong>Start:</strong> {{ startDate }}</li>
+                        <li><strong>End:</strong> {{ endDate }}</li>
+                        <li><strong>Crop:</strong> {{ crop }}</li>
                     </ul>
                 </p>
                 <br>
@@ -77,7 +77,10 @@
         var sampleHarvestReport = new Vue ({
             el: '#sample-report',
             data: {
-                title: 'My Sample Harvest Report'
+                title: 'My Sample Harvest Report',
+                startDate: '2020-05-01',
+                endDate: '2020-05-15',
+                crop: 'Kale',
             }
         })
     </script>
