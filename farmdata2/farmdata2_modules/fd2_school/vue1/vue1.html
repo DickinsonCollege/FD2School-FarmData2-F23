@@ -41,6 +41,23 @@
         <li><b>Crop</b>:{{rptCrop}}</li>
      </ul>
     </p>
+
+    <table border="1">
+        <tr>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+        </tr>
+        <tr v-for="log in hstLogs">
+            <td>{{log.date}}</td>
+            <th>{{log.area}}</th>
+            <th>{{log.crop}}</th>
+            <th>{{log.yield}}</th>
+            <th>{{log.units}}</th>
+        </tr>
+    </table>
 </div>
 
 <script>
@@ -53,34 +70,15 @@
             rptCrop: "Kale",
             crops: ["Kale","Broccoli", "Peas"],
             rptField: "All",
-            fields: ["All", "Chuau-1", "SQ7"]
+            fields: ["All", "Chuau-1", "SQ7"],
+            hstLogs: [
+                {date: "2018-05-02", area:"Chuau-1", crop: "Kale", yield:10, units:"Bunches"},
+                {date: "2018-05-05", area:"SQ7", crop: "Kale", yield:7, units:"Bunches"},
+                {date: "2018-05-02", area:"Chuau-1", crop: "Peas", yield:20, units:"Bunches"},
+            ]
         }
     })
 </script>
 
 
 
-
-<table border="1">
-    <tr>
-        <th>Date</th>
-        <th>Area</th>
-        <th>Crop</th>
-        <th>Yield</th>
-        <th>Units</th>
-    </tr>
-    <tr>
-        <td>05/02/2018</td>
-        <td>Chuau-1</td>
-        <td>Kale</td>
-        <td>10</td>
-        <td>Bunches</td>
-    </tr>
-    <tr>
-        <td>05/05/2018</td>
-        <td>SQ7</td>
-        <td>Kale</td>
-        <td>7</td>
-        <td>Bunches</td>
-    </tr>
-</table>
