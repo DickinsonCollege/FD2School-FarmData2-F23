@@ -7,6 +7,12 @@
         [v-cloak] {
           display:none;
         }
+
+        table, th, td { 
+          border: 1px solid black; 
+          border-collapse: collapse; 
+          } 
+
     </style> 
 </head>
 
@@ -54,41 +60,26 @@
       <li><b>Crop:</b> Kale</li>
     </ul>
     </div>
+    <table> 
+      <tr> 
+        <th>Date</th> 
+        <th>Area</th> 
+        <th>Crop</th> 
+        <th>Yield</th> 
+        <th>Units</th> 
+      </tr> 
+      <tr v-for="t in tableData"> 
+        <td>{{ t.date }}</td> 
+        <td>{{ t.area }}</td> 
+        <td>{{ t.crop }}</td> 
+        <td>{{ t.yield }}</td> 
+        <td>{{ t.units }}</td> 
+      </tr> 
+    </table>
 </div>
 
 
 
-
-
-<table>
-    <style>
-        table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-        }
-        </style>
-    <tr>
-      <th>Date</th>
-      <th>Area</th>
-      <th>Crop</th>
-      <th>Yield</th>
-      <th>Units</th>
-    </tr>
-    <tr>
-      <td>05/02/2018</td>
-      <td>Chuau-1</td>
-      <td>Kale</td>
-      <td>10</td>
-      <td>Bunches</td>
-    </tr>
-    <tr>
-      <td>05/05/2018</td>
-      <td>SQ7</td>
-      <td>Kale</td>
-      <td>7</td>
-      <td>Bunches</td>
-    </tr>
-</table>
 </body>
 <script>
   var pageInfo = new Vue({
@@ -114,6 +105,11 @@
             "SQ7",
           ],
           selectedArea: "",
+
+          tableData: [
+            {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+            {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
+          ]
       } 
   });
 </script>
