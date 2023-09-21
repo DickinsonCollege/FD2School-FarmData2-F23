@@ -15,20 +15,18 @@
 <div id="pageInfo">
     <input type="text" value="Title:" v-model="rHeader"/>
     <body>
-        <br>
-    <label for="crop">Crop:</label>
-    <select id="crop">
-        <option>Broccoli</option>
-        <option selected>Kale</option>
-        <option>Peas</option>
-      </select>
+    <br>
+    
+    <label for="crop">Crop:</label> 
+    <select id="crop" v-model="selectedCrop"> 
+      <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+    </select>
+
     <br>
     <label for="field">Field:</label>
-    <select id="field">
-        <option selected>All</option>
-        <option>Chuau-1</option>
-        <option>SQ7</option>
-      </select>
+    <select id="field" v-model="selectedArea"> 
+      <option v-for="area in areas" :value="area">{{ area }}</option>
+    </select>
     <br>
     <label for="start">Start date:</label>
 
@@ -102,7 +100,20 @@
           maxStartDate: "2022-01-01",
           rEndDate:"05-15-2020",
           minEndDate:"05-05-2020",
-          maxEndDate:"01-01-2022"
+          maxEndDate:"01-01-2022",
+          crops: [
+            "Broccoli",
+            "Kale",
+            "Peas",
+          ],
+          selectedCrop: "",
+          
+          areas: [
+            "All",
+            "Chuau-1",
+            "SQ7",
+          ],
+          selectedArea: "",
       } 
   });
 </script>
