@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping List App</title>
+        <link rel="stylesheet" href="main.css">
+        <style>
+            [v-cloak] {
+              display:none;
+            }
+        </style> 
+    </head>
+    <body>
+        <div id="rHeader">
+        <h1 v-cloak>{{ header }}</h1>
+        <input type="text" v-model="header">
+        </div>
+    <script>
+        var rHeader = new Vue({
+            el: '#rHeader',
+            data: {
+                header: 'My Sample Harvest Report'
+            }   
+        });
+    </script>
+    </body>
+</html>
