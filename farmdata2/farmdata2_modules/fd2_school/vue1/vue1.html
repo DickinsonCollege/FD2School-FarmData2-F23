@@ -1,0 +1,85 @@
+<html> 
+<h1>Harvest Report</h1>
+    <div id="sample-report" v-cloak>
+        <body>
+            <p>This page is a simple <i>mockup</i> of a simplified harvest report.</p>
+            <br>
+            <p>
+                <label for="title">Title:</label>
+                <input type="text" v-model="title"/>
+            </p>
+            <br>
+            <p>
+                <label for="startDate">Start:</label>
+                <input type="date" id="startDate" name="startDate" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+                <label for="endDate">End:</label>
+                <input type="date" id="endDate" name="endDate" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+            </p>
+            <br>
+            <p>
+                <label for="crop">Crop:</label>
+                <select id="crop" name="crop">
+                    <option>Broccoli</option>
+                    <option selected>Kale</option>
+                    <option>Peas</option>
+                </select>
+                <label for="field">Area:</label>
+                <select id="field" name="field">
+                    <option slected>All</option>
+                    <option>Chuau-1</option>
+                    <option>SQ7</option>
+                </select>
+            </p>
+            <br>
+            <button type="generate">Generate Report</button>
+        </body>
+    <hr>
+        <h1>{{ title }}</h1>
+            <body> 
+                <p>Details:
+                    <ul>
+                        <li><strong>Farm:</strong> Sample Farm</li>
+                        <li><strong>User:</strong> manager1</li>
+                        <li><strong>Language:</strong> English</li>
+                        <br>
+                        <li><strong>Start:</strong> 05/01/2018</li>
+                        <li><strong>End:</strong> 05/15/2018</li>
+                        <li><strong>Crop:</strong> Kale</li>
+                    </ul>
+                </p>
+                <br>
+                <table border="1">
+                    <tr>
+                        <th><strong>Date</strong></th>
+                        <th><strong>Area</strong></th>
+                        <th><strong>Crop</strong></th>
+                        <th><strong>Yield</strong></th>
+                        <th><strong>Units</strong></th>
+                    </tr>
+                    <tr>
+                        <td>05/02/2018</td>
+                        <td>Chuau-1</td>
+                        <td>Kale</td>
+                        <td>10</td>
+                        <td>Bunches</td>
+                    </tr>
+                    <tr>
+                        <td>05/05/2018</td>
+                        <td>SQ7</td>
+                        <td>Kale</td>
+                        <td>7</td>
+                        <td>Bunches</td>
+                    </tr>
+                </table>
+            </body>
+    </div>
+    <script>
+        var sampleHarvestReport = new Vue ({
+            el: '#sample-report',
+            data: {
+                title: 'My Sample Harvest Report'
+            }
+        })
+    </script>
+<hr>
+</html>
