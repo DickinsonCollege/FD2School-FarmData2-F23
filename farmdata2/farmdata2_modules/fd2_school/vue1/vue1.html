@@ -23,16 +23,12 @@
             <p>
             <label for="crop">Crop:</label>
             <select id="crop" v-model="reportCrop">
-                <option value="broccoli">Broccoli</option>
-                <option value="kale" selected>Kale</option>
-                <option value="peas">Peas</option>
+                <option v-for="crop in crops">{{crop}}</option>
             </select>
 
             <label for="area">Area:</label>
             <select id="area" name="area">
-                <option value="all" selected>All</option>
-                <option value="Chuau-1">Chuau-1</option>
-                <option value="SQ7"></option>
+                <option v-for="area in areas">{{area}}</option>
             </select>
             </p>
             <button id="generateButton">Generate Report</button>
@@ -51,6 +47,7 @@
                 <li><strong>Crop:</strong>{{reportCrop}}</li>
             </ul>
         </div>
+        
         <script>
             var vueDate = new Vue({
                 el:'#report-title',
@@ -58,10 +55,21 @@
                     reportTitle: 'My Sample Harvest Report',
                     reportStartDate: '05/05/2020',
                     reportEndDate: '05/15/2020',
-                    reportCrop: 'Kale'
+                    reportCrop: 'Kale',
+                    crops: [
+                        "Broccoli",
+                        "Kale",
+                        "Peas",
+                    ],
+                    areas: [
+                        "All",
+                        "Chuau-1",
+                        "SQ7"
+                    ]
                 }
             });
         </script>
+
         <table border="1">
            <thead>
                 <th>Date</th>
