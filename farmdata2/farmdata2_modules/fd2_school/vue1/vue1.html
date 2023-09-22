@@ -29,7 +29,20 @@
 <button type="button">Generate Report</button>
 <hr/>
 
-<h1> My Sample Harvest Report </h1>
+<div id="report-title" v-cloak>
+    <h1>{{header}}</h1>
+    <input type="text" v-model="header">
+</div>
+
+<script>
+    var reportTitle = new Vue({
+        el: '#report-title',
+        data: {
+            header: 'My Sample Harvest Report'
+        }
+    })
+</script>
+
 <p>Details: </p>
 <ul>
     <li><strong>Farm:</strong>Sample Farm</li>
