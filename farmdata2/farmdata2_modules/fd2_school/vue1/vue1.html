@@ -20,15 +20,11 @@
         <br>
         <label for="crop">Crop:</label>
         <select id="crop" name="crop" v-model="reportCrop">
-            <option>Broccoli</option>
-            <option selected>Kale</option>
-            <option>Peas</option>
+            <option v-for="crop in crops">{{ crop }}</option>
         </select>
         <label for="field">Area:</label>
         <select id="field" name="field">
-            <option selected>All</option>
-            <option>Chuau-1</option>
-            <option>SQ7</option>
+            <option v-for="area in areas">{{ area }}</option>
         </select>
         <br>
         <br>
@@ -81,6 +77,16 @@
                 reportStartDate: "05/05/2020",
                 reportEndDate: "05/15/2020",
                 reportCrop: "Kale",
+                crops: [
+                    "Broccoli",
+                    "Kale",
+                    "Peas",
+                ],
+                areas: [
+                    "All",
+                    "Chuau-1",
+                    "SQ7",
+                ],
             },
         });
 
