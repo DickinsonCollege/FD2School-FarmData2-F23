@@ -52,19 +52,12 @@
                         <th><strong>Yield</strong></th>
                         <th><strong>Units</strong></th>
                     </tr>
-                    <tr>
-                        <td>05/02/2018</td>
-                        <td>Chuau-1</td>
-                        <td>Kale</td>
-                        <td>10</td>
-                        <td>Bunches</td>
-                    </tr>
-                    <tr>
-                        <td>05/05/2018</td>
-                        <td>SQ7</td>
-                        <td>Kale</td>
-                        <td>7</td>
-                        <td>Bunches</td>
+                    <tr v-for="h in harvestReport1">
+                        <td>{{ h.date }}</td>
+                        <td>{{ h.area }}</td>
+                        <td>{{ h.crop }}</td>
+                        <td>{{ h.yield }}</td>
+                        <td>{{ h.units }}</td>
                     </tr>
                 </table>
             </body>
@@ -87,6 +80,10 @@
                     'All',
                     'Chuau-1',
                     'SQ7'
+                ],
+                harvestReport1: [
+                    {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                    {date: "2019-06-17", area: "SQ7", crop: "Peas", yield: 40, units: "Pods"}
                 ],
             }
         })
