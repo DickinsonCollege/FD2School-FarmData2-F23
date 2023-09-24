@@ -1,13 +1,17 @@
 <html>
+
+<div id="vue_spike1" v-cloak>
     <body>
         <p>
         <h1>Harvest Report</h1>
         <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-        <div>
+
+        
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" value="My Sample Harvest Report" />
-        </div>
+        <input v-model="title" type="text" id="title" name="title"/>
+        
         <br>
+
         <div>
         <label for="startdate">Start:</label>
         <input type="date" id="startdate" name="start_date" 
@@ -16,7 +20,9 @@
         <input type="date" id="startdate" name="start_date" 
             value="2020-05-15" min="2020-05-05" max="2022-01-01" />
         </div>
+
         <br>
+
         <div>
         <label for="crops">Crop:</label>
         <select id="crops" name="crops">
@@ -31,12 +37,17 @@
             <option>SQ7</option>
           </select>
         </div>
+
         <br>
+
         <button type="button">Generate Report</button>
-        </p>
 
         <hr>
-        <h1>My Sample Harvest Report</h1>
+
+        
+        <v-cloak><h1>{{ title }}</h1></v-cloak>
+    
+
         <p>Details:</p>
 
         <ul>
@@ -44,7 +55,9 @@
         <li><strong>User:</strong>manager1</li>
         <li><strong>Language:</strong>English</li>
         </ul>
+
         <br>
+        
         <ul>
             <li><strong>Start:</strong>05/01/2018</li>
             <li><strong>End:</strong>05/15/2018</li>
@@ -79,4 +92,15 @@
 
         </div>
     </body>
+</div>
+
+<script>
+    var vueSpike = new Vue({
+      el: "#vue_spike1",
+      data: {
+          title: "My Sample Harvest Report"
+      }
+    })
+  </script>
+
   </html>
