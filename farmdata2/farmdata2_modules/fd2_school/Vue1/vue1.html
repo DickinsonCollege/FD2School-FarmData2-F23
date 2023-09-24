@@ -15,23 +15,23 @@
         <div>
         <label for="startdate">Start:</label>
         <input type="date" id="startdate" name="start_date" 
-            value="2020-05-05" min="2014-01-01" max="2022-01-01" />
+            v-model ="startDate" min="2014-01-01" max="2022-01-01" />
         <label for="enddate">End:</label>
         <input type="date" id="startdate" name="start_date" 
-            value="2020-05-15" min="2020-05-05" max="2022-01-01" />
+            v-model ="endDate"  min="2020-05-05" max="2022-01-01" />
         </div>
 
         <br>
 
         <div>
         <label for="crops">Crop:</label>
-        <select id="crops" name="crops">
-            <option selected>Kale</option>
+        <select v-model="crop" id="crops" name="crops">
+            <option>Kale</option>
             <option>Peas</option>
             <option>Broccoli</option>
           </select>
         <label for="area">Area:</label>
-        <select id="area" name="area">
+        <select v-model="area" id="area" name="area">
             <option selected>All</option>
             <option>Chuau-1</option>
             <option>SQ7</option>
@@ -59,9 +59,9 @@
         <br>
         
         <ul>
-            <li><strong>Start:</strong>05/01/2018</li>
-            <li><strong>End:</strong>05/15/2018</li>
-            <li><strong>Crop:</strong>Kale</li>
+            <li><strong>Start:</strong> {{ startDate }}</li>
+            <li><strong>End:</strong> {{ endDate }}</li>
+            <li><strong>Crop:</strong> {{ crop }}</li>
             </ul>
 
         <div>
@@ -98,7 +98,11 @@
     var vueSpike = new Vue({
       el: "#vue_spike1",
       data: {
-          title: "My Sample Harvest Report"
+          title: "My Sample Harvest Report",
+          startDate: "2020-05-05",
+          endDate: "2020-05-15",
+          crop: "Kale",
+          area: "All"
       }
     })
   </script>
