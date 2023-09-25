@@ -1,13 +1,41 @@
+
 <html>
     <hr>
-    <label for="tile">Title:</label>
-    <input type="text" id="'title" name="title"/>
+    
     <body>
         <h1>
             Harvest Report
         </h1>
         <p>
             This page is a <i>mockup</i> of a simplified harvest report.
+            <ul>
+                <li>
+                    <label for="tile">Title:</label>
+                    <input type="text" id="title" name="title" value="My Sample Harvest Report"/>
+                </li>
+
+                <li><label for="start">Start:</label>
+                    <input type="date" id="start" name="date-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+                
+                <label for="end">End:</label>
+                    <input type="date" id="end" name="date-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+                </li>
+                <li><label for="crop">Crop:</label>
+                    <select id="crop" name="crops" >
+                            <option>Broccoli</option>
+                            <option selected>Kale</option>
+                            <option>Peas</option>
+                    </select>
+                </li>
+                <li><label for="area">Area:</label>
+                    <select id="area" name="fields">
+                        <option selected>All</option>
+                        <option>Chuau-1</option>
+                        <option>SQ7</option>
+                    </select>
+                </li>
+            </ul>
+            <input type="button" value="Generate Report"/>
         </p>
 
     </body>
@@ -25,30 +53,35 @@
                     <li><strong>Language:</strong>English</li> <br>
 
 
-                    <li><label for="start"><strong>Start:</strong></label>
-                        <input type="date" id="start" name="date-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
-                    </li>
-                    <li><label for="end"><strong>End:</strong></label>
-                        <input type="date" id="end" name="date-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
-                    </li>
-                    <li><label for="crop"><strong>Crop:</strong></label>
-                        <select id="crop" name="crops" >
-                                <option>Broccoli</option>
-                                <option selected>Kale</option>
-                                <option>Peas</option>
-                        </select>
-                    </li>
-                    <li><label for="area"><strong>Area:</strong></label>
-                        <select id="area" name="fields">
-                            <option selected>All</option>
-                            <option>Chuau-1</option>
-                            <option>SQ7</option>
-                        </select>
-                    </li>
+                    <li><strong>Start:</strong>05/01/2018</li>
+                    <li><strong>End:</strong>05/15/2018</li>
+                    <li><strong>Crop:</strong>Kale</li>
                 </ul>
             </dd>
         </p>
     </body>
-    <input type="button" value="Generate Report"/>
+    <table border="1">
+        <tr>
+            <td><strong>Date</strong></td>
+            <td><strong>Area</strong></td>
+            <td><strong>Crop</strong></td>
+            <td><strong>Yield</strong></td>
+            <td><strong>Units</strong></td>
+        </tr>
+        <tr>
+            <td>05/02/2018</td>
+            <td>Chuau-1</td>
+            <td>Kale</td>
+            <td>10</td>
+            <td>Bunches</td>
+        </tr>
+        <tr>
+            <td>05/05/2018</td>
+            <td>SQ7</td>
+            <td>Kale</td>
+            <td>7</td>
+            <td>Bunches</td>
+        </tr>
+    </table>
     <hr>
 </html>
