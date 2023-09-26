@@ -62,13 +62,15 @@
     </div>
     <table> 
       <tr> 
+        <th>Row</th>
         <th>Date</th> 
         <th>Area</th> 
         <th>Crop</th> 
         <th>Yield</th> 
         <th>Units</th> 
       </tr> 
-      <tr v-for="t in tableData"> 
+      <tr v-for="(t,index) in tableData"> 
+        <td>{{ t.index }}</td> 
         <td>{{ t.date }}</td> 
         <td>{{ t.area }}</td> 
         <td>{{ t.crop }}</td> 
@@ -108,6 +110,8 @@
 
           newData:'',
 
+          rowNum: 1,
+
           tableData: [
             
           ]
@@ -115,8 +119,9 @@
         },
         methods: {
           saveReport: function(){
-              this.tableData.push({date:"2018-0501", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"});      
-          },
+              this.tableData.push({index: this.rowNum,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
+              this.rowNum=this.rowNum+1;
+            },
                 
       } 
   });
