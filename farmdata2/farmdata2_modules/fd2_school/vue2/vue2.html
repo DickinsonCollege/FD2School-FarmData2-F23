@@ -44,7 +44,7 @@
     <label for="end">End date:</label>
     <input type="date" id="end" min="minEndDate" max="maxEndDate" v-model="rEndDate" />
     <br>
-    <button type="submit">Generate Report</button>
+    <button class="btn btn-primary" @click='tableData.push({date: "2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches" })' type="submit">Generate Report</button>
     
     <hr style="width:33%;margin-left:0">
     <div id="rHeader">
@@ -107,8 +107,7 @@
           selectedArea: "",
 
           tableData: [
-            {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
-            {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
+            
           ]
       } 
   });
