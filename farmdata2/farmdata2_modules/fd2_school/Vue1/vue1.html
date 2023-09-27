@@ -31,7 +31,7 @@
             <option>Broccoli</option>
           </select>
         <label for="area">Area:</label>
-        <select v-model="area" id="area" name="area">
+        <select id="area" name="area">
             <option selected>All</option>
             <option>Chuau-1</option>
             <option>SQ7</option>
@@ -45,7 +45,7 @@
         <hr>
 
         
-        <v-cloak><h1>{{ title }}</h1></v-cloak>
+        <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
     
 
         <p>Details:</p>
@@ -101,8 +101,7 @@
           title: "My Sample Harvest Report",
           startDate: "2020-05-05",
           endDate: "2020-05-15",
-          crop: "Kale",
-          area: "All"
+          crop: "Kale"
       }
     })
   </script>
