@@ -62,6 +62,16 @@ function fd2_school_menu() {
     'weight' => -30,                                  // larger weights appear further right.
   );
 
+  // Define the tab for the module.
+  $items['farm/fd2-school/vue2'] = array(                 // Put the school in the farm menu
+    'title' => 'Vue2',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('vue2'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
   // Define the name and URL for the default sub-tab that appears when the tab is opened.
   // Content for this default sub-tab is provided by the 'page arguments' above.
   $items['farm/fd2-school/info'] = array(
