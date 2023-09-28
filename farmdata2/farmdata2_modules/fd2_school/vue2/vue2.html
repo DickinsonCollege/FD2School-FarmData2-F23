@@ -42,7 +42,7 @@
                 <li><b>Crop:</b>{{reportCrop}}</li>
             </ul>
             <table border="1">
-                <tr>
+                <tr v-if="reportLogs.length!=0">
                     <th>Row</th>
                     <th>Date</th>
                     <th>Area</th>
@@ -50,6 +50,7 @@
                     <th>Yield</th>
                     <th>Units</th>
                 </tr>
+                <tr v-else>No matching records</tr>
                 <tr v-for="(log,index) in reportLogs">
                     <td>{{index+1}}</td>
                     <td >{{log.date}}</td>
