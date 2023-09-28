@@ -37,12 +37,12 @@
     <label for="start">Start date:</label>
 
     <div id="startDate">
-    <input type="date" id="start" min="minStartDate" max="maxStartDate" v-model="rStartDate" />        
+    <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="rStartDate"/>        
     </div>
 
     <br>
     <label for="end">End date:</label>
-    <input type="date" id="end" min="minEndDate" max="maxEndDate" v-model="rEndDate" />
+    <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="rEndDate" />
     <br>
     <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
     
@@ -89,12 +89,13 @@
       el: '#pageInfo',
       data: {
           rHeader: "",
-          rStartDate: "05-05-2020",
+          rStartDate: "2020-05-05",
           minStartDate: "2014-01-01",
           maxStartDate: "2022-01-01",
-          rEndDate:"05-15-2020",
+          rEndDate:"2020-05-15",
           minEndDate:"05-05-2020",
           maxEndDate:"01-01-2022",
+          
           crops: [
             "Broccoli",
             "Kale",
