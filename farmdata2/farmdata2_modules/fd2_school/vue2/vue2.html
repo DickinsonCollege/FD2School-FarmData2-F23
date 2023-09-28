@@ -60,7 +60,8 @@
       <li><b>Crop:</b> Kale</li>
     </ul>
     </div>
-    <table> 
+    <h3 v-if="tableData.length === 0"> No records to display </h3>
+    <table v-if="tableData.length != 0"> 
       <tr> 
         <th>Row</th>
         <th>Date</th> 
