@@ -38,7 +38,7 @@
         </select>
         <br>
         <br>
-        <input type="button" value="Generate Report" />
+        <input type="button" value="Generate Report" v-on:click='harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"})'/>
     <hr>
       <h1>{{ reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
         <p>Details:</p>
@@ -59,7 +59,7 @@
                 <th>Yield</th>
                 <th>Units</th>
             </tr>
-            <tr v-for="t in table">
+            <tr v-for="t in harvestLogs">
                 <td>{{t.date}}</td>
                 <td>{{t.area}}</td>
                 <td>{{t.crop}}</td>
@@ -89,6 +89,7 @@
                 table: [
                 {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
                 {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}],
+                harvestLogs: [],
             }
         });
         Vue.config.devtools = true; 
