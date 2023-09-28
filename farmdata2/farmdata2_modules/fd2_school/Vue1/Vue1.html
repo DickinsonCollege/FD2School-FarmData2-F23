@@ -1,87 +1,100 @@
-
+<!DOCTYPE html>
 <html>
-    <hr>
-    
-    <body>
-        <h1>
-            Harvest Report
-        </h1>
-        <p>
-            This page is a <i>mockup</i> of a simplified harvest report.
-            <ul>
-                <li>
-                    <label for="tile">Title:</label>
-                    <input type="text" id="title" name="title" value="My Sample Harvest Report"/>
-                </li>
-
-                <li><label for="start">Start:</label>
-                    <input type="date" id="start" name="date-start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
-                
-                <label for="end">End:</label>
-                    <input type="date" id="end" name="date-end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
-                </li>
-                <li><label for="crop">Crop:</label>
-                    <select id="crop" name="crops" >
-                            <option>Broccoli</option>
-                            <option selected>Kale</option>
-                            <option>Peas</option>
-                    </select>
-                </li>
-                <li><label for="area">Area:</label>
-                    <select id="area" name="fields">
-                        <option selected>All</option>
-                        <option>Chuau-1</option>
-                        <option>SQ7</option>
-                    </select>
-                </li>
-            </ul>
-            <input type="button" value="Generate Report"/>
-        </p>
-
-    </body>
-    <hr>
-    <body>
-        <h1>
-            My Sample Harvest Report
-        </h1>
-        <p>
-            Detail:
-            <dd>
+        <hr>
+        <body> 
+            <div id="report_heading" v-cloak> 
+            <h1>{{header}}</h1>
+            <p>
+                This page is a <i>mockup</i> of a simplified harvest report.
                 <ul>
-                    <li><strong>Farm:</strong>Sample Farm</li>
-                    <li><strong>User:</strong>manager1</li>
-                    <li><strong>Language:</strong>English</li> <br>
+                    <li>
+                        <label for="report_heading">Title:</label>
+                        <input type="text" v-model="header" />
+                    </li>
 
-
-                    <li><strong>Start:</strong>05/01/2018</li>
-                    <li><strong>End:</strong>05/15/2018</li>
-                    <li><strong>Crop:</strong>Kale</li>
+                    <li><label for="start">Start:</label>
+                        <input type="date" id="start" value="2020-05-05" min="2014-01-01" max="2022-01-01"/>
+                
+                    <label for="end">End:</label>
+                        <input type="date" id="end" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+                    </li>
+                    <li><label for="crop">Crop:</label>
+                        <select id="crop" name="crops" >
+                                <option>Broccoli</option>
+                                <option selected>Kale</option>
+                                <option>Peas</option>
+                        </select>
+                    </li>
+                    <li><label for="area">Area:</label>
+                        <select id="area" name="fields">
+                            <option selected>All</option>
+                            <option>Chuau-1</option>
+                            <option>SQ7</option>
+                        </select>
+                    </li>
                 </ul>
-            </dd>
-        </p>
+                <input type="button" value="Generate Report"/>
+            </p>
+
+            <hr>
+
+        
+                <h1>{{header}}</h1>  
+            </div>
+            <p>
+                Detail:
+                <dd>
+                    <ul>
+                        <li><strong>Farm:</strong>Sample Farm</li>
+                        <li><strong>User:</strong>manager1</li>
+                        <li><strong>Language:</strong>English</li> <br>
+
+
+                        <li><strong>Start:</strong>05/01/2018</li>
+                        <li><strong>End:</strong>05/15/2018</li>
+                        <li><strong>Crop:</strong>Kale</li>
+                    </ul>
+                </dd>
+            </p>
+        
+    
+            <table border="1">
+                <tr>
+                    <td><strong>Date</strong></td>
+                    <td><strong>Area</strong></td>
+                    <td><strong>Crop</strong></td>
+                    <td><strong>Yield</strong></td>
+                    <td><strong>Units</strong></td>
+                </tr>
+                <tr>
+                    <td>05/02/2018</td>
+                    <td>Chuau-1</td>
+                    <td>Kale</td>
+                    <td>10</td>
+                    <td>Bunches</td>
+                </tr>
+                <tr>
+                    <td>05/05/2018</td>
+                    <td>SQ7</td>
+                    <td>Kale</td>
+                    <td>7</td>
+                    <td>Bunches</td>
+                </tr>
+            </table>
+    
+            <script src="https://unpkg.com/vue@2"></script>
+            <script>
+                var harvest_report = new Vue({
+                el: "#report_heading",
+            
+                data: {
+                    header: "My Sample Harvest Report",
+                    newTitle: '',
+             }
+             });
+         
+            </script>
+        </div>
     </body>
-    <table border="1">
-        <tr>
-            <td><strong>Date</strong></td>
-            <td><strong>Area</strong></td>
-            <td><strong>Crop</strong></td>
-            <td><strong>Yield</strong></td>
-            <td><strong>Units</strong></td>
-        </tr>
-        <tr>
-            <td>05/02/2018</td>
-            <td>Chuau-1</td>
-            <td>Kale</td>
-            <td>10</td>
-            <td>Bunches</td>
-        </tr>
-        <tr>
-            <td>05/05/2018</td>
-            <td>SQ7</td>
-            <td>Kale</td>
-            <td>7</td>
-            <td>Bunches</td>
-        </tr>
-    </table>
     <hr>
 </html>
