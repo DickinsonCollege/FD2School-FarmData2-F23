@@ -38,7 +38,7 @@
         </select>
         <br>
         <br>
-        <input type="button" value="Generate Report" v-on:click='harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"})'/>
+        <input type="button" value="Generate Report" @click="generateReportButton"/>
     <hr>
       <h1>{{ reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
         <p>Details:</p>
@@ -90,6 +90,18 @@
                 {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
                 {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}],
                 harvestLogs: [],
+            },
+            methods: {
+                generateReportButton: function (){
+                    if (this.harvestLogs.length==0) {
+                    this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
+                } else if (this.harvestLogs.length==1) {
+                    this.harvestLogs.push({date: "2020-05-01", area: "Orion-1", crop: "Carrot", yield: 12, units: "Bunches"});
+                } else if (this.harvestLogs.length==2) {
+                    this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "cucumber", yield: 9, units: "Bunches"});
+                } 
+
+            }
             }
         });
         Vue.config.devtools = true; 
