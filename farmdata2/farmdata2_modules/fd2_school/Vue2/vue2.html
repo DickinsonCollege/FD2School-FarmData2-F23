@@ -37,7 +37,7 @@
 
         <br>
 
-        <button type="button" v-on:click="saveReport">Generate Report</button>
+        <button type="button" v-on:click="saveReport" @click='changeState("activeReport")'>Generate Report</button>
 
         <hr>
 
@@ -61,7 +61,8 @@
             <li><strong>Crop:</strong> {{ crops }}</li>
             </ul>
 
-        <div>
+        <p v-if='state === "nullReport" || harvestLogs.length === 0'>There are no matching records</p>
+        <div v-if='state === "activeReport" && !(harvestLogs.length === 0)' >
             <table border=1>
                 <tr>
                   <th>Row</th>
@@ -77,7 +78,7 @@
                 <td>{{ cell.area }}</td> 
                 <td>{{ cell.crop }}</td> 
                 <td>{{ cell.yield }}</td> 
-                <td>{{ cell.units }}</td> 
+                <td>{{ cell.units }}</td>
               </tr>
               </table>
               
@@ -90,6 +91,7 @@
     var vueSpike = new Vue({
       el: "#vue_spike2",
       data: {
+          state: "nullReport",
           title: "My Sample Harvest Report",
           startDate: "2020-05-05",
           endDate: "2020-05-15",
@@ -101,6 +103,9 @@
       methods: {
             saveReport: function(){
                 this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+            },
+            changeState: function(newState){
+                this.state = newState
             }
 
         }
