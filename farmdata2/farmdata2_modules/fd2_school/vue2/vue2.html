@@ -27,7 +27,7 @@
                 </select>
             </p>
             <br>
-            <button type="generate" @click='harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"})'>Generate Report</button>
+            <button type="generate" @click='genReport'>Generate Report</button>
         </body>
     <hr>
         <h1>{{ (title == '') ? 'Mock Harvest Report':title}}</h1>
@@ -84,6 +84,11 @@
                 newLog: {},
                 harvestLogs: [
                 ]
+            },
+            methods: {
+                genReport: function() {
+                    this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+                }
             }
         })
         Vue.config.devtools = true;
