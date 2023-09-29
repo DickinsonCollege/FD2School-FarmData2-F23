@@ -13,9 +13,9 @@
         <br>
         <br>
         <label for="start-date">Start:</label>
-        <input type="date" id="start-date" name="start-date" min="2014-01-01" :disabled="reportStartDate > reportEndDate" max="2022-01-01" :disabled="reportStartDate > reportEndDate" v-model="reportStartDate" />
+        <input type="date" id="start-date" name="start-date" :min="reportStartDate" :max="reportEndDate" v-model="reportStartDate" />
         <label for="end-date">End:</label>
-        <input type="date" id="end-date" name="end-date" min="2020-05-05" :disabled="reportStartDate > reportEndDate" max="2022-01-01" :disabled="reportStartDate > reportEndDate" v-model="reportEndDate" />
+        <input type="date" id="end-date" name="end-date" :min="reportStartDate" max="reportEndDate" v-model="reportEndDate" />
         <br>
         <br>
         <label for="crop">Crop:</label>
@@ -72,10 +72,8 @@
             el: "#report",
             data: {
                 reportTitle: "My Sample Harvest Report",
-                // reportStartDate: "05/05/2020",
-                // reportEndDate: "05/15/2020",
-                reportStartDate: "",
-                reportEndDate: "",
+                reportStartDate: "05/05/2020",
+                reportEndDate: "05/15/2020",
                 reportCrop: "Kale",
                 crops: [
                     "Broccoli",
