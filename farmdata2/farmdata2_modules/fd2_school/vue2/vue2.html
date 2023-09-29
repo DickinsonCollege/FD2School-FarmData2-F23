@@ -44,7 +44,7 @@
                 <li><strong>End:</strong>{{reportEndDate}}</li>
                 <li><strong>Crop:</strong>{{reportCrop}}</li>
             </ul>
-            <table border="1">
+            <table v-if="harvestLogs.length>0" border=1>
                 <thead>
                      <th>Row</th>
                      <th>Date</th>
@@ -68,6 +68,7 @@
                      </tr>
                  </tbody>
              </table>
+             <p v-else>No matching records</p>
         </div>
 
         <script>
