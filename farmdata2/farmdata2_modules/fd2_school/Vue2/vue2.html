@@ -44,11 +44,15 @@
         </br>
     
         <label for="start">Start date:</label>
-        <input type="date" id="start" name="trip-start" value="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="start"/>
+        
+
+        <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="_StartDate"/>  
     
         <label for="end">End date:</label>
-        <input type="date" id="end" name="trip-end" value="2020-05-15" min="2020-05-05" max="2022-01-01" v-model = "end"/>
-    
+        
+        
+        <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="_EndDate" />
+
         </br>
         </br>
     
@@ -95,7 +99,7 @@
             
                 <h3 v-if="table.length === 0"> Nothing to display </h3>
                 <table v-if="table.length != 0"> 
-                    
+
                     <tr>
                         <th>Row</th>
                         <th>Date</th>
@@ -139,7 +143,13 @@
                             rowNumber:1,
                             table: [
                                 
-                            ]
+                            ],
+                            _StartDate: "2020-05-05",
+                            minStartDate: "2014-01-01",
+                            maxStartDate: "2022-01-01",
+                            _EndDate:"2020-05-15",
+                            minEndDate:"05-05-2020",
+                            maxEndDate:"01-01-2022",
                         },
                         methods: {
                             saveReport: function() {
