@@ -55,29 +55,11 @@
         
     
             <table border="1">
-                <tr>
-                    <td><strong>Date</strong></td>
-                    <td><strong>Area</strong></td>
-                    <td><strong>Crop</strong></td>
-                    <td><strong>Yield</strong></td>
-                    <td><strong>Units</strong></td>
-                </tr>
-                <tr>
-                    <td>05/02/2018</td>
-                    <td>Chuau-1</td>
-                    <td>Kale</td>
-                    <td>10</td>
-                    <td>Bunches</td>
-                </tr>
-                <tr>
-                    <td>05/05/2018</td>
-                    <td>SQ7</td>
-                    <td>Kale</td>
-                    <td>7</td>
-                    <td>Bunches</td>
-                </tr>
+                <tr><td v-for="item in table">{{item.row1}}</td></tr>
+                <tr><td v-for="item in table">{{item.row2}}</td></tr>
+                <tr><td v-for="item in table">{{item.row3}}</td></tr>
             </table>
-    
+        </div>
             <script src="https://unpkg.com/vue@2"></script>
             <script>
                 var harvest_report = new Vue({
@@ -98,11 +80,20 @@
                             'Chuau-1',
                             'SQ7',
                         ],
+                        table:[
+                            {row1: "Date", row2: "05/05/2020", row3: "05/08/2020"},
+                            {row1: "Area", row2: "SQ7", row3: "Chuau-1"},
+                            {row1: "Crop", row2: "Kale", row3: "Kale"},
+                            {row1: "Yield", row2: "10", row3: "10"},
+                            {row1: "Units", row2: "Bunches", row3: "Bunches"},
+                            
+                        ]
+
                     }
                 });
          
             </script>
-        </div>
+        
     </body>
     <hr>
 </html>
