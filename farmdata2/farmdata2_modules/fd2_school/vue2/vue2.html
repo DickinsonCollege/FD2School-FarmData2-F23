@@ -11,9 +11,9 @@
             <br>
             <p>
                 <label for="startDate">Start:</label>
-                <input type="date" id="startDate" name="startDate" min="2014-01-01" max="2022-01-01" v-model="startDate"/>
+                <input type="date" id="startDate" name="startDate" min="2014-01-01" :max="endDate" v-model="startDate"/>
                 <label for="endDate">End:</label>
-                <input type="date" id="endDate" name="endDate" min="2020-05-05" max="2022-01-01" v-model="endDate"/>
+                <input type="date" id="endDate" name="endDate" :min="startDate" max="2022-01-01" v-model="endDate"/>
             </p>
             <br>
             <p>
@@ -44,7 +44,7 @@
                     </ul>
                 </p>
                 <br>
-                <p v-if="harvestLogs.length === 0">No Harvest Report Records to Display</p>
+                <p v-if="harvestLogs.length === 0">No Harvest Report Records Match</p>
                 <table border="1" v-if="harvestLogs.length > 0">
                     <tr>
                         <th><strong>Row</strong></th>
