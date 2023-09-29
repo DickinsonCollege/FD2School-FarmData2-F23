@@ -93,7 +93,9 @@
                 </style>
             </head>
             
-                <table>
+                <h3 v-if="table.length === 0"> Nothing to display </h3>
+                <table v-if="table.length != 0"> 
+                    
                     <tr>
                         <th>Row</th>
                         <th>Date</th>
