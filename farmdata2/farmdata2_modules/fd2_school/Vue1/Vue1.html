@@ -29,11 +29,9 @@
             <option v-for="crops in crops">{{ crops }}</option>
         </select>
      <label for="area">Area:</label>
-     <select id="area" name="area">
-          <option>Chuau-1</option>
-          <option selected>All</option>
-          <option>SQ7</option>
-        </select>
+     <select v-model="areas" id ="area" name="area">
+          <option v-for="area in areas">{{ area }}</option>
+     </select>
      <br>
      <br>
      <button type="generate">Generate Report</button>
@@ -75,7 +73,8 @@
                          <td>Bunches</td>
                     </tr>
                </table>    
-          </div>  
+          </div> 
+          
      </body>
 </div>
  
@@ -87,6 +86,7 @@
           startDate: "2020-05-05",
           endDate: "2020-05-15",
           crops: ["Kale", "Peas", "Broccoli"],
+          areas: ["All", "Chuau-1", "SQ7"],
        }
      })
      Vue.config.devtools = true
