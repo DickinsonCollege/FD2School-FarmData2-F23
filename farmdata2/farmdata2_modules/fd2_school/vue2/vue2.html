@@ -46,13 +46,15 @@
                 <br>
                 <table border="1">
                     <tr>
+                        <th><strong>Row</strong></th>
                         <th><strong>Date</strong></th>
                         <th><strong>Area</strong></th>
                         <th><strong>Crop</strong></th>
                         <th><strong>Yield</strong></th>
                         <th><strong>Units</strong></th>
                     </tr>
-                    <tr v-for="h in harvestLogs">
+                    <tr v-for="(h,index) in harvestLogs">
+                        <td>{{ index + 1}}</td>
                         <td>{{ h.date }}</td>
                         <td>{{ h.area }}</td>
                         <td>{{ h.crop }}</td>
@@ -87,6 +89,8 @@
             },
             methods: {
                 genReport: function() {
+                    this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+                    this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                 }
             }
