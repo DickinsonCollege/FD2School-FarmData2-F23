@@ -52,8 +52,8 @@
         </br>
         </br>
     
-        <input type="submit" value="Generate Report" />
-    
+        <button class="btn btn-primary" @click='table.push({date: "2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches" })' type="submit">Generate Report</button>
+        
     
     <hr/>
                 <h1>{{ (header == '') ? 'Mock Harvest Report':header}}</h1>
