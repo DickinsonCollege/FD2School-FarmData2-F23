@@ -18,18 +18,14 @@
                     <label for="end">End:</label>
                         <input type="date" id="endDate" min="2020-05-05" max="2022-01-01" v-model="end"/>
                     </li>
-                    <li><label for="crop">Crop:</label>
-                        <select id="crop" name="crops" v-model="crop">
-                                <option>Broccoli</option>
-                                <option selected>Kale</option>
-                                <option>Peas</option>
+                    <li><label>Crop:</label>
+                        <select id="crop" v-model="crop">
+                            <option v-for="item in plants">{{item}}</option>
                         </select>
                     </li>
                     <li><label for="area">Area:</label>
                         <select id="area" name="fields">
-                            <option selected>All</option>
-                            <option>Chuau-1</option>
-                            <option>SQ7</option>
+                            <option v-for="item in area">{{item}}</option>
                         </select>
                     </li>
                 </ul>
@@ -85,15 +81,25 @@
             <script src="https://unpkg.com/vue@2"></script>
             <script>
                 var harvest_report = new Vue({
-                el: "#report",
+                    el: "#report",
             
-                data: {
-                    header: "My Sample Harvest Report",
-                    start: "",
-                    end: "",
-                    crop: "",
-             }
-             });
+                    data: {
+                        header: "My Sample Harvest Report",
+                        start: "",
+                        end: "",
+                        crop: "",
+                        plants: [
+                            'Broccoli',
+                            'Kale',
+                            'Peas',
+                        ],
+                        area:[
+                            'All',
+                            'Chuau-1',
+                            'SQ7',
+                        ],
+                    }
+                });
          
             </script>
         </div>
