@@ -52,7 +52,7 @@
         </br>
         </br>
     
-        <button class="btn btn-primary" @click='table.push({date: "2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches" })' type="submit">Generate Report</button>
+        <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
         
     
     <hr/>
@@ -131,11 +131,17 @@
                                 'SQ7',
                                 'Chuau-1'
                             ],
+                            newData: '',
                             table: [
                                 {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
                                 {date: "2018-05-10", area: "SQ7", crop: "Broccoli", yield: 5, units: "Bunches"}
                             ]
-                        }
+                        },
+                        methods: {
+                            saveReport: function() {
+                            this.table.push({date:"2018-0501", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"});      
+                        },
+                    }
                     });
                     Vue.config.devtools = true;
                 </script>
