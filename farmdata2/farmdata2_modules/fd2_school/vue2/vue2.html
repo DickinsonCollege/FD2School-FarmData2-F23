@@ -44,7 +44,8 @@
                     </ul>
                 </p>
                 <br>
-                <table border="1">
+                <p v-if="harvestLogs.length === 0">No Harvest Report Records to Display</p>
+                <table border="1" v-if="harvestLogs.length > 0">
                     <tr>
                         <th><strong>Row</strong></th>
                         <th><strong>Date</strong></th>
