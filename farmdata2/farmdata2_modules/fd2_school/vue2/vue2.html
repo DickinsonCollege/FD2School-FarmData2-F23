@@ -24,7 +24,7 @@
         </select>
         <br/>
 
-        <button type="button">Generate Report</button>
+        <button type="button" @click='reportHarvestLogs.push({date:"2018-05-01", area:"Orion", crop:"Kale", yield: 7, units: "Bunches"})'>Generate Report</button>
         <hr/>
 
 
@@ -73,8 +73,6 @@
                     'SQ7'
                 ],
                 reportHarvestLogs: [
-                    {data: '05/02/2018', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches'},
-                    {data: '05/05/2018', area: 'SQ7', crop: 'Kale', yield: 7, units: 'Bunches'}
                 ]
             }
         })
