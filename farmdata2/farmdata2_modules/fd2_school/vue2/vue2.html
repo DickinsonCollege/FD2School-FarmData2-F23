@@ -14,9 +14,23 @@
             </p>
             <p>
             <label for="start">Start:</label>
-            <input type="date" id="start" v-model="reportStartDate" value="05/05/2020" min="01/01/2014" max="01/01/2022">
+            <input 
+                type="date" 
+                id="start" 
+                v-model="reportStartDate" 
+                value="05/05/2020" 
+                min="2014-01-01" :disabled="reportStartDate > reportEndDate"
+                max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+            >
             <label for="end">End:</label>
-            <input type="date" id="end" v-model="reportEndDate" value="05/15/2020" min="05/05/2020" max="01/01/2022">
+            <input 
+                type="date" 
+                id="end" 
+                v-model="reportEndDate" 
+                value="05/15/2020" 
+                min="2020-05-05" :disabled="reportStartDate > reportEndDate"
+                max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+            >
             </p>
             <p>
             <label for="crop">Crop:</label>
