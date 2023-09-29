@@ -3,7 +3,7 @@
         <hr>
         <body> 
             <div id="report" v-cloak> 
-            <h1>{{header}}</h1>
+            <h1>{{(header!="") ? header : "Mock Harvest Report"}}</h1>
             <p>
                 This page is a <i>mockup</i> of a simplified harvest report.
                 <ul>
@@ -39,7 +39,7 @@
             <hr>
 
         
-                <h1>{{header}}</h1>  
+                <h1>{{(header!="") ? header : "Mock Harvest Report"}}</h1>  
             
             <p>
                 Detail:
