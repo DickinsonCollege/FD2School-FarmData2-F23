@@ -93,12 +93,20 @@
             },
             methods: {
                 genReport: function() {
+                    axios.get('/farm.json')  // this line sends the request.
+                    .then((response) => {
+                        this.Farm = response.data.name;
+                        this.User = response.data.user.name;
+                        this.Language = response.data.languages.en.name;
+                    })
+                    .catch((error) => {
+                        console.log("Error occurred");
+                        console.log(error);
+                    })
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
-                    this.Farm = 'Sample Farm';
-                    this.User = 'manager1';
-                    this.Language = 'English';
+                    
                 }
             }
         })
