@@ -34,13 +34,13 @@
             <body> 
                 <p>Details:
                     <ul>
-                        <li><strong>Farm:</strong> Sample Farm</li>
-                        <li><strong>User:</strong> manager1</li>
-                        <li><strong>Language:</strong> English</li>
+                        <li><strong>Farm: </strong>{{ Farm }}</li>
+                        <li><strong>User: </strong>{{ User }}</li>
+                        <li><strong>Language: </strong>{{ Language }}</li>
                         <br>
-                        <li><strong>Start:</strong> {{ startDate }}</li>
-                        <li><strong>End:</strong> {{ endDate }}</li>
-                        <li><strong>Crop:</strong> {{ crop }}</li>
+                        <li><strong>Start: </strong>{{ startDate }}</li>
+                        <li><strong>End: </strong>{{ endDate }}</li>
+                        <li><strong>Crop: </strong>{{ crop }}</li>
                     </ul>
                 </p>
                 <br>
@@ -70,6 +70,9 @@
             el: '#sample-report',
             data: {
                 title: 'My Sample Harvest Report',
+                Farm: '',
+                User: '',
+                Language: '',
                 startDate: '2020-05-01',
                 endDate: '2020-05-15',
                 crop: 'Kale',
