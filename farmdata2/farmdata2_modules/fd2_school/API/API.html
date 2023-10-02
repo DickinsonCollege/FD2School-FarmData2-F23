@@ -2,7 +2,12 @@
     <div id="test">
       <input type="text" v-model="reportTitle" placeholder="Enter report title">
       <h1 v-cloak>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
-
+        <label for="farm">Farm:</label>
+        <input type="text" id="farm" v-model="farm" placeholder="Enter your farm here.">
+        <label for="user">User:/label>
+        <input type="text" id="user" v-model="user" placeholder="Enter user name.">
+        <label for="language">Language</label>
+        <input type="text" id="language" v-model="language" placeholder="Enter language.">
       <label for="crops">Crop:</label>
       <select name="crops" id="crops" v-model="selectedCrop">
         <option v-for="crop in crops" :value="crop">{{ crop }}</option>
@@ -74,6 +79,9 @@
           crops: ["broccoli", "kale", "peas"],
           areas: ["all", "chuahu-1", "sq7"],
           harvestLogs: [],
+          farm:"",
+          user:"",
+          language:"",
         },
         methods: {
           generateReport: function () {
