@@ -4,7 +4,7 @@
       <h1 v-cloak>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
         <label for="farm">Farm:</label>
         <input type="text" id="farm" v-model="farm" placeholder="Enter your farm here.">
-        <label for="user">User:/label>
+        <label for="user">User:</label>
         <input type="text" id="user" v-model="user" placeholder="Enter user name.">
         <label for="language">Language</label>
         <input type="text" id="language" v-model="language" placeholder="Enter language.">
@@ -85,7 +85,10 @@
         },
         methods: {
           generateReport: function () {
-            
+            this.farm = "Sample Farm";
+            this.user = "manager1";
+            this.language = "English";
+
             this.harvestLogs.push({
               date: "2018-05-01",
               area: "Orion-3",
