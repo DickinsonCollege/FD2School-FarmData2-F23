@@ -1,0 +1,134 @@
+<html>
+<body>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="main.css">
+    <style>
+        [v-cloak] {
+          display:none;
+        }
+
+        table, th, td { 
+          border: 1px solid black; 
+          border-collapse: collapse; 
+          } 
+
+    </style> 
+</head>
+
+<h1>Harvest Report</h1>
+<p><FONT COLOR="GREY"> This page is a <i>mockup</i> of a simplfied Harvest Report</FONT></p>
+<div id="pageInfo">
+    <input type="text" value="Title:" v-model="rHeader"/>
+    <body>
+    <br>
+    
+    <label for="crop">Crop:</label> 
+    <select id="crop" v-model="selectedCrop"> 
+      <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+    </select>
+
+    <br>
+    <label for="field">Field:</label>
+    <select id="field" v-model="selectedArea"> 
+      <option v-for="area in areas" :value="area">{{ area }}</option>
+    </select>
+    <br>
+    <label for="start">Start date:</label>
+
+    <div id="startDate">
+    <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="rStartDate"/>        
+    </div>
+
+    <br>
+    <label for="end">End date:</label>
+    <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="rEndDate" />
+    <br>
+    <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
+    
+    <hr style="width:33%;margin-left:0">
+    <div id="rHeader">
+    <h1>{{ (rHeader!="") ? rHeader:"Mock Harvest Report"}}</h1>
+    <p><FONT COLOR="GREY"> Details:</FONT></p>
+    <ul>
+      <li><b>Farm:</b> Sample Farm</li>
+      <li><b>User:</b> manager1</li>
+      <li><b>Language:</b> English</li>
+<br>
+      <li><b>Start:</b> {{ rStartDate }}</li>
+      <li><b>End:</b> {{ rEndDate }}</li>
+      <li><b>Crop:</b> Kale</li>
+    </ul>
+    </div>
+    <h3 v-if="tableData.length === 0"> No records to display </h3>
+    <table v-if="tableData.length != 0"> 
+      <tr> 
+        <th>Row</th>
+        <th>Date</th> 
+        <th>Area</th> 
+        <th>Crop</th> 
+        <th>Yield</th> 
+        <th>Units</th> 
+      </tr> 
+      <tr v-for="(t,index) in tableData"> 
+        <td>{{ t.index }}</td> 
+        <td>{{ t.date }}</td> 
+        <td>{{ t.area }}</td> 
+        <td>{{ t.crop }}</td> 
+        <td>{{ t.yield }}</td> 
+        <td>{{ t.units }}</td> 
+      </tr> 
+    </table>
+</div>
+
+
+
+</body>
+<script>
+  var pageInfo = new Vue({
+      el: '#pageInfo',
+      data: {
+          rHeader: "",
+          rStartDate: "2020-05-05",
+          minStartDate: "2014-01-01",
+          maxStartDate: "2022-01-01",
+          rEndDate:"2020-05-15",
+          minEndDate:"05-05-2020",
+          maxEndDate:"01-01-2022",
+          
+          crops: [
+            "Broccoli",
+            "Kale",
+            "Peas",
+          ],
+          selectedCrop: "",
+          
+          areas: [
+            "All",
+            "Chuau-1",
+            "SQ7",
+          ],
+          selectedArea: "",
+
+          newData:'',
+
+          rowNum: 1,
+
+          tableData: [
+            
+          ]
+
+        },
+        methods: {
+          saveReport: function(){
+              this.tableData.push({index: this.rowNum,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
+              this.rowNum=this.rowNum+1;
+            },
+                
+      } 
+  });
+  Vue.config.devtools = true;
+</script>
+</body>
+</html>
+
