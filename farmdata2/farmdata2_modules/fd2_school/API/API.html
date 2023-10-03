@@ -96,6 +96,17 @@
               yield: "12",
               units: "Bunches",
             });
+
+            axios.get("/farm.json") 
+                .then((response) => {
+                    this.farm = response.data.name;
+                    this.farm = response.data.user.name;
+                    this.language = response.data.user.language;
+                })
+                .catch((error) => {
+                    console.log("Error Occurred");
+                    console.log(error);
+                })
           },
         },
       });
