@@ -29,7 +29,7 @@
         <label for="crop">Crop: </label>
         <select id="crop" name="crop" v-model ="crop">
             
-            <option v-for="crop in crops"> {{ crop }}</option>
+            <option v-for="crop in cropNames"> {{ crop }}</option>
           </select>  
           
         
@@ -123,16 +123,22 @@
                 <script>
                     var Vues = new Vue({
                         el: '#HarvestHeader',
+                        created() {
+	                        console.log("HarvestReport Vue instance created!")
+                            getIDToCropMap()
+                                .then((theMap) => {
+                                    this.idToCropMap = theMap;
+                                })
+                                .catch((err) => {
+                                    console.log("Error occurred!")
+                                })
+                        },
                         data: {
                             header: 'My Sample Harvest Report',
                             start: '2020-05-01',
                             end: '2020-05-15',
                             crop: 'Kale',
-                            crops: [
-                                'Kale',
-                                'Broccoli',
-                                'Peas'
-                            ],
+                            idToCropMap: new Map(),
                             area: 'All',
                             areas: [
                                 'All',
@@ -152,7 +158,14 @@
                             maxEndDate:"01-01-2022",
                             Farm:'',
                             User:'',
-                            Language:''
+                            Language:'',
+                        
+                        
+                        },
+                        computed: {
+                            cropNames () {
+                                return Array.from(this.idToCropMap.values());
+                            }
                         },
                         methods: {
                             saveReport: function() {
