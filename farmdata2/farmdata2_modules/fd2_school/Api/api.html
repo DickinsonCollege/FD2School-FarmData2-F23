@@ -46,12 +46,12 @@
         <label for="start">Start date:</label>
         
 
-        <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="_StartDate"/>  
+        <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="sStartDate"/>  
     
         <label for="end">End date:</label>
         
         
-        <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="_EndDate" />
+        <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="eEndDate" />
 
         </br>
         </br>
@@ -63,7 +63,7 @@
                 <h1>{{ (header == '') ? 'Mock Harvest Report':header}}</h1>
             
             
-            <script src="https://unpkg.com/vue@2"></script>
+            
         
             
         
@@ -144,10 +144,10 @@
                             table: [
                                 
                             ],
-                            _StartDate: "2020-05-05",
+                            sStartDate: "2020-05-05",
                             minStartDate: "2014-01-01",
                             maxStartDate: "2022-01-01",
-                            _EndDate:"2020-05-15",
+                            eEndDate:"2020-05-15",
                             minEndDate:"05-05-2020",
                             maxEndDate:"01-01-2022",
                             Farm:'',
@@ -156,6 +156,19 @@
                         },
                         methods: {
                             saveReport: function() {
+                                axios.get('/farm.json')
+                                .then ((response) => {
+                                    console.log("Got Response")
+                                    console.log(response)
+                                    this.farm=response.data.name;
+                                    this.user=response.data.user.name;
+                                    this.language=response.data.languages.en.name;
+                                })
+                                .catch ((error) => {
+                                    console.log("Error Occurred")
+                                    console.log(error)
+                                })
+
                                 this.table.push({index: this.rowNumber,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
                                 this.rowNumber=this.rowNumber+1;
                                 this.Farm = 'Sample Farm';
