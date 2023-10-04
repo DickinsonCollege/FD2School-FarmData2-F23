@@ -10,7 +10,7 @@
         <input type="text" id="language" v-model="language" placeholder="Enter language.">
       <label for="crops">Crop:</label>
       <select name="crops" id="crops" v-model="selectedCrop">
-        <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+        <option v-for="crop in cropNames" :value="crop">{{ crop }}</option>
       </select>
       <label for="area">Area:</label>
       <select name="area" id="area">
@@ -71,6 +71,18 @@
     <script>
       var test = new Vue({
         el: "#test",
+        created() {
+	        console.log("HarvestReport Vue instance created!")
+          getIDToCropMap()
+            .then((theMap) => {
+              this.idToCropMap = theMap;
+            }) 
+            .catch((error) => {
+              console.log("Error occurred while fetching map.");
+              console.log(error);
+            })
+        },
+
         data: {
           reportTitle: "",
           startDate: "2020-05-05",
@@ -82,6 +94,12 @@
           farm:"",
           user:"",
           language:"",
+          idToCropMap: new Map(),
+        },
+        computed: {
+          cropNames: function() {
+            return Array.from(this.idToCropMap.values());
+          },
         },
         methods: {
           generateReport: function () {
