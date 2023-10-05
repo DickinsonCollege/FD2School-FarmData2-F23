@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>FarmData2 HTML</title>
+  </head>
+  <body>
+    <h1>Harvest Report</h1>
+      <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+      <label for="title">Title</label>
+      <div id="title" v-cloak>
+        <input type="text" v-model="reportTitle">
+        <br>
+        <br>
+        <form>
+          <label>
+            Start:
+            <input type="date" v-model="reportStartDate" 
+            min="2014-01-01" :disabled="reportStartDate>reportEndDate"
+            max="2022-01-01" :disabled="reportStartDate>reportEndDate">
+          </label>
+          <label>
+            End:
+            <input type="date" v-model="reportEndDate"
+            min="2020-05-05" :disabled="reportStartDate>reportEndDate"
+            max="2022-01-01" :disabled="reportStartDate>reportEndDate">
+          </label>
+        </form>
+        <br>
+        <label for="crop">Crop</label>
+        <select id="crop" v-model="reportCrop">
+          <option v-for="crop in crops">{{crop}}</option>
+        </select>
+        <label for="field">Area</label>
+        <select id="field" name="field">
+          <option v-for="area in areas">{{area}}</option>
+        </select>
+        <br>
+        <br>
+        <input type="button" value="Generate Report" @click="generateReportButton"/>
+    <hr>
+      <h1>{{ reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
+        <p>Details:</p>
+        <ul>
+            <li><strong>Farm:</strong>Sample Farm</li>
+            <li><strong>User:</strong>manager1</li>
+            <li><strong>Language:</strong>English</li>
+        <br>
+            <li><strong>Start:</strong>{{reportStartDate}}</li>
+            <li><strong>End:</strong>{{reportEndDate}}</li>
+            <li><strong>Crop:</strong>{{reportCrop}}</li>
+        </ul>
+        <table v-if="harvestLogs.length>0" border=1>
+            <tr>
+                <th>Row</th>
+                <th>Date</th>
+                <th>Area</th>
+                <th>Crop</th>
+                <th>Yield</th>
+                <th>Units</th>
+                <th>Delete</th>
+            </tr>
+            <tr v-for="(t,index) in harvestLogs">
+                <td>{{index+1}}</td>
+                <td>{{t.date}}</td>
+                <td>{{t.area}}</td>
+                <td>{{t.crop}}</td>
+                <td>{{t.yield}}</td>
+                <td>{{t.units}}</td>
+                <td><button type="button" @click="deleteLog">Delete</button></td>
+            </tr>
+        </table>
+        <p v-else>No matching records</p>
+      </div>
+      <script>
+        var vueData = new Vue({
+            el:"#title",
+            data: {
+                reportTitle: "My Sample Harvest Report",
+                reportStartDate: "2020-05-05",
+                reportEndDate: "2020-05-15",
+                reportCrop: "Kale",
+                crops: [
+                  "Broccoli",
+                  "Kale",
+                  "Peas",
+                ],
+                areas: [
+                  "All",
+                  "Chuau-1",
+                  "SQ7",
+                ],
+                table: [
+                {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
+                {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}],
+                harvestLogs: [],
+            },
+            methods: {
+                generateReportButton: function (){
+                    if (this.harvestLogs.length==0) {
+                    this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
+                } else if (this.harvestLogs.length==1) {
+                    this.harvestLogs.push({date: "2020-05-01", area: "Orion-1", crop: "Carrot", yield: 12, units: "Bunches"});
+                } else if (this.harvestLogs.length==2) {
+                    this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "cucumber", yield: 9, units: "Bunches"});
+                } 
+            },
+                deleteLog: function(Index) { 
+                    this.harvestLogs.splice(Index, 1); } 
+            }
+        });
+        Vue.config.devtools = true; 
+      </script>    
+  </body>
+</html>
