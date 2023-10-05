@@ -29,7 +29,7 @@
                         </select>
                     </li>
                 </ul>
-                <input type="button" value="Generate Report"/>
+                <button v-on:click="harvestLog.push({date:'05/01/2018', area:'Orion-3', crop:'Kale', yield:'12', units:'Bunches'})">Generate Report</button>
             </p>
 
             <hr>
@@ -55,9 +55,23 @@
         
     
             <table border="1">
-                <tr><td v-for="item in table">{{item.row1}}</td></tr>
-                <tr><td v-for="item in table">{{item.row2}}</td></tr>
-                <tr><td v-for="item in table">{{item.row3}}</td></tr>
+                <tr>
+                    <th>Date</th>
+                    <th>Area</th>
+                    <th>Crop</th>
+                    <th>Yield</th>
+                    <th>Units</th>
+                </tr>
+                <tr v-for="item in harvestLog">
+                    <td>{{item.date}}</td>
+                    <td>{{item.area}}</td>
+                    <td>{{item.crop}}</td>
+                    <td>{{item.yield}}</td>
+                    <td>{{item.units}}</td>
+                </tr>
+                
+               
+                
             </table>
         </div>
             <script src="https://unpkg.com/vue@2"></script>
@@ -80,14 +94,10 @@
                             'Chuau-1',
                             'SQ7',
                         ],
-                        table:[
-                            {row1: "Date", row2: "05/05/2020", row3: "05/08/2020"},
-                            {row1: "Area", row2: "SQ7", row3: "Chuau-1"},
-                            {row1: "Crop", row2: "Kale", row3: "Kale"},
-                            {row1: "Yield", row2: "10", row3: "10"},
-                            {row1: "Units", row2: "Bunches", row3: "Bunches"},
-                            
-                        ]
+                        harvestLog:[
+
+                        ],
+                        
 
                     }
                 });
