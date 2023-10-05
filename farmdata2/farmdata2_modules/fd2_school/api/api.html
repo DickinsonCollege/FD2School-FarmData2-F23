@@ -101,7 +101,21 @@
             },
             methods: {
                 generateReportButton: function (){
-                    if (this.harvestLogs.length==0) {
+                axios 
+                .get("/farm.json")
+                .then((response) => {
+                    // Block A:
+                    this.Farm = response.data.name,
+                    this.User = response.data.user.name 
+                    this.Language = response.data.languages.en.name
+                })
+                .catch((error) => {
+                    // Block B:
+                    console.log("Error Occurred")
+                    console.log(error)
+                })
+                // Block C:
+                if (this.harvestLogs.length==0) {
                     this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"});
                 } else if (this.harvestLogs.length==1) {
                     this.harvestLogs.push({date: "2020-05-01", area: "Orion-1", crop: "Carrot", yield: 12, units: "Bunches"});
@@ -109,9 +123,6 @@
                     this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "cucumber", yield: 9, units: "Bunches"});
                 } 
 
-                this.Farm = "Sample Farm",
-                this.User = "manager1",
-                this.Language = "English"
             },
                 deleteLog: function(Index) { 
                     this.harvestLogs.splice(Index, 1); } 
