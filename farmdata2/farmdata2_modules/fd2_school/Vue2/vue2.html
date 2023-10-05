@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+        <hr>
+        <body> 
+            <div id="report" v-cloak> 
+            <h1>{{(header!="") ? header : "Mock Harvest Report"}}</h1>
+            <p>
+                This page is a <i>mockup</i> of a simplified harvest report.
+                <ul>
+                    <li>
+                        <label for="report">Title:</label>
+                        <input type="text" v-model="header" />
+                    </li>
+
+                    <li><label for="start">Start:</label>
+                        <input type="date" id="startDate" min="2014-01-01" max="2022-01-01" v-model="start"/>
+                
+                    <label for="end">End:</label>
+                        <input type="date" id="endDate" min="2020-05-05" max="2022-01-01" v-model="end"/>
+                    </li>
+                    <li><label>Crop:</label>
+                        <select id="crop" v-model="crop">
+                            <option v-for="item in plants">{{item}}</option>
+                        </select>
+                    </li>
+                    <li><label for="area">Area:</label>
+                        <select id="area" name="fields">
+                            <option v-for="item in area">{{item}}</option>
+                        </select>
+                    </li>
+                </ul>
+                <input type="button" value="Generate Report"/>
+            </p>
+
+            <hr>
+
+        
+                <h1>{{(header!="") ? header : "Mock Harvest Report"}}</h1>  
+            
+            <p>
+                Detail:
+                <dd>
+                    <ul>
+                        <li><strong>Farm: </strong>Sample Farm</li>
+                        <li><strong>User: </strong>manager1</li>
+                        <li><strong>Language: </strong>English</li> <br>
+
+
+                        <li><strong>Start: </strong>{{start}}</li>
+                        <li><strong>End: </strong>{{end}}</li>
+                        <li><strong>Crop: </strong>{{crop}}</li>
+                    </ul>
+                </dd>
+            </p>
+        
+    
+            <table border="1">
+                <tr><td v-for="item in table">{{item.row1}}</td></tr>
+                <tr><td v-for="item in table">{{item.row2}}</td></tr>
+                <tr><td v-for="item in table">{{item.row3}}</td></tr>
+            </table>
+        </div>
+            <script src="https://unpkg.com/vue@2"></script>
+            <script>
+                var harvest_report = new Vue({
+                    el: "#report",
+            
+                    data: {
+                        header: "My Sample Harvest Report",
+                        start: "",
+                        end: "",
+                        crop: "",
+                        plants: [
+                            'Broccoli',
+                            'Kale',
+                            'Peas',
+                        ],
+                        area:[
+                            'All',
+                            'Chuau-1',
+                            'SQ7',
+                        ],
+                        table:[
+                            {row1: "Date", row2: "05/05/2020", row3: "05/08/2020"},
+                            {row1: "Area", row2: "SQ7", row3: "Chuau-1"},
+                            {row1: "Crop", row2: "Kale", row3: "Kale"},
+                            {row1: "Yield", row2: "10", row3: "10"},
+                            {row1: "Units", row2: "Bunches", row3: "Bunches"},
+                            
+                        ]
+
+                    }
+                });
+                Vue.config.devtools = true;
+         
+            </script>
+        
+    </body>
+    <hr>
+</html>
