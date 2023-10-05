@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
         <hr>
         <body> 
             <div id="report" v-cloak> 
@@ -29,7 +30,7 @@
                         </select>
                     </li>
                 </ul>
-                <button v-on:click="harvestLog.push({date:'05/01/2018', area:'Orion-3', crop:'Kale', yield:'12', units:'Bunches'})">Generate Report</button>
+                <button v-on:click="saveLog">Generate Report</button>
             </p>
 
             <hr>
@@ -99,6 +100,11 @@
                         ],
                         
 
+                    },
+                    methods:{
+                        saveLog: function(){
+                            this.harvestLog.push({date:'05/01/2018', area:'Orion-3', crop:'Kale', yield:'12', units:'Bunches'});
+                        }
                     }
                 });
                 Vue.config.devtools = true;
