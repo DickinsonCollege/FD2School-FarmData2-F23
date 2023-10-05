@@ -69,12 +69,24 @@
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
                 reportCrop: "Kale",
-                crops:["Kale","Broccoli","Peas"],
+                crops:[],
                 areas:["All","Chuau-1","SQ7"],
                 reportLogs:[],
                 farm:"",
                 user:"",
                 language:"",
+                idToCropMap: new Map(),
+            },
+            created() {
+	            console.log("HarvestReport Vue instance created!")
+                getIDToCropMap()
+                    .then((theMap) => {
+                        this.idToCropMap=theMap;
+                    })
+                    .catch((err) => {
+                        console.log("Error Occurred")
+                        console.log(error)
+                    })
             },
             methods: {
                 generateReport: function(){
@@ -90,10 +102,18 @@
                             console.log(error)
                         })
 
+                },
+            },
+            computed: {
+                cropNames(){
+                    this.crops=Array.from(this.idToCropMap.values())
                 }
-            }
+            },
+
+
 
         });
+
         Vue.config.devtools = true;
     </script>
 
