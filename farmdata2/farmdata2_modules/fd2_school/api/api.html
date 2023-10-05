@@ -92,9 +92,20 @@
         methods: {
             
             savehstLogs: function(){
-                this.farm = "Sample Farm",
-                this.user = "manager1",
-                this.language="English",
+                axios.get("/farm.json")
+                .then ((response) => {
+                    this.farm = response.data.name
+                    this.user = response.data.user.name
+                    this.language = response.data.languages.en.name
+
+
+                })
+                .catch((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+
+                })
+
                 this.hstLogs.push({row:this.hstLogs.length + 1,date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
             }
         }
