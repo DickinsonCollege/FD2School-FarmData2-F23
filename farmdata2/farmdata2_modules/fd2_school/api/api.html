@@ -15,7 +15,7 @@
 
         <label for="crop">Crop:</label>
         <select id="crop" name="crop" v-model="reportCrop">
-            <option v-for="crop in reportCrops"> {{crop}} </option>
+            <option v-for="crop in cropNames"> {{crop}} </option>
         </select>
 
         <label for="field">Area:</label>
@@ -61,16 +61,22 @@
     <script>
         var report = new Vue({
             el: '#report',
+            created() {
+                getIDToCropMap()
+                .then((theMap) => {
+                    this.idToCropMap = theMap
+                })
+                .catch((err) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+                })  
+                console.log("HarvestReport Vue instance created!")
+            },
             data: {
                 reportTitle: 'My Sample Harvest Report',
                 reportStartDate: '2020-05-05',
                 reportEndDate: '2020-05-15',
                 reportCrop: 'Kale',
-                reportCrops: [
-                    'Broccoli',
-                    'Kale',
-                    'Peas'
-                ],
                 reportField: 'All',
                 reportFields: [
                     'All',
@@ -81,7 +87,13 @@
                 ],
                 farm: '',
                 user: '',
-                language: ''
+                language: '',
+                idToCropMap: new Map()
+            },
+            computed: {
+                cropNames() {
+                    return Array.from(this.idToCropMap.values());
+                }
             },
             methods: {
                 generateReport: function() {
