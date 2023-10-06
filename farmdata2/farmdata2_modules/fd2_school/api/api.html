@@ -14,7 +14,7 @@
     <br><br>
     <label for="rptCrop">Crop</label> 
     <select  v-model="rptCrop">
-        <option v-for="crop in crops">{{crop}}</option>
+        <option v-for="crop in cropNames">{{crop}}</option>
     </select>
 
     <label for="rptField">Area</label>
@@ -76,19 +76,37 @@
 <script>
     var Vue2 = new Vue({
         el:"#Vue2",
+        created(){
+            console.log("HarvestReport Vue instance created!")
+            getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap
+            })
+            .catch((err) => {
+                console.log("Error Occurred")
+                console.log(err)
+
+            })
+        },
         data: {
             rptTitle: "My Sample Harvest Report",
             rptStartDate: "2020-05-05",
             rptEndDate: "2020-05-15",
             rptCrop: "Kale",
-            crops: ["Kale","Broccoli", "Peas"],
             rptField: "All",
             fields: ["All", "Chuau-1", "SQ7"],
             hstLogs: [],
             farm: "",
             user: "",
             language: "",
+            idToCropMap: new Map(),
         },
+        computed:{
+            cropNames(){
+                return Array.from(this.idToCropMap.values())
+            }
+        }
+        ,
         methods: {
             
             savehstLogs: function(){
