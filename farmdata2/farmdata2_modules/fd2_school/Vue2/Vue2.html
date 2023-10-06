@@ -34,8 +34,11 @@
      </select>
      <br>
      <br>
-     <button type="generate">Generate Report</button>
-     
+       
+     <div>
+          <input v-model="newReport" type="text" placeholder="Generate a new report">
+          <button class="btn btn-primary" @click='harvestList.push({Date:"2-18-05-01", Area:"Orion-3", Crop:"Kale", Yield:"12", Units:"Bunches"})'>Generate Report</button>
+        </div>
      <hr>
 
      <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
@@ -58,17 +61,17 @@
                          <th>Yield</th>
                          <th>Units</th>
                     </tr>
-                    <tr v-for="cell in cells">
-                         <td>{{ cell.date }}</td>
-                         <td>{{ cell.area }}</td>
-                         <td>{{ cell.crop }}</td>
-                         <td>{{ cell.yield }}</td>
-                         <td>{{ cell.units }}</td>
+                    <tr v-for="cell in harvestList">
+                         <td>{{ cell.Date }}</td>
+                         <td>{{ cell.Area }}</td>
+                         <td>{{ cell.Crop }}</td>
+                         <td>{{ cell.Yield }}</td>
+                         <td>{{ cell.Units }}</td>
                     </tr>
                </table>
                 
           </div>   
-     </body>
+</body>
 </div>
  
 <script>
@@ -80,13 +83,13 @@
           endDate: "2020-05-15",
           crops: ["Kale", "Peas", "Broccoli"],
           areas: ["All", "Chuau-1", "SQ7"],
-          cells: [
-            {date: "2020-10-08", area: "Chuau-1", crop: "Broccoli", yield: 5, units: "Bunches"},
-            {date: "2020-11-08", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
-        ],
+          harvestList: [],
+          selectedCrop: "", // New data property for selected crop
+          selectedArea: "", // New data property for selected area
+          newReport: "",
        }
      })
      Vue.config.devtools = true;
-
 </script>
+
 </html>    
