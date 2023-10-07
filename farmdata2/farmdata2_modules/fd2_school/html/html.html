@@ -13,16 +13,12 @@
 <input type="datetime-local" id="end-date" name="end-date" value="2020-05-15" min="2020-05-05" max="2022-01-01" v-model="end"/>
 <br>
 <label for="crop">Crop:</label>
-<select id="crop" name="crop">
-    <option>Broccoli</option>
-    <option selected>Kale</option>
-    <option>Peas</option>
+<select id="crop" name="crop" v-model="crp">
+     <option v-for="crp in crops_avail">{{ crp }}</option>
 </select>
 <label for="field">Area:</label>
-<select id="field" name="field">
-    <option selected>All</option>
-    <option>Chuau-1</option>
-    <option>SQ7</option>
+<select id="field" name="field" v-model="field">
+    <option v-for="field in fields_avail">{{field}}</option>
 </select>
 <br>
 <br>
@@ -76,5 +72,17 @@
         title:'My Sample Harvest Report',
         start: '1999-01-01T01:01',
         end:'2001-01-01T01:01',
+        crops_avail: [
+            'Broccoli',
+            'Kale',
+            'Peas',
+        ],
+        fields_avail:[
+            'All',
+            'Chuau-1',
+            'SQ7'
+        ],
+        crp: "Kale",
+        field: 'All',
     }
 });</script>
