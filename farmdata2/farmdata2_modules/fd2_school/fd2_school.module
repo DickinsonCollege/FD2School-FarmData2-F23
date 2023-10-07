@@ -55,12 +55,35 @@ function fd2_school_menu() {
   // Define the name and URL for the default sub-tab that appears when the tab is opened.
   // Content for this default sub-tab is provided by the 'page arguments' above.
   $items['farm/fd2-school/info'] = array(
-    'title' => 'Info',
-    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'title' => 'Info', 
+    'page callback' => 'fd2_school_view', 
+    'page arguments' => array('info'),  
+    'access arguments' => array('view fd2 school'),
+    'type' => MENU_LOCAL_TASK,          
     'weight' => -100,
   );
 
   // Add items blocks for new sub-tabs here.
+
+
+  $items['farm/fd2-school/vue1'] = array(
+    'title' => 'Vue1', 
+    'page callback' => 'fd2_school_view', 
+    'page arguments' => array('vue1'), 
+    'access arguments' => array('view fd2 school'),
+    'type' => MENU_LOCAL_TASK, 
+    'weight' => 50,
+  );
+
+
+  $items['farm/fd2-school/html'] = array(
+    'title' => 'HTML', 
+    'page callback' => 'fd2_school_view', 
+    'page arguments' => array('html'), 
+    'access arguments' => array('view fd2 school'),
+    'type' => MENU_LOCAL_TASK, 
+    'weight' => -50,
+  );
 
   return $items;
 };

@@ -1,6 +1,9 @@
+<!DOCTYPE html>
+<html>
 <h1>Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
-<p>Title: <input type="text" id="comment" name="comment" size="21" value="My Sample Harvest Report" /></p><br />
+<div id="sample-harvest-report">
+<p>Title: <input type="text" v-model="header"></p><br />
 
 <label for="start">Start:</label>
 <input type="date" id="start" name="start date" value="2018-05-01" min="2014-01-01" max="2022-01-01" />
@@ -23,41 +26,54 @@
 
 <button type="button">Generate Report</button>
 <hr />
-<h1>My Sample Harvest Report</h1>
+<h1>{{ header }}</h1>
+</div>
+<script src="https://unpkg.com/vue@2"></script>
+<script>
+  var sHR = new Vue({
+    el: '#sample-harvest-report',
+    data: {
+      header: 'My Sample Harvest Report'
+    }
+  });
+</script>
 <p>Details: </p>
 <ul>
-    <li><strong>Farm:</strong>Sample Farm</li>
-    <li><strong>User:</strong>manager1</li>
-    <li><strong>Language:</strong>English</li><br />
-    <li><strong>Start:</strong>05/01/2018</li>
-    <li><strong>End:</strong>05/15/2018</li>
-    <li><strong>Crop:</strong>Kale</li>
+  <li><strong>Farm:</strong>Sample Farm</li>
+  <li><strong>User:</strong>manager1</li>
+  <li><strong>Language:</strong>English</li><br />
+  <li><strong>Start:</strong>05/01/2018</li>
+  <li><strong>End:</strong>05/15/2018</li>
+  <li><strong>Crop:</strong>Kale</li>
 </ul> <br />
 
 <table border="1">
-    <tr>
-      <th>Date</th>
-      <th>Area</th>
-      <th>Crop</th>
-      <th>Yield</th>
-      <th>Units</th>
-    </tr>
-    <tr>
-      <td>05/02/2018</td>
-      <td>Chuau-1</td>
-      <td>Kale</td>
-      <td>10</td>
-      <td>Bunches</td>
-    </tr>
-    <tr>
-      <td>05/05/2018</td>
-      <td>SQ7</td>
-      <td>Kale</td>
-      <td>7</td>
-      <td>Bunches</td>
-    </tr>
-  </table>
-  
+  <tr>
+    <th>Date</th>
+    <th>Area</th>
+    <th>Crop</th>
+    <th>Yield</th>
+    <th>Units</th>
+  </tr>
+  <tr>
+    <td>05/02/2018</td>
+    <td>Chuau-1</td>
+    <td>Kale</td>
+    <td>10</td>
+    <td>Bunches</td>
+  </tr>
+  <tr>
+    <td>05/05/2018</td>
+    <td>SQ7</td>
+    <td>Kale</td>
+    <td>7</td>
+    <td>Bunches</td>
+  </tr>
+</table>
+</html>
+
+
+
 
 
 
