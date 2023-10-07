@@ -6,12 +6,12 @@
 <p>Title: <input type="text" v-model="header"></p><br />
 
 <label for="start">Start:</label>
-<input type="date" id="start" name="start date" value="2018-05-01" min="2014-01-01" max="2022-01-01" />
+<input type="date" id="start" name="start date" v-model="start" min="2014-01-01" max="2022-01-01" />
 <label for="end">End:</label>
-<input type="date" id="start" name="end date" value="2018-05-01" min="2014-01-01" max="2022-01-01" /><br />
+<input type="date" id="start" name="end date" v-model="end" min="2014-01-01" max="2022-01-01" /><br />
 <br />
 <label for="crop choice">Crop:</label>
-<select name="crops" id="crop choices">
+<select name="crops" id="crop choices" v-model="choice">
   <option value="kale" selected>Kale</option>
   <option value="broccoli">Broccoli</option>
   <option value="peas">Peas</option>
@@ -27,24 +27,14 @@
 <button type="button">Generate Report</button>
 <hr />
 <h1>{{ header }}</h1>
-</div>
-<script src="https://unpkg.com/vue@2"></script>
-<script>
-  var sHR = new Vue({
-    el: '#sample-harvest-report',
-    data: {
-      header: 'My Sample Harvest Report'
-    }
-  });
-</script>
 <p>Details: </p>
 <ul>
   <li><strong>Farm:</strong>Sample Farm</li>
   <li><strong>User:</strong>manager1</li>
   <li><strong>Language:</strong>English</li><br />
-  <li><strong>Start:</strong>05/01/2018</li>
-  <li><strong>End:</strong>05/15/2018</li>
-  <li><strong>Crop:</strong>Kale</li>
+  <li><strong>Start:</strong>{{ start }}</li>
+  <li><strong>End:</strong>{{ end }}</li>
+  <li><strong>Crop:</strong>{{ choice }}</li>
 </ul> <br />
 
 <table border="1">
@@ -70,6 +60,19 @@
     <td>Bunches</td>
   </tr>
 </table>
+</div>
+<script src="https://unpkg.com/vue@2"></script>
+<script>
+  var sHR = new Vue({
+    el: '#sample-harvest-report',
+    data: {
+      header: 'My Sample Harvest Report',
+      start: '05/01/2018',
+      end: '05/01/2018',
+      choice: 'Kale'
+    }
+  });
+</script>
 </html>
 
 
