@@ -68,6 +68,14 @@ function fd2_school_menu() {
     'access arguments' => array('view fd2 example'),
     'weight' => 125,
   );
+    $items['farm/fd2-school/vue1'] = array(
+    'title' => 'vue1',
+    'type' => MENU_LOCAL_TASK,
+    'page callback' => 'fd2_school_view',
+    'page arguments' => array('vue1'),
+    'access arguments' => array('view fd2 example'),
+    'weight' => 125,
+  );
   // Add items blocks for new sub-tabs here.
 
   return $items;
