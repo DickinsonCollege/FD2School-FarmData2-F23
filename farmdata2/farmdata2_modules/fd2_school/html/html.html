@@ -8,9 +8,9 @@
 <input type="text" id="title" name="title" v-model="title"/>
 <br>
 <label for="start-date">Start:</label>
-<input type="datetime-local" id="start-date" name="start-date"  value="2020-05-05" min="2014-01-01" max="2022-01-01" />
+<input type="datetime-local" id="start-date" name="start-date"  value="2020-05-05" min="2014-01-01" max="2022-01-01" v-model="start"/>
 <label for="end-date">End:</label>
-<input type="datetime-local" id="end-date" name="end-date" value="2020-05-15" min="2020-05-05" max="2022-01-01"/>
+<input type="datetime-local" id="end-date" name="end-date" value="2020-05-15" min="2020-05-05" max="2022-01-01" v-model="end"/>
 <br>
 <label for="crop">Crop:</label>
 <select id="crop" name="crop">
@@ -30,15 +30,15 @@
 <hr>
 <hr>
 
-<h1>{{title}}</h1>
+<h1>{{title ? title : "My Report" }}</h1>
 <p>Details:</p>
 <ul>
     <li><strong>Farm</strong>:Sample Farm</li>
     <li><strong>User</strong>:manager1</li>
     <li><strong>Language</strong>:English</li>
     <br>
-    <li><strong>Start</strong>:05/01/2018</li>
-    <li><strong>End</strong>:05/15/2018</li>
+    <li><strong>Start</strong>:{{start}}</li>
+    <li><strong>End</strong>:{{end}}</li>
     <li><strong>Crop</strong>:Kale</li>
 </ul>
 
@@ -73,6 +73,8 @@
 <script> var abcd = new Vue({
     el: '#harvest-report', 
     data: {
-        title:'My Sample Harvest Report'
+        title:'My Sample Harvest Report',
+        start: '1999-01-01T01:01',
+        end:'2001-01-01T01:01',
     }
 });</script>
