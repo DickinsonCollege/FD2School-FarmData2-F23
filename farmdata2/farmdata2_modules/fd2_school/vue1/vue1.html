@@ -16,7 +16,7 @@
   <option value="broccoli">Broccoli</option>
   <option value="peas">Peas</option>
 </select>
-<label for="field choice">Area:</label>
+<label for="field choice">Area:</label>  
 <select name="field" id="field choices">
   <option value="all" selected>All</option>
   <option value="chuau-1">Chuau-1</option>
@@ -26,7 +26,7 @@
 
 <button type="button">Generate Report</button>
 <hr />
-<h1>{{ header }}</h1>
+<h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
 <p>Details: </p>
 <ul>
   <li><strong>Farm:</strong>Sample Farm</li>
