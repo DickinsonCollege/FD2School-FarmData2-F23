@@ -95,6 +95,7 @@
           user:"",
           language:"",
           idToCropMap: new Map(),
+          allHarvestLogs: [],
         },
         computed: {
           cropNames: function() {
@@ -106,6 +107,22 @@
             this.farm = "Sample Farm";
             this.user = "manager1";
             this.language = "English";
+
+            let startTimestamp = dayjs(this.startDate).unix();
+            let endTimestamp = dayjs(this.endDate).unix();
+            console.log("Start Timestamp:", startTimestamp);
+            console.log("End Timestamp:", endTimestamp);
+            let requestString = `/log.json?type=farm_harvest&timestamp[ge]=${startTimestamp}&timestamp[le]=${endTimestamp}`;
+            console.log("Requested Timestamp:", requestString);
+
+            getAllPages(requestString)
+                .then ((logs) => {
+                    this.allHarvestLogs = logs;
+                })
+                .catch((error) => {
+                    console.error("Error occurred while fetching harvest logs:", error);
+                });
+
 
             this.harvestLogs.push({
               date: "2018-05-01",
