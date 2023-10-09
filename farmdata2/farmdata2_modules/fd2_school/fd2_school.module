@@ -91,11 +91,21 @@ function fd2_school_menu() {
     );
   
   //API sub-tab
-  $items['farm/fd2-school/API2'] = array(
+  $items['farm/fd2-school/API'] = array(
       'title' => 'API',
       'type' => MENU_LOCAL_TASK,
       'page callback' => 'fd2_school_view',
       'page arguments' => array('API'),
+      'access arguments' => array ('view fd2 school'),
+      'weight' => 100,
+    );
+
+    //API 2 sub-tab
+  $items['farm/fd2-school/API2'] = array(
+      'title' => 'API2',
+      'type' => MENU_LOCAL_TASK,
+      'page callback' => 'fd2_school_view',
+      'page arguments' => array('API2'),
       'access arguments' => array ('view fd2 school'),
       'weight' => 100,
     );
