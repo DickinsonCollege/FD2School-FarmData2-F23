@@ -42,11 +42,11 @@
                 Detail:
                 <dd>
                     <ul>
-                        <li><strong>Farm: </strong>Sample Farm</li>
-                        <li><strong>User: </strong>manager1</li>
-                        <li><strong>Language: </strong>English</li> <br>
-
-
+                        <li v-model="farm"><strong>Farm: </strong>{{farm}}</li>
+                        <li v-model="user"><strong>User: </strong>{{user}}</li>
+                        <li v-model="language"><strong>Language: </strong>{{language}}</li> <br>
+                    </ul>
+                    <ul>
                         <li><strong>Start: </strong>{{start}}</li>
                         <li><strong>End: </strong>{{end}}</li>
                         <li><strong>Crop: </strong>{{crop}}</li>
@@ -84,6 +84,9 @@
                     el: "#report",
             
                     data: {
+                        farm: "",
+                        user: "",
+                        language: "",
                         state: 'default',
                         header: "My Sample Harvest Report",
                         start: "05/05/2020",
@@ -102,12 +105,17 @@
                         harvestLog:[
 
                         ],
+
+                       
                         
 
                     },
                     methods:{
                         saveLog: function(){
                             this.harvestLog.push({date:'05/01/2018', area:'Orion-3', crop:'Kale', yield:'12', units:'Bunches'});
+                            this.farm = 'Sample Farm';
+                            this.user = 'Manager 1';
+                            this.language = 'English';
                             
                         },
                         changeState: function(newState){
