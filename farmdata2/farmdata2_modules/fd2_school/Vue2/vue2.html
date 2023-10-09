@@ -14,10 +14,10 @@
                     </li>
 
                     <li><label for="start">Start:</label>
-                        <input type="date" id="startDate" min="2014-01-01" max="2022-01-01" v-model="start"/>
+                        <input type="date" id="startDate" :min="start" :max="end" v-model="start"/>
                 
                     <label for="end">End:</label>
-                        <input type="date" id="endDate" min="2020-05-05" max="2022-01-01" v-model="end"/>
+                        <input type="date" id="endDate" :min="start" :max="end" v-model="end"/>
                     </li>
                     <li><label>Crop:</label>
                         <select id="crop" v-model="crop">
@@ -86,8 +86,8 @@
                     data: {
                         state: 'default',
                         header: "My Sample Harvest Report",
-                        start: "",
-                        end: "",
+                        start: "05/05/2020",
+                        end: "05/15/2020",
                         crop: "",
                         plants: [
                             'Broccoli',
