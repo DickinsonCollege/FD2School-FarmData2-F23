@@ -76,6 +76,16 @@ function fd2_school_menu() {
   );
 
 
+  $items['farm/fd2-school/vue2'] = array(
+    'title' => 'Vue2', 
+    'page callback' => 'fd2_school_view', 
+    'page arguments' => array('vue2'), 
+    'access arguments' => array('view fd2 school'),
+    'type' => MENU_LOCAL_TASK, 
+    'weight' => 100,
+  );
+
+
   $items['farm/fd2-school/html'] = array(
     'title' => 'HTML', 
     'page callback' => 'fd2_school_view', 
