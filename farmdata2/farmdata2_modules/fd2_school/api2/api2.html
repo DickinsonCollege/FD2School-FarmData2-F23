@@ -95,7 +95,10 @@
                 ],
                 newLog: {},
                 harvestLogs: [
-                ]
+                ],
+                allPages: [
+
+                ],
             },
             computed: {
                 cropNames () {
@@ -104,7 +107,7 @@
             },
             methods: {
                 genReport: function() {
-                    axios.get('/farm.json')  // this line sends the request.
+                    axios.get('/farm.json')
                     .then((response) => {
                         this.Farm = response.data.name;
                         this.User = response.data.user.name;
@@ -114,6 +117,22 @@
                         console.log("Error occurred");
                         console.log(error);
                     })
+                    
+                    let startTimestamp = dayjs(this.startDate).unix();
+                    let endTimestamp = dayjs(this.endDate).unix();
+                    console.log(startTimestamp);
+                    console.log(endTimestamp);
+                    console.log("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp + "&timestamp[le]=" + endTimestamp);
+                    
+                    getAllPages('/log.json?type=farm_harvest&timestamp[ge]=' + startTimestamp + '&timestamp[le]=' + endTimestamp, this.allPages)
+                    .then(() => {
+
+                    })
+                    .catch((err) => {
+                        console.log("Error occurred");
+                        console.log(error);
+                    })
+                    
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
                     this.harvestLogs.push({date:"2018-05-02", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
