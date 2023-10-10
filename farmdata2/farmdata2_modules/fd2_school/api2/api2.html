@@ -81,6 +81,7 @@
                 language: "",
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
+                result: [],
             },
             computed: {
                 cropNames() {
@@ -98,6 +99,20 @@
                             this.user = response.data.user.name;
                             this.language = response.data.languages.en.name;
                          })
+                         .catch((error) => {
+                            console.log("Error Occurred");
+                            console.log(error);
+                         })
+
+                    let timestampStart = dayjs(this.reportStartDate).unix();
+                    let timestampEnd = dayjs(this.reportEndDate).unix();
+                    let request = "/log.json?type=farm_harvest&timestamp[ge]=" + timestampStart + "&timestamp[le]=" + timestampEnd;
+                    console.log(timestampStart);
+                    console.log(timestampEnd);
+                    console.log(request);
+
+                    getAllPages(request, this.result)
+                         .then(() => {})
                          .catch((error) => {
                             console.log("Error Occurred");
                             console.log(error);
