@@ -54,7 +54,7 @@
                 <th>Units</th>
                 <th>Delete</th>
             </tr>
-            <tr v-for="(log,index) in harvestReportRows">
+            <tr v-for="(log,index) in harvestReportRows" v-if="log.crop === reportCrop">
                 <td>{{ index + 1}}</td>
                 <td>{{ log.date }}</td>
                 <td>{{ log.area }}</td>
