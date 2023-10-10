@@ -85,7 +85,7 @@
                 Language: '',
                 startDate: '2020-05-01',
                 endDate: '2020-05-15',
-                crop: 'Kale',
+                crop: '',
                 idToCropMap: new Map(),
                 area: 'All',
                 areas: [
@@ -106,15 +106,17 @@
                 },
                 harvestReportRows() {
                 let tableRows = []
-                    for(let log of this.allHarvestLogs) {
-                        let tableRow = {
-                            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
-                            area: log.area[0].name,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid)
+                    for(let log of this.allHarvestLogs) { 
+                        if(this.idToCropMap.get(log.data.crop_tid) === this.crop) {   
+                            let tableRow = {
+                                date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                                area: log.area[0].name,
+                                yield: log.quantity[0].value,
+                                units: log.quantity[0].unit.name,
+                                crop: this.idToCropMap.get(log.data.crop_tid)
+                            }
+                            tableRows.push(tableRow)
                         }
-                        tableRows.push(tableRow)
                     }
                     return tableRows
                 },
