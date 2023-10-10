@@ -76,6 +76,7 @@
                 user:"",
                 language:"",
                 idToCropMap: new Map(),
+                datedLogs:[],
             },
             created() {
 	            console.log("HarvestReport Vue instance created!")
@@ -101,7 +102,21 @@
                             console.log("Error Occurred")
                             console.log(error)
                         })
+                    let timestampStart = dayjs(this.reportStartDate).unix();
+                    let timestampEnd = dayjs(this.reportEndDate).unix();
+                    console.log(timestampStart)
+                    console.log(timestampEnd)
+                    datedRequest= "/log.json?type=farm_harvest&timestamp[ge]="+timestampStart+"&timestamp[le]="+timestampEnd
+                    console.log(datedRequest)
+                    getAllPages(datedRequest, this.datedLogs)
+                        .then(() => {
 
+                            
+                        })
+                        .catch((error) => {
+                            console.log("Error Occurred")
+                            console.log(error)
+                        })
                 },
             },
             computed: {
