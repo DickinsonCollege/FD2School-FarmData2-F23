@@ -60,9 +60,20 @@
         <th>Date</th>
         <th>Area</th>
         <th>Crop</th>
-        <th>Field</th>
+        <th>Yield</th>
         <th>Units</th>
       </tr>
+      <thead>
+        <tbody>
+            <tr v-for="row in harvestReportRows">
+                <td>{{ row.date }}</td>
+                <td>{{ row.area }}</td>
+                <td>{{ row.crop }}</td>
+                <td>{{ row.yield }}</td>
+                <td>{{ row.units }}</td>
+              </tr>
+        </tbody>
+      </thead>
     </table>
     </div>
    
@@ -101,6 +112,27 @@
           cropNames: function() {
             return Array.from(this.idToCropMap.values());
           },
+          
+            harvestReportRows() {
+                let tableRows = [];
+                for (let log of this.allHarvestLogs) {
+                    let area=log.area[0];
+                    let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
+                    
+                    if(harvestQuantity){
+                        let tableRow = {
+                            date: dayjs(log.timestamp * 1000).format("YYYY-MM-DD"), // Convert timestamp to a human-friendly date
+                            area: log.name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: harvestQuantity.value,
+                            units: harvestQuantity.units,
+                        };
+                        tableRows.push(tableRow);
+                    }
+                }
+
+                return tableRows;
+            },
         },
         methods: {
           generateReport: function () {
@@ -118,32 +150,30 @@
             getAllPages(requestString)
                 .then ((logs) => {
                     this.allHarvestLogs = logs;
+                    axios.get("/farm.json")
+                        .then((response) => {
+                            this.farm=response.data.name;
+                            this.user=response.data.user.name;
+                            this.language = response.data.user.language;
+                            console.log(this.farm, this.user, this.language);
+                        })
+                        .catch((error) => {
+                            console.log("Error Occurred");
+                            console.log(error);
+                        });
                 })
                 .catch((error) => {
                     console.error("Error occurred while fetching harvest logs:", error);
                 });
-
-
             this.harvestLogs.push({
               date: "2018-05-01",
               area: "Orion-3",
               crop: "Kale",
               yield: "12",
               units: "Bunches",
-            });
-
-            axios.get("/farm.json") 
-                .then((response) => {
-                    this.farm = response.data.name;
-                    this.farm = response.data.user.name;
-                    this.language = response.data.user.language;
-                })
-                .catch((error) => {
-                    console.log("Error Occurred");
-                    console.log(error);
-                })
+            }); 
           },
-        },
+        }          
       });
       Vue.config.devtools = true;
     </script>
