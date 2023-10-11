@@ -42,7 +42,7 @@
 
     <br>
     <label for="end">End date:</label>
-    <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="rEndDate" />
+    <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="rEndDate"/>
     <br>
     <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
     
@@ -93,8 +93,12 @@
           minStartDate: "2014-01-01",
           maxStartDate: "2022-01-01",
           rEndDate:"2020-05-15",
-          minEndDate:"05-05-2020",
-          maxEndDate:"01-01-2022",
+          minEndDate:"2020-05-05",
+          maxEndDate:"2022-01-01",
+          rStartTimestamp:"",
+          rEndTimestamp:"",
+          APIAllPageData:[
+          ],
 
           idToCropMap: new Map(),
           
@@ -135,7 +139,7 @@
         computed: {
             cropNames(){
                 return Array.from(this.idToCropMap.values());
-            }
+            },
         },
 
         methods: {
@@ -150,12 +154,28 @@
                 console.log("Error Occurred")
                 console.log(error)
               })
-                
+
+
+              let rStartTimestamp = dayjs(this.rStartDate).unix();
+              let rEndTimestamp = dayjs(this.rEndDate).unix();
+              console.log(rStartTimestamp);
+              console.log(rEndTimestamp);
+              console.log("/log.json?type=farm_harvest&timestamp[ge]=" + rStartTimestamp 
+                                  + "&timestamp[le]=" + rEndTimestamp);
+
               this.tableData.push({index: this.rowNum,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
               this.rowNum=this.rowNum+1;
               
-            },
-                
+              getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + rStartTimestamp + "&timestamp[le]=" + rEndTimestamp)
+              .then((res) => {
+                this.APIAllPageData=res
+              })
+              .catch((err) => {
+                console.log("Error Occurred")
+                console.log(err)
+              })
+
+            },  
       } 
   });
   Vue.config.devtools = true;
