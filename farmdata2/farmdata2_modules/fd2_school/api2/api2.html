@@ -70,7 +70,7 @@
         <th>Yield</th> 
         <th>Units</th> 
       </tr> 
-      <tr v-for="(t,index) in harvestReportRows"> 
+      <tr v-for="t in harvestReportRows"> 
         <td>{{ index+1 }}</td> 
         <td>{{ t.date }}</td> 
         <td>{{ t.area }}</td> 
@@ -143,14 +143,17 @@
             harvestReportRows() {
 	            let tableRows = []
 	            for(let log of this.APIAllPageData) {
-                let tableRow = {
-			          date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
-                area: log.area[0].name,
-                yield: log.quantity[0].value,
-                units: log.quantity[0].unit.name,
-                crop: this.idToCropMap.get(log.data.crop_tid)
+                if(this.idToCropMap.get(log.data.crop_tid) === this.selectedCrop){
+                  let tableRow = {
+			            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                  area: log.area[0].name,
+                  yield: log.quantity[0].value,
+                  units: log.quantity[0].unit.name,
+                  crop: this.idToCropMap.get(log.data.crop_tid)
+                }
+                tableRows.push(tableRow)
 		            }
-		            tableRows.push(tableRow)
+		            
 	            }
 	            return tableRows
             }
@@ -174,13 +177,8 @@
 
               let rStartTimestamp = dayjs(this.rStartDate).unix();
               let rEndTimestamp = dayjs(this.rEndDate).unix();
-              console.log(rStartTimestamp);
-              console.log(rEndTimestamp);
-              console.log("/log.json?type=farm_harvest&timestamp[ge]=" + rStartTimestamp 
-                                  + "&timestamp[le]=" + rEndTimestamp);
 
-              this.tableData.push({index: this.rowNum,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
-              this.rowNum=this.rowNum+1;
+              this.tableData.push({index: 0,date:"", area: "", crop: "",yield:"",units: ""}),     
               
               getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + rStartTimestamp + "&timestamp[le]=" + rEndTimestamp)
               .then((res) => {
