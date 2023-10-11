@@ -70,8 +70,8 @@
         <th>Yield</th> 
         <th>Units</th> 
       </tr> 
-      <tr v-for="(t,index) in tableData"> 
-        <td>{{ t.index }}</td> 
+      <tr v-for="(t,index) in harvestReportRows"> 
+        <td>{{ index+1 }}</td> 
         <td>{{ t.date }}</td> 
         <td>{{ t.area }}</td> 
         <td>{{ t.crop }}</td> 
@@ -99,6 +99,7 @@
           rEndTimestamp:"",
           APIAllPageData:[
           ],
+          index:0,
 
           idToCropMap: new Map(),
           
@@ -116,8 +117,6 @@
           language: "",
 
           newData:'',
-
-          rowNum: 1,
 
           tableData: [
             
@@ -140,6 +139,23 @@
             cropNames(){
                 return Array.from(this.idToCropMap.values());
             },
+
+            harvestReportRows() {
+	            let tableRows = []
+	            for(let log of this.APIAllPageData) {
+                let tableRow = {
+			          date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                area: log.area[0].name,
+                yield: log.quantity[0].value,
+                units: log.quantity[0].unit.name,
+                crop: this.idToCropMap.get(log.data.crop_tid)
+		            }
+		            tableRows.push(tableRow)
+	            }
+	            return tableRows
+            }
+
+            
         },
 
         methods: {
