@@ -120,14 +120,17 @@
                     let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
                     
                     if(harvestQuantity){
+                        let cropName = this.idToCropMap.get(log.data.crop_tid);
+                        if(cropName == this.selectedCrop){
                         let tableRow = {
                             date: dayjs(log.timestamp * 1000).format("YYYY-MM-DD"), // Convert timestamp to a human-friendly date
                             area: log.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            crop: cropName,
                             yield: harvestQuantity.value,
                             units: harvestQuantity.units,
                         };
                         tableRows.push(tableRow);
+                        }
                     }
                 }
 
