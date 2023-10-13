@@ -100,6 +100,7 @@
             user: "",
             language: "",
             idToCropMap: new Map(),
+            allPages: [],
         },
         computed:{
             cropNames(){
@@ -115,8 +116,6 @@
                     this.farm = response.data.name
                     this.user = response.data.user.name
                     this.language = response.data.languages.en.name
-
-
                 })
                 .catch((error) => {
                     console.log("Error Occurred")
@@ -125,6 +124,22 @@
                 })
 
                 this.hstLogs.push({row:this.hstLogs.length + 1,date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
+                let start = dayjs(this.rptStartDate).unix();
+                let end = dayjs(this.rptEndDate).unix();
+                request = "/log.json?type=farm_harvest&timestamp[ge]="+ start+"&timestamp[le]="+end;
+                console.log(start)
+                console.log(end)
+                console.log(request)
+
+                getAllPages(request)
+                .then((res) => {
+                    this.allPages = res
+                })
+                .catch((err) => {
+                    console.log("Error :(")
+                    console.log(err)
+                })
+ 
             }
         }
     })
