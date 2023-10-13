@@ -52,7 +52,7 @@
                 <th>Yield</th>
                 <th>Units</th>
             </tr>
-            <tr v-for="log in hstLogs">
+            <tr v-for="log in harvestReportRows">
                 <td>{{log.row}}</td>
                 <td>{{log.date}}</td>
                 <td>{{log.area}}</td>
@@ -100,11 +100,29 @@
             user: "",
             language: "",
             idToCropMap: new Map(),
-            allPages: [],
+            allLogs: [],
         },
         computed:{
             cropNames(){
                 return Array.from(this.idToCropMap.values())
+            },
+
+            harvestReportRows(){
+                let tableRows = []
+                i = 0;
+                for (let log of this.allLogs){
+                    let tableRow = {
+                        row: i += 1,
+                        date: dayjs.unix(log.timestamp).format("MM/DD/YYYY"),
+                        crop: this.idToCropMap.get(log.data.crop_tid),
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value ,
+                        units: log.quantity[0].unit.name,
+                    }
+                    tableRows.push(tableRow)
+                }
+                return tableRows
+
             }
         }
         ,
@@ -118,26 +136,18 @@
                     this.language = response.data.languages.en.name
                 })
                 .catch((error) => {
-                    console.log("Error Occurred")
-                    console.log(error)
-
                 })
 
-                this.hstLogs.push({row:this.hstLogs.length + 1,date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"});
                 let start = dayjs(this.rptStartDate).unix();
                 let end = dayjs(this.rptEndDate).unix();
                 request = "/log.json?type=farm_harvest&timestamp[ge]="+ start+"&timestamp[le]="+end;
-                console.log(start)
-                console.log(end)
-                console.log(request)
+
 
                 getAllPages(request)
                 .then((res) => {
-                    this.allPages = res
+                    this.allLogs = res
                 })
                 .catch((err) => {
-                    console.log("Error :(")
-                    console.log(err)
                 })
  
             }
