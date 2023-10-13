@@ -42,7 +42,7 @@
      </ul>
     </p>
 
-    <div v-if="hstLogs.length > 0">      
+    <div v-if="harvestReportRows.length > 0">      
         <table border="1">
             <tr>
                 <th>Row</th>
@@ -92,7 +92,7 @@
             rptTitle: "My Sample Harvest Report",
             rptStartDate: "2020-05-05",
             rptEndDate: "2020-05-15",
-            rptCrop: "Kale",
+            rptCrop: "",
             rptField: "All",
             fields: ["All", "Chuau-1", "SQ7"],
             hstLogs: [],
@@ -119,7 +119,10 @@
                         yield: log.quantity[0].value ,
                         units: log.quantity[0].unit.name,
                     }
-                    tableRows.push(tableRow)
+
+                    if(this.rptCrop == (tableRow.crop)){
+                        tableRows.push(tableRow)
+                    }
                 }
                 return tableRows
 
@@ -156,6 +159,5 @@
 
     Vue.config.devtools = true;
 </script>
-
 
 
