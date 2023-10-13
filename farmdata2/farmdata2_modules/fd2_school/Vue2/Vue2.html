@@ -37,7 +37,7 @@
        
      <div>
           <input v-model="newReport" type="text" placeholder="Generate a new report">
-          <button class="btn btn-primary" @click='harvestList.push({Date:"2-18-05-01", Area:"Orion-3", Crop:"Kale", Yield:"12", Units:"Bunches"})'>Generate Report</button>
+          <button class="btn btn-primary" @click='generateReport'>Generate Report</button>
         </div>
      <hr>
 
@@ -87,8 +87,28 @@
           selectedCrop: "", // New data property for selected crop
           selectedArea: "", // New data property for selected area
           newReport: "",
-       }
-     })
+       },
+       methods: {
+          generateReport: function(){
+            if(this.newReport == ''){
+              this.newReport = '';
+            }
+            else{
+              this.harvestList.push({
+               Date: "2018-05-01",
+               Area: "Orion-3",
+               Crop: "Kale",
+               Yield: "12",
+               Units: "Bunches"
+              });
+            }
+
+            this.newReport = '';
+            
+          }
+        }
+
+       })
      Vue.config.devtools = true;
 </script>
 
