@@ -58,7 +58,7 @@
                 <li><strong>End:</strong>{{reportEndDate}}</li>
                 <li><strong>Crop:</strong>{{reportCrop}}</li>
             </ul>
-            <table v-if="harvestLogs.length>0" border=1>
+            <table v-if="harvestReportRows.length>0" border=1>
                 <thead>
                      <th>Row</th>
                      <th>Date</th>
@@ -69,7 +69,7 @@
                      <th>Delete</th>
                  </thead>
                  <tbody>
-                    <tr v-for="(t,index) in harvestLogs">
+                    <tr v-for="(t,index) in harvestReportRows">
                          <td>{{index+1}}</td>
                          <td>{{t.date}}</td>
                          <td>{{t.area}}</td>
@@ -97,7 +97,7 @@
                     reportEndDate: '2020-05-15',
                     reportCrop: 'Kale',
                     idToCropMap: new Map(),
-                    result: [],
+                    harvestLogsRequest: [],
                     areas: [
                         "All",
                         "Chuau-1",
@@ -110,14 +110,14 @@
                 },
                 created() {
                     console.log("HarvestReport Vue instance created!")
-                    getCropToIDMap()
+                    getIdToCropMap()
                     .then((theMap)=>{
                         this.idToCropMap=theMap;
                     })
                     .catch((error)=>{
                         console.log("Error");
                     })
-                    getAllPages("/log.json?type=farm_harvest", arr=[])
+                    getAllPages("/log.json?type=farm_harvest", this.harvestLogsRequest)
                     .then(()=>{
 
                     })
@@ -127,8 +127,26 @@
                 },
                 computed: {
                     cropNamesArray (){
-                        return Array.from(this.idToCropMap.keys())
+                        return Array.from(this.idToCropMap.values())
                     },
+
+                    harvestReportRows() { 
+                        let tableRows = [] 
+                        for(let log of this.harvestLogsRequest) { 
+                            // if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop){
+                                let tableRow = { 
+                                    date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
+                                    area: log.area[0].name,
+                                    yield: log.quantity[0].value,
+                                    units: log.quantity[0].unit.name,
+                                    crop: this.idToCropMap.get(log.data.crop_tid),
+                                } 
+                            // }
+                            tableRows.push(tableRow) 
+                        }    
+                        return tableRows 
+                    },
+
                 },
 
                 methods: { 
@@ -139,8 +157,8 @@
                         console.log(timestampEnd)
                         request = "/log.json?type=farm_harvest&timestamp[ge]="+timestampStart+"&timestamp[le]="+timestampEnd
                         console.log(request)
-                        getAllPages(request,this.result)
-                        
+                        getAllPages(request,this.harvestLogsRequest)
+
                         axios 
                         .get("/farm.json")
                         .then((response) => {
