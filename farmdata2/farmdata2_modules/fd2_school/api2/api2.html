@@ -37,7 +37,6 @@
             <select id="crop" v-model="reportCrop">
                 <option v-for="crop in cropNamesArray">{{crop}}</option>
             </select>
-
             <label for="area">Area:</label>
             <select id="area" name="area">
                 <option v-for="area in areas">{{area}}</option>
@@ -45,9 +44,7 @@
             </p>
             <input type="button" value="Generate Report" @click="generateReportButton"/>
             <hr>
-
             <h1>{{reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
-
             <p>Details:</p>
             <ul>
                 <li><strong>Farm:</strong>{{Farm}}</li>
@@ -84,7 +81,6 @@
              </table>
              <p v-else>No matching records</p>
         </div>
-
         <script>
             var vueDate = new Vue({
                 el:'#report-title',
@@ -110,7 +106,7 @@
                 },
                 created() {
                     console.log("HarvestReport Vue instance created!")
-                    getIdToCropMap()
+                    getCropToIDMap()
                     .then((theMap)=>{
                         this.idToCropMap=theMap;
                     })
@@ -127,26 +123,21 @@
                 },
                 computed: {
                     cropNamesArray (){
-                        return Array.from(this.idToCropMap.values())
+                        return Array.from(this.idToCropMap.keys())
                     },
 
                     harvestReportRows() { 
-                        let tableRows = [] 
-                        for(let log of this.harvestLogsRequest) { 
-                            // if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop){
-                                let tableRow = { 
-                                    date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
-                                    area: log.area[0].name,
-                                    yield: log.quantity[0].value,
-                                    units: log.quantity[0].unit.name,
-                                    crop: this.idToCropMap.get(log.data.crop_tid),
-                                } 
-                            // }
-                            tableRows.push(tableRow) 
-                        }    
-                        return tableRows 
-                    },
-
+                    let tableRows = [] 
+                    for(let log of this.harvestLogsRequest) { 
+                        let tableRow = { 
+                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
+                            area: log.area[0].name,
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name,
+                            crop: this.idToCropMap.get(log.data.crop_tid)
+                        } 
+                        tableRows.push(tableRow) }    
+                    return tableRows } ,
                 },
 
                 methods: { 
@@ -172,7 +163,6 @@
                             console.log("Error Occurred")
                             console.log(error)
                         })
-
                         // Block C:
                         if (this.harvestLogs.length==0) { 
                             this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"}); 
