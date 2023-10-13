@@ -97,11 +97,7 @@
                     reportEndDate: '2020-05-15',
                     reportCrop: 'Kale',
                     idToCropMap: new Map(),
-                    // crops: [
-                    //     "Broccoli",
-                    //     "Kale",
-                    //     "Peas",
-                    // ],
+                    result: [],
                     areas: [
                         "All",
                         "Chuau-1",
@@ -121,6 +117,13 @@
                     .catch((error)=>{
                         console.log("Error");
                     })
+                    getAllPages("/log.json?type=farm_harvest", arr=[])
+                    .then(()=>{
+
+                    })
+                    .catch((err)=>{
+
+                    })
                 },
                 computed: {
                     cropNamesArray (){
@@ -130,6 +133,14 @@
 
                 methods: { 
                     generateReportButton: function (){
+                        let timestampStart = dayjs(this.reportStartDate).unix() 
+                        let timestampEnd = dayjs(this.reportEndDate).unix()
+                        console.log(timestampStart)
+                        console.log(timestampEnd)
+                        request = "/log.json?type=farm_harvest&timestamp[ge]="+timestampStart+"&timestamp[le]="+timestampEnd
+                        console.log(request)
+                        getAllPages(request,this.result)
+                        
                         axios 
                         .get("/farm.json")
                         .then((response) => {
