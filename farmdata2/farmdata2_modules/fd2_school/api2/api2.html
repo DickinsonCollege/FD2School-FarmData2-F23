@@ -86,7 +86,7 @@
                 reportTitle: "My Sample Harvest Report",
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
-                reportCrop: "Kale",
+                reportCrop: "KALE",
                 // crops: [
                 //   "Broccoli",
                 //   "Kale",
@@ -105,7 +105,7 @@
             created() { 
 
                 console.log("HarvestReport Vue instance created!")
-                getCropToIDMap()
+                getIDToCropMap()
                 .then((theMap)=>{
                     this.idToCropMap=theMap;
                 })
@@ -131,26 +131,27 @@
                 },
             computed: {
                 cropNamesArray (){
-                    return Array.from(this.idToCropMap.keys())
+                    return Array.from(this.idToCropMap.values())
                 },
 
                 areaNamesArray (){
                     return Array.from(this.idToAreaMap.keys())
                 },
 
-                harvestReportRows() { 
-                    let tableRows = [] 
+                harvestReportRows() {  
+                    let tableRows = []
                     for(let log of this.harvestLogsRequest) { 
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop) {
                         let tableRow = { 
                             date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                             area: log.area[0].name,
                             yield: log.quantity[0].value,
                             units: log.quantity[0].unit.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid)
-                        } 
-                        tableRows.push(tableRow) }    
-                    return tableRows } ,
-            },
+                            crop: this.idToCropMap.get(log.data.crop_tid),     
+                         } 
+                        tableRows.push(tableRow)} }
+                        return tableRows}},
+
             methods: {
                 generateReportButton: function (){
                     let timestampStart = dayjs(this.reportStartDate).unix() 
