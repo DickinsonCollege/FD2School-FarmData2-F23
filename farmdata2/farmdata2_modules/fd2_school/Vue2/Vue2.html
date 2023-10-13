@@ -36,8 +36,8 @@
      <br> 
      <div>
           <input v-model="newReport" type="text" placeholder="Generate a new report">
-          <button class="btn btn-primary" @click='generateReport'>Generate Report</button>
-        </div>
+          <button class="btn btn-primary" @click='clickReport'>Generate Report</button>
+     </div>
      <hr>
 
      <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
@@ -54,7 +54,7 @@
           <div>
                
                <table border = "1">
-                    <tr>
+                    <tr v-if="harvestList.length > 0">
                          <th>Row</th>
                          <th>Date</th>
                          <th>Area</th>
@@ -63,7 +63,7 @@
                          <th>Units</th>
                     </tr>
                     <tr v-for="(cell,index) in harvestList">
-                         <td>{{cell.index}}</td>
+                         <td>{{index + 1}}</td>
                          <td>{{ cell.Date }}</td>
                          <td>{{ cell.Area }}</td>
                          <td>{{ cell.Crop }}</td>
@@ -92,6 +92,11 @@
           newReport: "",
        },
        methods: {
+          clickReport: function(){
+               this.harvestList.push({Date:"2018-05-01",
+               Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
+               });
+          },
           generateReport: function(){
             if(this.newReport == ''){
               this.newReport = '';
@@ -104,12 +109,10 @@
                Crop: "Kale",
                Yield: "12",
                Units: "Bunches"
-              }),
-              this.rowNum=this.rowNum+1;
-              this.newReport = '';
+              });
             }
 
-            
+            this.newReport = '';
             
           }
         }
