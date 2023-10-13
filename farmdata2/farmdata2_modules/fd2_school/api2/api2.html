@@ -74,7 +74,8 @@
                 reportTitle: "My Sample Harvest Report",
                 reportStartDate: "05/05/2020",
                 reportEndDate: "05/15/2020",
-                reportCrop: "Kale",
+                reportCrop: "All",
+                reportArea: "All",
                 harvestLogs: [],
                 farm: "",
                 user: "",
@@ -85,10 +86,14 @@
             },
             computed: {
                 cropNames() {
-                    return Array.from(this.idToCropMap.values());
+                    let arr = Array.from(this.idToCropMap.values());
+                    arr.unshift("All");
+                    return arr;
                 },
                 areaNames() {
-                    return Array.from(this.idToAreaMap.values());
+                    let arr = Array.from(this.idToAreaMap.values());
+                    arr.unshift("All");
+                    return arr;
                 },
                 harvestReportRows() {
                     let tableRows = [];
