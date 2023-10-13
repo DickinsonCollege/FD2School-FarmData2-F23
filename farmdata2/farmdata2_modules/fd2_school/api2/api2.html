@@ -23,7 +23,7 @@
             <option v-for="crop in cropNames">{{ crop }}</option>
         </select>
         <label for="field">Area:</label>
-        <select id="field" name="field">
+        <select id="field" name="field" v-model="reportArea">
             <option v-for="area in areaNames">{{ area }}</option>
         </select>
         <br>
@@ -105,7 +105,10 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid),
                         }
-                        if (tableRow.crop === this.reportCrop) {
+                        if (tableRow.crop === this.reportCrop && tableRow.area === this.reportArea) {
+                            tableRows.push(tableRow);
+                        }
+                        else if (this.reportCrop === "All" && this.reportArea === "All") {
                             tableRows.push(tableRow);
                         }
                     }
