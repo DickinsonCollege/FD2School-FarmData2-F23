@@ -35,7 +35,7 @@
             <p>
             <label for="crop">Crop:</label>
             <select id="crop" v-model="reportCrop">
-                <option v-for="crop in crops">{{crop}}</option>
+                <option v-for="crop in cropNamesArray">{{crop}}</option>
             </select>
 
             <label for="area">Area:</label>
@@ -96,11 +96,12 @@
                     reportStartDate: '2020-05-05',
                     reportEndDate: '2020-05-15',
                     reportCrop: 'Kale',
-                    crops: [
-                        "Broccoli",
-                        "Kale",
-                        "Peas",
-                    ],
+                    idToCropMap: new Map(),
+                    // crops: [
+                    //     "Broccoli",
+                    //     "Kale",
+                    //     "Peas",
+                    // ],
                     areas: [
                         "All",
                         "Chuau-1",
@@ -111,6 +112,22 @@
                         {date: "2018-05-22", area:"SQ7", crop:"Peas", yield: 5, units: "Bunches"}],
                         harvestLogs: [],
                 },
+                created() {
+                    console.log("HarvestReport Vue instance created!")
+                    getCropToIDMap()
+                    .then((theMap)=>{
+                        this.idToCropMap=theMap;
+                    })
+                    .catch((error)=>{
+                        console.log("Error");
+                    })
+                },
+                computed: {
+                    cropNamesArray (){
+                        return Array.from(this.idToCropMap.keys())
+                    },
+                },
+
                 methods: { 
                     generateReportButton: function (){
                         axios 
