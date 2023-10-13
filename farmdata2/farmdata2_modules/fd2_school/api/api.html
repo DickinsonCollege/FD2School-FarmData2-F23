@@ -50,9 +50,9 @@
 
             <p>Details:</p>
             <ul>
-                <li><strong>Farm:</strong>Sample Farm</li>
-                <li><strong>User:</strong>manager1</li>
-                <li><strong>Language:</strong>English</li>
+                <li><strong>Farm:</strong>{{Farm}}</li>
+                <li><strong>User:</strong>{{User}}</li>
+                <li><strong>Language:</strong>{{Language}}</li>
                 <br>
                 <li><strong>Start:</strong>{{reportStartDate}}</li>
                 <li><strong>End:</strong>{{reportEndDate}}</li>
@@ -89,6 +89,9 @@
             var vueDate = new Vue({
                 el:'#report-title',
                 data: {
+                    Farm:"",
+                    User:"",
+                    Language:"",
                     reportTitle: 'My Sample Harvest Report',
                     reportStartDate: '2020-05-05',
                     reportEndDate: '2020-05-15',
