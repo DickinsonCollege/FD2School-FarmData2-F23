@@ -22,7 +22,7 @@
     </select>
     <br>
     <br>
-    <button type="button">Generate Report</button>
+    <button type="button" @click='harvests.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield: 12, units: "Bunches"})'>Generate Report</button>
     <hr>
     <hr>
     
@@ -49,20 +49,13 @@
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr>
-            <td>05/02/2018</td>
-            <td>Chuau-1</td>
-            <td>Kale</td>
-            <td>10</td>
-            <td>Bunches</td>
-        </tr>
-        <tr>
-            <td>05/05/2018</td>
-            <td>SQ7</td>
-            <td>Kale</td>
-            <td>7</td>
-            <td>Bunches</td>
-        </tr>
+        <tr v-for="harvest in harvests"> 
+            <td>{{ harvest.date }}</td> 
+            <td>{{ harvest.area }}</td> 
+            <td>{{ harvest.crop }}</td> 
+            <td>{{ harvest.yield }}</td> 
+            <td>{{ harvest.units }}</td> 
+          </tr>
     </table>
     
     </div>
@@ -84,6 +77,7 @@
             ],
             crp: "Kale",
             field: 'All',
+            harvests: [],
         }
     });
     Vue.config.devtools=true;
