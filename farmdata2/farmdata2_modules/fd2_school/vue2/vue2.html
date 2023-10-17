@@ -23,8 +23,7 @@
     </select>
     <br>
     <br>
-    <button type="button"
-        @click='generate_report'>Generate
+    <button type="button" @click='generate_report'>Generate
         Report</button>
     <hr>
     <hr>
@@ -84,7 +83,17 @@
         },
         methods: {
             generate_report: function () {
-                this.harvests.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield: 12, units: "Bunches"});
+                switch (this.harvests.length % 3) {
+                    case 0:
+                        this.harvests.push({ date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" });
+                        break;
+                    case 1:
+                        this.harvests.push({ date: "2019-05-01", area: "Orion-4", crop: "Peas", yield: 12, units: "Bunches" });
+                        break;
+                    case 2:
+                        this.harvests.push({ date: "2020-05-01", area: "Orion-5", crop: "Flesh", yield: 12, units: "Bunches" });
+                        break;
+                }
             }
 
         }
