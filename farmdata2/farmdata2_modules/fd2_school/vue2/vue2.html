@@ -45,13 +45,15 @@
     <br>
     <table border="1px solid black">
         <tr>
+            <th>Row</th>
             <th>Date</th>
             <th>Area</th>
             <th>Crop</th>
             <th>Yield</th>
             <th>Units</th>
         </tr>
-        <tr v-for="harvest in harvests">
+        <tr v-for="(harvest, i) in harvests">
+            <td>{{ i + 1 }}</td>
             <td>{{ harvest.date }}</td>
             <td>{{ harvest.area }}</td>
             <td>{{ harvest.crop }}</td>
