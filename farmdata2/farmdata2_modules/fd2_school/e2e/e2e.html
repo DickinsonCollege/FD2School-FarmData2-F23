@@ -55,7 +55,7 @@
         </br>
         </br>
     
-        <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
+        <button data-cy="gen-report" class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
         
     
     <hr/>
@@ -96,7 +96,8 @@
                 </style>
             </head>
             
-                <h3 v-if="harvestReportRows.length === 0"> Nothing to display </h3>
+                <h3 data-cy="report-title-after" v-if="harvestReportRows.length === 0"> Nothing to display </h3>
+                <h3 data-cy="report-title-before" v-if="harvestReportRows.length != 0"> Report </h3>
                 <table v-if="harvestReportRows.length != 0"> 
 
                     <tr>
@@ -107,7 +108,7 @@
                         <th>Yield</th>
                         <th>Units</th>
                     </tr>
-                    <tr v-for="(t,index) in harvestReportRows">
+                    <tr v-for="(t) in harvestReportRows">
                         <td>{{ index+1 }}</td>
                         <td>{{ t.date }}</td>
                         <td>{{ t.area }}</td>
@@ -159,7 +160,7 @@
                             Language:'',
                             sStartTimestamp:"",
                             eEndTimestamp:"",
-                            APIAllPageData:[
+                            pageData:[
                             ],
                             index:0,
                         
@@ -172,7 +173,7 @@
                         
                             harvestReportRows() {
                                 let tableRows = []
-                                    for(let log of this.APIAllPageData) {
+                                    for(let log of this.pageData) {
                                         if(this.idToCropMap.get(log.data.crop_tid) === this.crop) {   
                                             let tableRow = {
                                                 date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
@@ -205,14 +206,12 @@
 
                                 let sStartTimestamp = dayjs(this.sStartDate).unix();
                                 let eEndTimestamp = dayjs(this.eEndDate).unix();  
-                                this.rowNumber=this.rowNumber+1;
-                                this.Farm = 'Sample Farm';
-                                this.User = 'manager1';
-                                this.Language = 'English';
+                                
+                                this.table.push({index: 0,date:"", area: "", crop: "",yield:"",units: ""}), 
 
                                 getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + sStartTimestamp + "&timestamp[le]=" + eEndTimestamp)
                                 .then((res) => {
-                                    this.APIAllPageData=res
+                                    this.pageData=res
                                 })
                                 .catch((err) => {
                                     console.log("Error Occurred")
