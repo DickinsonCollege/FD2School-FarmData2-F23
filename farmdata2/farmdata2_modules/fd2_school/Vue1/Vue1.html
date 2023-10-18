@@ -67,13 +67,7 @@
                     </tr>
                </table>
                 
-          </div> 
-          <div>
-               <label for="names">Name:</label>
-               <input v-model="newName" type="text" placeholder="Add a name"
-               @keyup.enter="names.push(newName)">
-               <button class="btn btn-primary" @click="names.push(newName)">Add Name</button>
-          </div>    
+          </div>   
      </body>
 </div>
  
@@ -90,8 +84,6 @@
             {date: "2020-10-08", area: "Chuau-1", crop: "Broccoli", yield: 5, units: "Bunches"},
             {date: "2020-11-08", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
         ],
-          names: ["Aleksandar", "Marko"],
-          newName: ""
        }
      })
      Vue.config.devtools = true;
