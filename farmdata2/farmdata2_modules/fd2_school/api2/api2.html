@@ -96,14 +96,16 @@
                 harvestReportRows() {
                     let tableRows = []
                     for(let log of this.getAllPagesResult) {
-                        let tableRow = {
-                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
-                            area: log.area[0].name,
-                            crop: this.idToCropMap.get(log.data.crop_tid),
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name
+                        if(this.idToCropMap.get(log.data.crop_tid) == this.reportCrop) {
+                            let tableRow = {
+                                date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                                area: log.area[0].name,
+                                crop: this.idToCropMap.get(log.data.crop_tid),
+                                yield: log.quantity[0].value,
+                                units: log.quantity[0].unit.name
+                            }
+                            tableRows.push(tableRow)
                         }
-                        tableRows.push(tableRow)
                     }
                     return tableRows
                 }
@@ -115,7 +117,7 @@
                         this.farm = response.data.name
                         this.user = response.data.user.name
                         this.language = response.data.languages.en.name
-                        //^^ its pretty much hardcoded to english as of right now
+                        //^^ its pretty much hardcoded to english as of right
                         reportStartDateTimeStamp = dayjs(this.reportStartDate).unix()
                         reportEndDateTimeStamp = dayjs(this.reportEndDate).unix()
                         requestEndpointWithQueryParams = '/log.json?type=farm_harvest&timestamp[ge]=' + reportStartDateTimeStamp + '&timestamp[le]=' + reportEndDateTimeStamp 
