@@ -88,7 +88,8 @@
                 farm: '',
                 user: '',
                 language: '',
-                idToCropMap: new Map()
+                idToCropMap: new Map(),
+                getAllPagesResult: []
             },
             computed: {
                 cropNames() {
@@ -102,6 +103,17 @@
                         this.farm = response.data.name
                         this.user = response.data.user.name
                         this.language = response.data.languages.en.name
+
+                        reportStartDateTimeStamp = dayjs(this.reportStartDate).unix()
+                        reportEndDateTimeStamp = dayjs(this.reportEndDate).unix()
+                        requestEndpointWithQueryParams = '/log.json?type=farm_harvest&timestamp[ge]=' + reportStartDateTimeStamp + '&timestamp[le]=' + reportEndDateTimeStamp 
+                        getAllPages(requestEndpointWithQueryParams)
+                        .then((res) => {
+                            this.getAllPagesResult = res
+                        })
+                        .catch((err) => {
+                           console.log(err)
+                        })
                     })
                     .catch((error) => {
                         console.log("Error Occurred")
