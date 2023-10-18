@@ -160,7 +160,7 @@
                             Language:'',
                             sStartTimestamp:"",
                             eEndTimestamp:"",
-                            APIAllPageData:[
+                            pageData:[
                             ],
                             index:0,
                         
@@ -173,7 +173,7 @@
                         
                             harvestReportRows() {
                                 let tableRows = []
-                                    for(let log of this.APIAllPageData) {
+                                    for(let log of this.pageData) {
                                         if(this.idToCropMap.get(log.data.crop_tid) === this.crop) {   
                                             let tableRow = {
                                                 date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
@@ -212,15 +212,15 @@
                                 this.Language = 'English';
 
                                 getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + sStartTimestamp + "&timestamp[le]=" + eEndTimestamp)
-                                .then((res) => {
-                                    this.APIAllPageData=res
-                                })
-                                .catch((err) => {
-                                    console.log("Error Occurred")
-                                    console.log(err)
-                                })
+                                    .then((res) => {
+                                        this.pageData=res
+                                    })
+                                    .catch((err) => {
+                                        console.log("Error Occurred")
+                                        console.log(err)
+                                    })
 
-                                }
+                                    }
 
                             }
                     
