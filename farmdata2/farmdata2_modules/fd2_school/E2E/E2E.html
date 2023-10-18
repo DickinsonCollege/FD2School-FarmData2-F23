@@ -9,7 +9,7 @@
         <label for="language">Language</label>
         <input type="text" id="language" v-model="language" placeholder="Enter language.">
       <label for="crops">Crop:</label>
-      <select name="crops" id="crops" v-model="selectedCrop">
+      <select name="crops" id="crops" v-model="selectedCrop" data-cy="crop-dropdown">
         <option v-for="crop in cropNames" :value="crop">{{ crop }}</option>
       </select>
       <label for="area">Area:</label>
@@ -22,7 +22,7 @@
       <table border=1>
         <thead>
           <tr>
-            <th>Date</th>
+            <th>Date</th>   
             <th>Area</th>
             <th>Crop</th>
             <th>Yield</th>
@@ -45,10 +45,10 @@
     <title>Title Field Example</title>
     <h1 data-cy="page-header">Harvest Report</h1>
     <p>This page is a <em>mockup</em> of a simplified harvest report</p>
-    <label for="start" data-cy="start-date-label">Start Date:</label>
-    <input type="date" id="start" name="start-date" v-model="startDate" min="2014-01-01" max="2022-01-01" />
-    <label for="end" data-cy="end-date-label">End Date:</label>
-    <input type="date" id="end" name="end-date" v-model="endDate" value="20202-05-15" min="2020-05-05" max="2022-01-01" /><br />
+    <label for="start">Start Date:</label>
+    <input type="text" id="start" data-cy="start-date-label" name="start-date" value= "05/05/2020" v-model="startDate" min="01/01/2014" max="01/01/2022"/>
+    <label for="end">End Date:</label>
+    <input type="text" id="end" data-cy="end-date-label" name="end-date" v-model="endDate" value="05/15/2020" min="05/05/2020" max="01/01/2022" /><br />
     <hr />
     <h1>My Sample Harvest:</h1>
     <p>Details:</p>
@@ -96,8 +96,8 @@
 
         data: {
           reportTitle: "",
-          startDate: "2020-05-05",
-          endDate: "2020-05-15",
+          startDate: "05/05/2020",
+          endDate: "05/15/2020",
           selectedCrop: "kale",
           crops: ["broccoli", "kale", "peas"],
           areas: ["all", "chuahu-1", "sq7"],
@@ -123,7 +123,7 @@
                         let cropName = this.idToCropMap.get(log.data.crop_tid);
                         if(cropName == this.selectedCrop){
                         let tableRow = {
-                            date: dayjs(log.timestamp * 1000).format("YYYY-MM-DD"), // Convert timestamp to a human-friendly date
+                            date: dayjs(log.timestamp * 1000).format("MM/DD/YYYY"), // Convert timestamp to a human-friendly date
                             area: log.name,
                             crop: cropName,
                             yield: harvestQuantity.value,
