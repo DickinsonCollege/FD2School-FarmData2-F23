@@ -45,12 +45,12 @@
         <label for="start">Start date:</label>
         
 
-        <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="sStartDate"/>  
+        <input data-cy="start-date" type="date" id="start" min="minStartDate" :max="minEndDate" v-model="sStartDate"/>  
     
         <label for="end">End date:</label>
         
         
-        <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="eEndDate" />
+        <input data-cy="end-date" type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="eEndDate" />
 
         </br>
         </br>
