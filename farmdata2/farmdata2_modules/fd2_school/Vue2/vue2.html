@@ -1,0 +1,164 @@
+<h1>
+    Harvest Report
+        </h1>
+    
+        <head>
+           <style>
+                [v-cloak]{
+                    display: none;
+                }
+                </style>      
+        </head>
+    
+        <body>
+    
+            <p>
+                This page is a <i>mockup</i> of a simplified harvest report.
+            </p>     
+        
+    <div id="HarvestHeader" v-cloak>
+                
+                <label for="comment">Title:</label>
+                <input type="text"  v-model="header" />
+                
+            </br>
+                
+    
+        </br>
+       
+        <label for="crop">Crop: </label>
+        <select id="crop" name="crop" v-model ="crop">
+            
+            <option v-for="crop in crops"> {{ crop }}</option>
+          </select>  
+          
+        
+    
+        <label for="field">Area: </label>
+        <select id="field" name="field" v-mdoel="area">
+        <option v-for="area in areas"> {{ area }}</option>
+            
+          </select> 
+        
+        </br>
+        </br>
+    
+        <label for="start">Start date:</label>
+        
+
+        <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="_StartDate"/>  
+    
+        <label for="end">End date:</label>
+        
+        
+        <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="_EndDate" />
+
+        </br>
+        </br>
+    
+        <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
+        
+    
+    <hr/>
+                <h1>{{ (header == '') ? 'Mock Harvest Report':header}}</h1>
+            
+            
+            <script src="https://unpkg.com/vue@2"></script>
+        
+            
+        
+        
+            
+            <p>
+                Details:
+                </p>
+                <ul>
+                    <li><strong>Farm: </strong>Sample Farm</li>
+                    <li><strong>User: </strong>manager1</li>
+                    <li><strong>Language: </strong>English</li>
+                </br>
+                    <li><strong>Start: </strong>{{ start }}</li>
+                    <li><strong>End: </strong>{{ end }}</li>
+                    <li><strong>Crop: </strong>{{ crop }}</li>
+    
+                    </ul>
+                  
+            
+    
+            <head>
+                <style>
+                    th {
+                        font-weight: bold;
+                    }
+                    
+                    table, th, td {
+                        border: 1px solid black;
+                    }
+                </style>
+            </head>
+            
+                <h3 v-if="table.length === 0"> Nothing to display </h3>
+                <table v-if="table.length != 0"> 
+
+                    <tr>
+                        <th>Row</th>
+                        <th>Date</th>
+                        <th>Area</th>
+                        <th>Crop</th>
+                        <th>Yield</th>
+                        <th>Units</th>
+                    </tr>
+                    <tr v-for="(t,index) in table">
+                        <td>{{ t.index }}</td>
+                        <td>{{ t.date }}</td>
+                        <td>{{ t.area }}</td>
+                        <td>{{ t.crop }}</td>
+                        <td>{{ t.yield }}</td>
+                        <td>{{ t.units }}</td>
+                    </tr>
+                    
+                   
+                </table>
+    </div>
+                <script>
+                    var Vues = new Vue({
+                        el: '#HarvestHeader',
+                        data: {
+                            header: 'My Sample Harvest Report',
+                            start: '2020-05-01',
+                            end: '2020-05-15',
+                            crop: 'Kale',
+                            crops: [
+                                'Kale',
+                                'Broccoli',
+                                'Peas'
+                            ],
+                            area: 'All',
+                            areas: [
+                                'All',
+                                'SQ7',
+                                'Chuau-1'
+                            ],
+                            newData: '',
+                            rowNumber:1,
+                            table: [
+                                
+                            ],
+                            _StartDate: "2020-05-05",
+                            minStartDate: "2014-01-01",
+                            maxStartDate: "2022-01-01",
+                            _EndDate:"2020-05-15",
+                            minEndDate:"05-05-2020",
+                            maxEndDate:"01-01-2022",
+                        },
+                        methods: {
+                            saveReport: function() {
+                                this.table.push({index: this.rowNumber,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
+                                this.rowNumber=this.rowNumber+1;
+                            },
+                    }
+                    });
+                    Vue.config.devtools = true;
+                </script>
+    
+            </body>
