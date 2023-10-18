@@ -72,9 +72,9 @@
                 Details:
                 </p>
                 <ul>
-                    <li><strong>Farm: </strong>{{ Farm }}</li>
-                    <li><strong>User: </strong>{{ User}}</li>
-                    <li><strong>Language: </strong>{{ Language }}</li>
+                    <li data-cy="farm-name"><strong>Farm: </strong>{{ Farm }}</li>
+                    <li data-cy="user-name" ><strong>User: </strong>{{ User}}</li>
+                    <li> <strong>Language: </strong> <span data-cy="language-check"> {{ Language }} </span> </li>
                 </br>
                     <li><strong>Start: </strong>{{ start }}</li>
                     <li><strong>End: </strong>{{ end }}</li>
@@ -195,9 +195,9 @@
                                 .then ((response) => {
                                     console.log("Got Response")
                                     console.log(response)
-                                    this.farm=response.data.name;
-                                    this.user=response.data.user.name;
-                                    this.language=response.data.languages.en.name;
+                                    this.Farm=response.data.name;
+                                    this.User=response.data.user.name;
+                                    this.Language=response.data.languages.en.name;
                                 })
                                 .catch ((error) => {
                                     console.log("Error Occurred")

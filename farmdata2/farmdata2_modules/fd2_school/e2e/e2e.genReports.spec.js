@@ -13,4 +13,15 @@ describe("Test the harvest report default values", () => {
         
     })
 
+    it("Check farm name, user name, and language after click", () => {
+        cy.get("[data-cy=gen-report]").click()
+        cy.get("[data-cy=farm-name]")
+            .should('have.text', "Farm: Sample Farm")
+        cy.get("[data-cy=user-name]")
+            .should('contain.text', "manager1")
+        cy.get("[data-cy=language-check]")
+            .should('have.text', " English ")
+        
+    })
+
 })
