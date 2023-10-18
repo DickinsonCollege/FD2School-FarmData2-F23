@@ -97,8 +97,8 @@
                 </style>
             </head>
             
-                <h3 v-if="table.length === 0"> Nothing to display </h3>
-                <table v-if="table.length != 0"> 
+                <h3 v-if="harvestReportRows.length === 0"> Nothing to display </h3>
+                <table v-if="harvestReportRows.length != 0"> 
 
                     <tr>
                         <th>Row</th>
@@ -108,8 +108,8 @@
                         <th>Yield</th>
                         <th>Units</th>
                     </tr>
-                    <tr v-for="(t,index) in table">
-                        <td>{{ t.index }}</td>
+                    <tr v-for="(t,index) in harvestReportRows">
+                        <td>{{ index+1 }}</td>
                         <td>{{ t.date }}</td>
                         <td>{{ t.area }}</td>
                         <td>{{ t.crop }}</td>
@@ -146,7 +146,6 @@
                                 'Chuau-1'
                             ],
                             newData: '',
-                            rowNumber:1,
                             table: [
                                 
                             ],
@@ -163,13 +162,30 @@
                             eEndTimestamp:"",
                             APIAllPageData:[
                             ],
+                            index:0,
                         
                         
                         },
                         computed: {
                             cropNames () {
                                 return Array.from(this.idToCropMap.values());
-                            }
+                            },
+                        
+                            harvestReportRows() {
+                                let tableRows = []
+                                    for(let log of this.APIAllPageData) {
+                                        let tableRow = {
+                                            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                                            area: log.area[0].name,
+                                            yield: log.quantity[0].value,
+                                            units: log.quantity[0].unit.name,
+                                            crop: this.idToCropMap.get(log.data.crop_tid)
+                                        }
+                                        tableRows.push(tableRow)
+                                    }
+                                    return tableRows
+                },
+                                    
                         },
                         methods: {
                             saveReport: function() {
@@ -187,13 +203,7 @@
                                 })
 
                                 let sStartTimestamp = dayjs(this.sStartDate).unix();
-                                let eEndTimestamp = dayjs(this.eEndDate).unix();
-                                console.log(sStartTimestamp);
-                                console.log(eEndTimestamp);
-                                console.log("/log.json?type=farm_harvest&timestamp[ge]=" + sStartTimestamp 
-                                                    + "&timestamp[le]=" + eEndTimestamp);
-
-                                this.table.push({index: this.rowNumber,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
+                                let eEndTimestamp = dayjs(this.eEndDate).unix();  
                                 this.rowNumber=this.rowNumber+1;
                                 this.Farm = 'Sample Farm';
                                 this.User = 'manager1';
