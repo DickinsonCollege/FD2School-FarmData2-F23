@@ -42,7 +42,7 @@
         </ul>
 
         <table border=1>
-            <tr v-if="reportHarvestLogs.length != 0">
+            <tr v-if="harvestReportRows.length != 0">
                 <th>Row</th>
                 <th>Date</th>
                 <th>Area</th>
@@ -51,9 +51,9 @@
                 <th>Units</th>
             </tr>
 
-            <p v-if="reportHarvestLogs.length == 0"> no harvest logs to be displayed </p>
+            <p v-if="harvestReportRows.length == 0"> no harvest logs to be displayed </p>
 
-            <tr v-for="(logs, index) in reportHarvestLogs"> <td>{{index + 1}}</td><td v-for="item in logs">{{item}}</td></tr>
+            <tr v-for="(logs, index) in harvestReportRows"> <td>{{index + 1}}</td><td v-for="item in logs">{{item}}</td></tr>
         </table>
               
     </div>
@@ -83,8 +83,6 @@
                     'Chuau-1',
                     'SQ7'
                 ],
-                reportHarvestLogs: [
-                ],
                 farm: '',
                 user: '',
                 language: '',
@@ -94,6 +92,20 @@
             computed: {
                 cropNames() {
                     return Array.from(this.idToCropMap.values());
+                },
+                harvestReportRows() {
+                    let tableRows = []
+                    for(let log of this.getAllPagesResult) {
+                        let tableRow = {
+                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                            area: log.area[0].name,
+                            crop: this.idToCropMap.get(log.data.crop_tid),
+                            yield: log.quantity[0].value,
+                            units: log.quantity[0].unit.name
+                        }
+                        tableRows.push(tableRow)
+                    }
+                    return tableRows
                 }
             },
             methods: {
@@ -103,7 +115,7 @@
                         this.farm = response.data.name
                         this.user = response.data.user.name
                         this.language = response.data.languages.en.name
-
+                        //^^ its pretty much hardcoded to english as of right now
                         reportStartDateTimeStamp = dayjs(this.reportStartDate).unix()
                         reportEndDateTimeStamp = dayjs(this.reportEndDate).unix()
                         requestEndpointWithQueryParams = '/log.json?type=farm_harvest&timestamp[ge]=' + reportStartDateTimeStamp + '&timestamp[le]=' + reportEndDateTimeStamp 
@@ -119,7 +131,6 @@
                         console.log("Error Occurred")
                         console.log(error)
                     })
-                    this.reportHarvestLogs.push({date:"2018-05-01", area:"Orion", crop:"Kale", yield: 7, units: "Bunches"})
               }
             }
         })
