@@ -154,11 +154,15 @@
                             minStartDate: "2014-01-01",
                             maxStartDate: "2022-01-01",
                             eEndDate:"2020-05-15",
-                            minEndDate:"05-05-2020",
-                            maxEndDate:"01-01-2022",
+                            minEndDate:"2020-05-05",
+                            maxEndDate:"2022-01-01",
                             Farm:'',
                             User:'',
                             Language:'',
+                            sStartTimestamp:"",
+                            eEndTimestamp:"",
+                            APIAllPageData:[
+                            ],
                         
                         
                         },
@@ -182,14 +186,32 @@
                                     console.log(error)
                                 })
 
+                                let sStartTimestamp = dayjs(this.sStartDate).unix();
+                                let eEndTimestamp = dayjs(this.eEndDate).unix();
+                                console.log(sStartTimestamp);
+                                console.log(eEndTimestamp);
+                                console.log("/log.json?type=farm_harvest&timestamp[ge]=" + sStartTimestamp 
+                                                    + "&timestamp[le]=" + eEndTimestamp);
+
                                 this.table.push({index: this.rowNumber,date:"2018-05-01", area: "Orion-3", crop: "Kale",yield:"12",units: "Bunches"}),     
                                 this.rowNumber=this.rowNumber+1;
                                 this.Farm = 'Sample Farm';
                                 this.User = 'manager1';
                                 this.Language = 'English';
 
-                            },
-                    }
+                                getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + sStartTimestamp + "&timestamp[le]=" + eEndTimestamp)
+                                .then((res) => {
+                                    this.APIAllPageData=res
+                                })
+                                .catch((err) => {
+                                    console.log("Error Occurred")
+                                    console.log(err)
+                                })
+
+                                },  
+
+                            }
+                    
                     });
                     Vue.config.devtools = true;
                 </script>
