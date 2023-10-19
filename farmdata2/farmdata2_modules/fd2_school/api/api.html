@@ -24,7 +24,7 @@
      <br>
      <label for="crops">Crop:</label>
         <select v-model="crops" id="crops" name="crops">
-            <option v-for="crops in crops">{{ crops }}</option>
+            <option v-for="crops in getCropNames">{{ crops }}</option>
         </select>
      <label for="area">Area:</label>
      <select v-model="areas" id ="area" name="area">
@@ -85,7 +85,7 @@
           maxStartDate: "2022-01-01",
           minEndDate: "2020-05-05",
           maxEndDate: "2022-01-01",
-          crops: ["Kale", "Peas", "Broccoli"],
+          idToCropMap: new Map(),
           areas: ["All", "Chuau-1", "SQ7"],
           rowNum: 1,
           harvestList: [],
@@ -97,6 +97,23 @@
           language: "",
           
        },
+       created() {
+	     getIDToCropMap()
+          .then((theMap) => {
+               this.idToCropMap=theMap
+          })
+
+          .catch((err) => {
+               console.log("error with IDtoCropMap")
+          })
+          },
+       
+       computed: {
+          getCropNames(){
+               return Array.from(this.idToCropMap.values());
+          }
+       },
+
        methods: {
           clickReport: function(){
                axios.get('/farm.json')
