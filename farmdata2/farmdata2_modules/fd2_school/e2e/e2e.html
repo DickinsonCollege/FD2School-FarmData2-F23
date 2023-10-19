@@ -44,21 +44,12 @@
     <label for="end">End date:</label>
     <input data-cy="end-date" type="date" id="end" :min="rStartDate" max="maxEndDate" v-model="rEndDate"/>
     <br>
-    <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
+    <button data-cy="report-button" class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
     
     <hr style="width:33%;margin-left:0">
     <div id="rHeader">
-    <h1>{{ (rHeader!="") ? rHeader:"Mock Harvest Report"}}</h1>
-    <p><FONT COLOR="GREY"> Details:</FONT></p>
-    <ul>
-      <li><b>Farm:</b> {{ farm }}</li>
-      <li><b>User:</b> {{ user }}</li>
-      <li><b>Language:</b> {{ language }}</li>
-<br>
-      <li><b>Start:</b> {{ rStartDate }}</li>
-      <li><b>End:</b> {{ rEndDate }}</li>
-      <li><b>Crop:</b> Kale</li>
-    </ul>
+    <h1 data-cy="report-title">{{ (rHeaderInput!="") ? rHeader:"Mock Harvest Report"}}</h1>
+
     </div>
     <h3 v-if="tableData.length === 0"> No records to display </h3>
     <table v-if="tableData.length != 0"> 
@@ -89,6 +80,7 @@
       el: '#pageInfo',
       data: {
           rHeader: "",
+          rHeaderInput: "",
           rStartDate: "2020-05-05",
           minStartDate: "2014-01-01",
           maxStartDate: "2022-01-01",
@@ -174,7 +166,7 @@
                 console.log(error)
               })
 
-
+              this.rHeaderInput = this.rHeader;
               let rStartTimestamp = dayjs(this.rStartDate).unix();
               let rEndTimestamp = dayjs(this.rEndDate).unix();
 
