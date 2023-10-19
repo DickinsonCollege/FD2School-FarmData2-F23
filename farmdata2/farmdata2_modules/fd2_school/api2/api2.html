@@ -91,7 +91,7 @@
                     reportTitle: 'My Sample Harvest Report',
                     reportStartDate: '2020-05-05',
                     reportEndDate: '2020-05-15',
-                    reportCrop: 'Kale',
+                    reportCrop: 'All',
                     idToCropMap: new Map(),
                     harvestLogsRequest: [],
                     areas: [
@@ -129,6 +129,7 @@
                     harvestReportRows() { 
                     let tableRows = [] 
                     for(let log of this.harvestLogsRequest) {
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop) {
                         let tableRow = { 
                             date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                             area: log.area[0].name,
@@ -136,8 +137,8 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid)
                         } 
-                        tableRows.push(tableRow) }    
-                    return tableRows } ,
+                        tableRows.push(tableRow) }}
+                    return tableRows }
                 },
 
                 methods: { 
