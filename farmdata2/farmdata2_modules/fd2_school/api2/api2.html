@@ -106,7 +106,7 @@
                 },
                 created() {
                     console.log("HarvestReport Vue instance created!")
-                    getCropToIDMap()
+                    getIDToCropMap()
                     .then((theMap)=>{
                         this.idToCropMap=theMap;
                     })
@@ -123,12 +123,12 @@
                 },
                 computed: {
                     cropNamesArray (){
-                        return Array.from(this.idToCropMap.keys())
+                        return Array.from(this.idToCropMap.values())
                     },
 
                     harvestReportRows() { 
                     let tableRows = [] 
-                    for(let log of this.harvestLogsRequest) { 
+                    for(let log of this.harvestLogsRequest) {
                         let tableRow = { 
                             date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                             area: log.area[0].name,
