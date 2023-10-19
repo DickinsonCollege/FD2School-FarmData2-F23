@@ -99,6 +99,16 @@
        },
        methods: {
           clickReport: function(){
+               axios.get('/farm.json')
+               .then((response) => {
+                    this.farm=response.data.name;
+                    this.user=response.data.user.name;
+                    this.language=response.data.languages.en.name;
+               })
+               .catch ((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+               })
                this.harvestList.push({Date:"2018-05-01",
                Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
                }),
