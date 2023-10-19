@@ -101,7 +101,11 @@
           clickReport: function(){
                this.harvestList.push({Date:"2018-05-01",
                Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
-               });
+               }),
+               this.farm="Sample Farm";
+               this.user="worker1";
+               this.language="english";
+
           },
           generateReport: function(){
             if(this.newReport == ''){
