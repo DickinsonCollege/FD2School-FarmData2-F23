@@ -41,9 +41,9 @@
      <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
      <p>Details:</p>
      <ul> 
-          <li><b>Farm</b>:Sample Farm</li>
-          <li><b>User</b>:manager1</li>
-          <li><b>Language</b>:English</li>
+          <li><b>Farm:</b>{{ farm }}</li>
+          <li><b>User:</b>{{ user }}</li>
+          <li><b>Language:</b>{{ language }}</li>
           <br>
           <li><b>Start:</b>{{startDate}}</li>
           <li><b>End:</b>{{endDate}}</li>
@@ -92,6 +92,10 @@
           selectedCrop: "", // New data property for selected crop
           selectedArea: "", // New data property for selected area
           newReport: "",
+          farm: "",
+          user: "",
+          language: "",
+          
        },
        methods: {
           clickReport: function(){
