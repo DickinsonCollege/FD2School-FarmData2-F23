@@ -37,12 +37,12 @@
     <label for="start">Start date:</label>
 
     <div id="startDate">
-    <input type="date" id="start" min="minStartDate" :max="minEndDate" v-model="rStartDate"/>        
+    <input data-cy="start-date" type="date" id="start" min="minStartDate" :max="rEndDate" v-model="rStartDate"/>        
     </div>
 
     <br>
     <label for="end">End date:</label>
-    <input type="date" id="end" :min="maxStartDate" max="maxEndDate" v-model="rEndDate"/>
+    <input data-cy="end-date" type="date" id="end" :min="rStartDate" max="maxEndDate" v-model="rEndDate"/>
     <br>
     <button class="btn btn-primary" @click="saveReport" type="submit">Generate Report</button>
     
