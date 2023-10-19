@@ -11,9 +11,9 @@
             <br>
             <p>
                 <label for="startDate">Start:</label>
-                <input type="date" id="startDate" name="startDate" min="2014-01-01" :max="endDate" v-model="startDate"/>
+                <input data-cy="start-date" type="date" id="startDate" name="startDate" min="2014-01-01" :max="endDate" v-model="startDate"/>
                 <label for="endDate">End:</label>
-                <input type="date" id="endDate" name="endDate" :min="startDate" max="2022-01-01" v-model="endDate"/>
+                <input data-cy="end-date" type="date" id="endDate" name="endDate" :min="startDate" max="2022-01-01" v-model="endDate"/>
             </p>
             <br>
             <p>
@@ -83,7 +83,7 @@
                 Farm: '',
                 User: '',
                 Language: '',
-                startDate: '2020-05-01',
+                startDate: '2020-05-05',
                 endDate: '2020-05-15',
                 crop: '',
                 idToCropMap: new Map(),
