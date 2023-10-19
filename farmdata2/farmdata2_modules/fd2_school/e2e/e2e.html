@@ -7,7 +7,7 @@
             <br>
             <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
             <label for=”reportTitle”>Title:</label>
-            <input type="text" id="reportTitle" value="My Sample Harvest Report" v-model="reportTitle"/>
+            <input type="text" id="reportTitle" value="My Sample Harvest Report" v-model="reportTitle" />
             <br>
             <br>
             <label for="start">Start:</label>
@@ -28,9 +28,9 @@
             </select>
             <br>
             <br>
-            <input type="button" value="Generate Report" v-on:click="generateReport"/>
+            <input type="button" value="Generate Report" data-cy="generate-button" v-on:click="generateReport"/>
             <hr>
-            <h1>{{reportTitle==""?"Mock Harvest Report":reportTitle}}</h1> 
+            <h1 data-cy="title">{{reportTitle==""?"Mock Harvest Report":reportTitle}}</h1> 
             <p>Details:</p>
             <ul>
                 <li><b>Farm:</b>{{farm}}</li>
@@ -65,7 +65,7 @@
         var report = new Vue({
             el:"#report",
             data: {
-                reportTitle: "My Sample Harvest Report",
+                reportTitle: "",
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
                 reportCrop: "Kale",
