@@ -85,7 +85,20 @@
             farm_user: "farm_user",
             farm_language: "farm_language",
             harvests: [],
+            crop_id_map: new Map(),
+            crop_names: new Array(),
         },
+        created() {
+            getIDToCropMap()
+            .then((m) => {
+                this.crop_id_map = m;
+                this.crop_names = Array.from(this.crop_id_map.values());
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        },
+
         methods: {
             generate_report: function () {
                 axios.get('/farm.json')  // this line sends the request.
