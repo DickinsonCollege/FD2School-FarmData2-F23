@@ -17,7 +17,7 @@
         <option v-for="area in areas" :value="area">{{ area }}</option>
       </select>
       <h1 v-cloak>Harvest Report</h1>
-      <button class="btn btn-primary" data-cy="generate-report-button" @click="generateReport">Generate Report</button>
+      <button class="btn btn-primary" data-cy="generate-button" @click="generateReport">Generate Report</button>
 
       <table border=1>
         <thead>

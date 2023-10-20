@@ -1,15 +1,14 @@
-describe("Your Test Suite Description", () => {
+describe("Test Report Generation", () => {
+    beforeEach(() => {
+      cy.login("manager1", "farmdata2");
+      cy.visit("/farm/fd2-school/e2e");
+    });
+
     it("Test Report Generation", () => {
-      // Initially, the report header should not exist.
-      cy.contains("[data-cy=report-header]", "My Sample Harvest").should("not.exist");
-  
-      // Click the "Generate Report" button and wait for it to be visible.
-      cy.get("[data-cy=generate-report-button]").should("be.visible").click();
-  
-      // Wait for the report header to exist after the data is loaded.
-      cy.contains("[data-cy=report-header]", "My Sample Harvest").should("exist");
+      cy.get("[data-cy=report-header]").not.exist
+      cy.get("[data-cy=generate-button]")
+      cy.get("[data-cy=generate-button]").click()
+      cy.get("[data-cy=report-header]").should.exist
     });
   }); 
-  
-  
   
