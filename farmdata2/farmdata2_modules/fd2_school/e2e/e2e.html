@@ -34,7 +34,7 @@
         <h1 data-cy="report-title" v-if="hasTitle">{{ reportTitle }}</h1>
 
         <p>Details:</p>
-        <ul>
+        <ul data-cy="details" v-if="hasDetails">
             <li data-cy="farm-name"><strong>Farm</strong>:{{ farm }}</li>
             <li data-cy="username"><strong>User</strong>:{{ user }}</li>
             <li><strong>Language</strong>:<span data-cy="language">{{ language }}</span></li>
@@ -84,6 +84,7 @@
                 idToAreaMap: new Map(),
                 result: [],
                 hasTitle: false,
+                hasDetails: false,
             },
             computed: {
                 cropNames() {
@@ -142,6 +143,8 @@
                          })
 
                     this.hasTitle = true;
+                    
+                    this.hasDetails = true;
                 },
                 deleteRow: function(rowIndex) {
                     this.harvestLogs.splice(rowIndex, 1);
