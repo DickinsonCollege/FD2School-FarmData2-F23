@@ -88,6 +88,14 @@
         },
         methods: {
             generate_report: function () {
+                axios.get('/farm.json')  // this line sends the request.
+                    .then((response) => {
+                        this.farm_name = response.data.name;
+                        this.farm_user = response.data.user.name;
+                        this.farm_language = response.data.languages.en.name;
+                    })
+                    .catch((error) => {
+                    });
                 switch (this.harvests.length % 3) {
                     case 0:
                         this.harvests.push({ date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" });
