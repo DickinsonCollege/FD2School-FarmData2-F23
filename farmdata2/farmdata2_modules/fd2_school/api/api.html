@@ -31,9 +31,9 @@
     <h1>{{title ? title : "My Report" }}</h1>
     <p>Details:</p>
     <ul>
-        <li><strong>Farm</strong>:Sample Farm</li>
-        <li><strong>User</strong>:manager1</li>
-        <li><strong>Language</strong>:English</li>
+        <li><strong>Farm</strong>:{{farm_name}}</li>
+        <li><strong>User</strong>:{{farm_user}}</li>
+        <li><strong>Language</strong>:{{farm_language}}</li>
         <br>
         <li><strong>Start</strong>:{{start_date}}</li>
         <li><strong>End</strong>:{{end_date}}</li>
@@ -81,6 +81,9 @@
             ],
             crp: "Kale",
             field: 'All',
+            farm_name: "farm_name",
+            farm_user: "farm_user",
+            farm_language: "farm_language",
             harvests: [],
         },
         methods: {
