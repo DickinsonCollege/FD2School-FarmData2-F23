@@ -23,10 +23,10 @@
     </select>
     
     <br><br>
-    <button type="button" v-on:click="savehstLogs">Generate Report</button>
+    <button data-cy="generate-report-button" type="button" v-on:click="savehstLogs">Generate Report</button>
     
     <hr>
-    <h1>{{rptTitle==""? "Mock Harvest Report":rptTitle}}</h1>
+    <h1 data-cy="report-title">{{rptTitle==""? "Mock Harvest Report":rptTitle}}</h1>
 
 
 <p>
