@@ -27,10 +27,10 @@
                 </select>
             </p>
             <br>
-            <button type="generate" @click='genReport'>Generate Report</button>
+            <button data-cy="Generate-Report-Button" type="generate" @click='genReport'>Generate Report</button>
         </body>
     <hr>
-        <h1>{{ (title == '') ? 'Mock Harvest Report':title}}</h1>
+        <h1 data-cy="title">{{ title == '' ? 'Mock Harvest Report':title}}</h1>
             <body> 
                 <p>Details:
                     <ul>
@@ -79,7 +79,7 @@
             },
             el: '#sample-report',
             data: {
-                title: 'My Sample Harvest Report',
+                title: '',
                 Farm: '',
                 User: '',
                 Language: '',
