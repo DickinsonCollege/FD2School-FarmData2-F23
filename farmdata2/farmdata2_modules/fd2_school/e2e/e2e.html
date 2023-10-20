@@ -9,7 +9,7 @@
     <h1 data-cy="page-header">Harvest Report</h1>
       <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
       <label for="title">Title</label>
-      <div id="title" v-cloak>
+      <div id="title"  v-cloak>
         <input type="text" v-model="reportTitle">
         <br>
         <br>
@@ -38,9 +38,9 @@
         </select>
         <br>
         <br>
-        <input type="button" value="Generate Report" @click="generateReportButton"/>
+        <input data-cy="generate-report-button" type="button" value="Generate Report" @click="generateReportButton"/>
     <hr>
-      <h1>{{ reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
+      <h1 data-cy="report-title">{{ reportTitle ? reportTitle: "Mock Harvest Report"}}</h1>
         <p>Details:</p>
         <ul>
             <li><strong>Farm:</strong>{{Farm}}</li>
