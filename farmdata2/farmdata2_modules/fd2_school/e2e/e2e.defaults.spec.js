@@ -19,4 +19,11 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy=crop]").children().eq(111).should("have.text", "ZUCCHINI")
         cy.get("[data-cy=crop]").children().should("have.length", "112")
     })
+
+    it("Check the area dropdown", () => {
+        cy.get("[data-cy=area]").children().eq(0).should("have.text", "All")
+        cy.get("[data-cy=area]").children().eq(4).should("have.text", "ALF-2")
+        cy.get("[data-cy=area]").children().eq(70).should("have.text", "Z")
+        cy.get("[data-cy=area]").children().should("have.length", "71")
+    })
 })
