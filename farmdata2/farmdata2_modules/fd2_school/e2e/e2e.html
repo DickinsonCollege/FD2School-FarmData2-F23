@@ -39,9 +39,9 @@
             <li data-cy="username"><strong>User</strong>:{{ user }}</li>
             <li><strong>Language</strong>:<span data-cy="language">{{ language }}</span></li>
             <br>
-            <li><strong>Start</strong>:{{ reportStartDate }}</li>
-            <li><strong>End</strong>:{{ reportEndDate }}</li>
-            <li><strong>Crop</strong>:{{ reportCrop }}</li>
+            <li><strong>Start</strong>:<span data-cy="report-start-date">{{ reportStartDate }}</span></li>
+            <li><strong>End</strong>:<span data-cy="report-end-date">{{ reportEndDate }}</span></li>
+            <li><strong>Crop</strong>:<span data-cy="report-crop">{{ reportCrop }}</span></li>
         </ul>
         <br>
         <table border="1" data-cy="harvest-report-table" v-if="hasTable">

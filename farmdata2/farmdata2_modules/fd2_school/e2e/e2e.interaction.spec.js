@@ -20,4 +20,21 @@ describe("Test the behavior of the Generate Report button", () => {
         cy.get("[data-cy=username]").should("contain.text", "manager1")
         cy.get("[data-cy=language]").should("have.text", "English")
     })
+
+    it("should update harvest report when start date, end date and crop inputs change", () => {
+        cy.get("[data-cy=start-date]").should("have.value", "2020-05-05") // check the default start date
+        cy.get("[data-cy=end-date]").should("have.value", "2020-05-15") // check the default end date
+        cy.get("[data-cy=crop]").should("have.text", "All") // check the default crop
+
+        cy.get("[data-cy=start-date]").type("2020-05-10") // enter a new start date
+        cy.get("[data-cy=end-date]").type("2020-05-30") // enter a new end date
+        cy.get("[data-cy=crop]").select("KALE") // enter a new crop
+
+        cy.get("[data-cy=generate-report-button]").click()
+
+        cy.get("[data-cy=report-start-date]").should("have.text", "2020-05-10")
+        cy.get("[data-cy=report-end-date]").should("have.text", "2020-05-30")
+        cy.get("[data-cy=report-crop]").should("have.text", "KALE")
+
+    })
 })
