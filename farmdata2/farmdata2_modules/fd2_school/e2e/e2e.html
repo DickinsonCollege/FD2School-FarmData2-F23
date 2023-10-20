@@ -44,7 +44,7 @@
             <li><strong>Crop</strong>:{{ reportCrop }}</li>
         </ul>
         <br>
-        <table border="1">
+        <table border="1" data-cy="harvest-report-table" v-if="hasTable">
             <tr v-if="harvestReportRows.length !== 0">
                 <th>Row</th>
                 <th>Date</th>
@@ -85,6 +85,7 @@
                 result: [],
                 hasTitle: false,
                 hasDetails: false,
+                hasTable: false,
             },
             computed: {
                 cropNames() {
@@ -142,9 +143,11 @@
                             console.log(error);
                          })
 
-                    this.hasTitle = true;
+                    this.hasTitle = true; // display the report title when the button is clicked
                     
-                    this.hasDetails = true;
+                    this.hasDetails = true; // display "Details" when the button is clicked
+
+                    this.hasTable = true; // display table when the button is clicked
                 },
                 deleteRow: function(rowIndex) {
                     this.harvestLogs.splice(rowIndex, 1);

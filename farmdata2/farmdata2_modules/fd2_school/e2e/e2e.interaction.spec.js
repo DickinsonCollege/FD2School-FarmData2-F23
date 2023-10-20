@@ -6,8 +6,12 @@ describe("Test the behavior of the Generate Report button", () => {
 
     it("Check the Generate Report button", () => {
         cy.get("[data-cy=report-title]").should("not.exist")
+        cy.get("[data-cy=details]").should("not.exist")
+        cy.get("[data-cy=harvest-report-table]").should("not.exist")
         cy.get("[data-cy=generate-report-button]").click()
         cy.get("[data-cy=report-title]").should("be.visible")
+        cy.get("[data-cy=details]").should("be.visible")
+        cy.get("[data-cy=harvest-report-table]").should("be.visible")
     })
 
     it("Check the information about the farm", () => {
