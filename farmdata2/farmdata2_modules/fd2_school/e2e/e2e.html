@@ -1,5 +1,5 @@
 <body>
-    <h1> Harvest Report </h1>
+    <h1 data-cy="page-header">Harvest Report</h1>
     <p> This page is a <i>mockup</i> of a simplified harvest report.</p>
 
     <div id="report" v-cloak>
@@ -8,9 +8,9 @@
         <br/>
 
         <label for="start">Start:</label>
-        <input type="date" id="start" name="start" v-model="reportStartDate" min="2014-01-01" max="2022-01-01" :disabled="reportStartDate > reportEndDate" />
+        <input data-cy="start-date" type="date" id="start" name="start" v-model="reportStartDate" min="2014-01-01" max="2022-01-01" :disabled="reportStartDate > reportEndDate" />
         <label for="end">End:</label>
-        <input type="date" id="end" name="end" v-model="reportEndDate" min="2020-05-05" max="2022-01-01" />
+        <input data-cy="end-date" type="date" id="end" name="end" v-model="reportEndDate" min="2020-05-05" max="2022-01-01" />
         <br/>
 
         <label for="crop">Crop:</label>
