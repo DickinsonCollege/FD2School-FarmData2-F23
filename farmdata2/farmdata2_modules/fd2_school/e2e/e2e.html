@@ -6,10 +6,10 @@
     <br><br>
     
     <label for="start">Start:</label>
-    <input type="date" v-model = "rptStartDate" :max="rptEndDate"/>
+    <input data-cy="start-date" type="date" v-model = "rptStartDate" :max="rptEndDate" />
     
     <label for="end">End:</label>
-    <input type="date" v-model = "rptEndDate" :min="rptStartDate"/> 
+    <input data-cy="end-date" type="date" v-model = "rptEndDate" :min="rptStartDate" /> 
     
     <br><br>
     <label for="rptCrop">Crop</label> 
