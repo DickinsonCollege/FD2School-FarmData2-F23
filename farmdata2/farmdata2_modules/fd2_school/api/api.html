@@ -37,7 +37,7 @@
         <br>
         <li><strong>Start</strong>:{{start_date}}</li>
         <li><strong>End</strong>:{{end_date}}</li>
-        <li><strong>Crop</strong>:Kale</li>
+        <li><strong>Crop</strong>:{{crp}}</li>
     </ul>
 
 
@@ -67,13 +67,9 @@
         el: '#harvest-report',
         data: {
             title: 'My Sample Harvest Report',
-            start_date: '1999-01-01T01:01',
-            end_date: '2001-01-01T01:01',
-            crops_avail: [
-                'Broccoli',
-                'Kale',
-                'Peas',
-            ],
+            start_date: '2020-07-01T01:01',
+            end_date: '2020-07-30T01:01',
+            crops_avail: [],
             fields_avail: [
                 'All',
                 'Chuau-1',
@@ -86,17 +82,17 @@
             farm_language: "farm_language",
             harvests: [],
             crop_id_map: new Map(),
-            crop_names: new Array(),
+            crops_avail: new Array(),
         },
         created() {
             getIDToCropMap()
-            .then((m) => {
-                this.crop_id_map = m;
-                this.crop_names = Array.from(this.crop_id_map.values());
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+                .then((m) => {
+                    this.crop_id_map = m;
+                    this.crops_avail = Array.from(this.crop_id_map.values());
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
         },
 
         methods: {
@@ -109,17 +105,26 @@
                     })
                     .catch((error) => {
                     });
-                switch (this.harvests.length % 3) {
-                    case 0:
-                        this.harvests.push({ date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches" });
-                        break;
-                    case 1:
-                        this.harvests.push({ date: "2019-05-01", area: "Orion-4", crop: "Peas", yield: 12, units: "Bunches" });
-                        break;
-                    case 2:
-                        this.harvests.push({ date: "2020-05-01", area: "Orion-5", crop: "Flesh", yield: 12, units: "Bunches" });
-                        break;
-                }
+                getAllPages('/log.json?type=farm_harvest&timestamp[ge]=' + dayjs(this.start_date).unix() + '&timestamp[le]=' + dayjs(this.end_date).unix()).then((reports) => {
+                    this.harvests = [];
+                    console.log(reports);
+                    for (let entry of reports) {
+                        var crop_name = this.crop_id_map.get(entry.data.crop_tid);
+                        if (crop_name == this.crp) {
+                            console.log(entry);
+                            this.harvests.push({
+                                date: dayjs.unix(entry.timestamp).format('MM/DD/YYYY'),
+                                area: entry.area[0].name,
+                                crop: crop_name,
+                                yield: entry.quantity[0].value,
+                                units: entry.quantity[0].unit.name,
+                            });
+                        }
+                    }
+                })
+                    .catch((err) => {
+                        console.log(error);
+                    });
             }
 
         }
