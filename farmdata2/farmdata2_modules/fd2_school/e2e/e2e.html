@@ -64,7 +64,7 @@
                 <td><button type="button" @click="deleteRow">Delete</button></td>
             </tr>
         </table>
-        <p v-if="harvestReportRows.length === 0">There are no matching records!</p>
+        <p v-if="harvestReportRows.length === 0" data-cy="no-record-message">There are no matching records!</p>
     </div>
 
     <script>

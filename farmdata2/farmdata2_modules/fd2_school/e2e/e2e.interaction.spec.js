@@ -47,4 +47,13 @@ describe("Test the behavior of the Generate Report button", () => {
 
         cy.get("[data-cy=report-title]").should("have.text", "Harvest Report")
     })
+
+    it("Check that a message is displayed if no logs are available", () => {
+        cy.get("[data-cy=start-date]").clear() // clear the start date input
+        cy.get("[data-cy=end-date]").clear() // clear the end date input
+
+        cy.get("[data-cy=generate-report-button]").click()
+
+        cy.get("[data-cy=no-record-message]").should("have.text", "There are no matching records!")
+    })
 })
