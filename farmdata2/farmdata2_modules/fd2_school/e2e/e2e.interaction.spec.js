@@ -37,4 +37,14 @@ describe("Test the behavior of the Generate Report button", () => {
         cy.get("[data-cy=report-crop]").should("have.text", "KALE")
 
     })
+
+    it("Check the title of the report when the input is changed", () => {
+        cy.get("[data-cy=title]").clear() // clear the input field before entering new title
+        
+        cy.get("[data-cy=title]").type("Harvest Report") // enter a new title
+
+        cy.get("[data-cy=generate-report-button]").click()
+
+        cy.get("[data-cy=report-title]").should("have.text", "Harvest Report")
+    })
 })
