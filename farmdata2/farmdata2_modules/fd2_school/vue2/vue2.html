@@ -20,7 +20,7 @@
 </select> <br />
 <br />
 
-<button type="button" @click='logs.push({date:"2018-05-02", area:"Chuau-1", crop:"Kale", yield:"10", units:"Bunches"})'>Generate Report</button>
+<button type="button" @click="addReport">Generate Report</button>
 <hr />
 <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
 <p>Details: </p>
@@ -73,8 +73,13 @@
       ] ,
       logs: [
         {}
-      ]      
-    }
+      ]     
+    } ,
+    methods: {
+            addReport: function() {
+                this.logs.push({date:"2018-05-02", area:"Chuau-1", crop:"Kale", yield:"10", units:"Bunches"})
+              }
+          } 
   });
   Vue.config.devtools = true; 
 </script>
