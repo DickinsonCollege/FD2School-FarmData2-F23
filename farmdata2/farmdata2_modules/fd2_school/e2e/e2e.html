@@ -47,13 +47,12 @@
             </p>
             <input data-cy="generate-report-button" type="button" value="Generate Report" @click="generateReportButton"/>
             <hr>
-            <!-- <h1 data-cy="report-title">{{reportTitle==""?"Mock Harvest Report":reportTitle}}</h1>  -->
             <h1 data-cy="report-title" v-if="showReportTitle">{{ reportTitle ? reportTitle : 'Mock Harvest Report' }}</h1>
             <p>Details:</p>
             <ul>
-                <li><strong>Farm:</strong>{{Farm}}</li>
-                <li><strong>User:</strong>{{User}}</li>
-                <li><strong>Language:</strong>{{Language}}</li>
+                <li data-cy="farm-name"><strong>Farm:</strong>{{Farm}}</li>
+                <li data-cy="user-name"><strong>User:</strong>{{User}}</li>
+                <li><strong>Language:</strong><span data-cy="lang-name">{{ language }}</span></li>
                 <br>
                 <li><strong>Start:</strong>{{reportStartDate}}</li>
                 <li><strong>End:</strong>{{reportEndDate}}</li>
