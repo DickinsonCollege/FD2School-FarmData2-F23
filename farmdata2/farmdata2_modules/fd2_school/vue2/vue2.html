@@ -20,7 +20,7 @@
 </select> <br />
 <br />
 
-<button type="button"@click="items.push(newItem)">Generate Report</button>
+<button type="button" @click='logs.push({date:"2018-05-02", area:"Chuau-1", crop:"Kale", yield:"10", units:"Bunches"})'>Generate Report</button>
 <hr />
 <h1>{{ header ? header : 'Mock Harvest Report' }}</h1>
 <p>Details: </p>
@@ -41,19 +41,12 @@
     <th>Yield</th>
     <th>Units</th>
   </tr>
-  <tr>
-    <td>05/02/2018</td>
-    <td>Chuau-1</td>
-    <td>Kale</td>
-    <td>10</td>
-    <td>Bunches</td>
-  </tr>
-  <tr>
-    <td>05/05/2018</td>
-    <td>SQ7</td>
-    <td>Kale</td>
-    <td>7</td>
-    <td>Bunches</td>
+  <tr v-for="log in logs">
+    <td>{{log.date}}</td>
+    <td>{{log.area}}</td>
+    <td>{{log.crop}}</td>
+    <td>{{log.yield}}</td>
+    <td>{{log.units}}</td>
   </tr>
 </table>
 </div>
@@ -78,24 +71,11 @@
         'sq7',
         'other',
       ] ,
-      log1: [
-        {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
-        {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}
+      logs: [
+        {}
       ]      
     }
   });
   Vue.config.devtools = true; 
 </script>
 </html>
-
-
-
- 
-
-
-
-
-
-
-
-
