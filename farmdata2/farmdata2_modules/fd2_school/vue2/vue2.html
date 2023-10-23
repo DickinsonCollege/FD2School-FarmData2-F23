@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<<<<<<< HEAD
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue Sub tab</title>
+    <style>
+        [v-cloak] {
+            display:none;
+        }
+    </style>
+    <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <h1>{{ header ? header : "Mock Harvest Report" }}</h1>
+        <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+        <input type="text" id="title" name="title" value="My Sample Harvest Report"/>
+        <br><br>
+
+        <form>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" :max="endDate" v-model="startDate">
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" :min="startDate" v-model="endDate">
+            <br><br>
+
+            <label for="crop">Crops:</label>
+            <select id="crop" name="crop" v-model="selectedCrop">
+                <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+            </select>
+            <label for="area">Area:</label>
+            <select id="area" name="area" v-model="selectedArea">
+                <option v-for="area in areas" :value="area">{{ area }}</option>
+            </select>
+        </form>
+        <button @click="generateReport">Generate Report</button>
+
+        <hr>
+        <div>
+            <h1>My Sample Harvest Report</h1>
+            <p>Details:</p>
+            <ul>
+                <li><strong>Farm:</strong>Sample Farm</li>
+                <li><strong>User:</strong>manager1</li>
+                <li><strong>Language:</strong>English</li>
+            </ul>
+            <br>
+            <ul>
+                <li><strong>Start:</strong>{{ startDate }}</li>
+                <li><strong>End:</strong>{{ endDate }}</li>
+                <li><strong>Crop:</strong>{{ selectedCrop }}</li>
+            </ul>
+            <table border="1" v-if="harvestLogs.length > 0">
+                <tr>
+                    <th>Row</th>
+                    <th>Date</th>
+                    <th>Area</th>
+                    <th>Crop</th>
+                    <th>Yield</th>
+                    <th>Units</th>
+                    <th>Delete</th>
+                </tr>
+                <tr v-for="(log, index) in harvestLogs" :key="log.date">
+                    <td>{{ index + 1 }}</td>
+                    <td>{{ log.date }}</td>
+                    <td>{{ log.area }}</td>
+                    <td>{{ log.crop }}</td>
+                    <td>{{ log.yield }}</td>
+                    <td>{{ log.units }}</td>
+                    <td>
+                        <button @click="deleteLog(index)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+            <p v-else>No recorded data found.</p>
+        </div>
+    </div>
+
+    <script>
+        var harvestRepo = new Vue({
+            el: '#app',
+            data: {
+                header: "Harvest Report",
+                startDate: '',
+                endDate: '',
+                selectedCrop: '',
+                selectedArea: '',
+                crops: ['Broccoli','Kale','Peas'],
+                areas: ['All','Chuau-1','SQ7'],
+                harvestLogs: [],
+            },
+            methods: {
+                generateReport: function() {
+                    var newHarvestLog = {
+                        date: '2021-08-20', 
+                        area: 'SQ7',    
+                        crop: 'Broccoli', 
+                        yield: 20,          
+                        units: 'Pounds'     
+                    };
+
+                    this.harvestLogs.push(newHarvestLog);
+                },
+                deleteLog: function(index) {
+                    // Remove the log at the given index
+                    this.harvestLogs.splice(index, 1);
+                }
+            }
+        });
+
+        Vue.config.devtools = true;
+    </script>
+</body>
+</html>
+
+<br><br>
+In this code, I added an HTML table with table headers (Date, Crop, Weight (lbs), Price per Pound, Total Value) and three rows of data as shown in the Mock Harvest Report image.
+
+Now, you can stage and commit these changes to your feature branch with a meaningful commit message and then push your feature branch to your origin. After that, you can convert your Draft Pull Request to a regular Pull Request on GitHub for review.
+
+
+=======
+
+>>>>>>> main
+</html>

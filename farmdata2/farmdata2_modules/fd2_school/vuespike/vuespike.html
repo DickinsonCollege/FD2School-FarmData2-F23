@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Data Binding Spike</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="heading">
+        <h1>{{ header.toLocaleUpperCase() }}</h1>
+        <h1>{{ header ? header : 'Vue is Ready' }}</h1>
+        <h1>{{ header }}</h1>
+        <input type="text" v-model="header">
+        <div>
+            <input type="text" v-model="newName" placeholder="Enter a name">
+            <button id="button" @click="saveName" :disabled="newName.trim() === ''">Add Name</button>
+        </div>
+        
+        <ul>
+            <li v-for="name in names">{{ name }}</li>
+            <li v-if="names.length === 0">No names yet!</li>
+        </ul>
+        <button type="button" @click="deleteName">Delete</button>
+        
+        <!-- Show/Hide Cards Buttons -->
+        <button v-if="!showCards" @click="showCards = true">Show Cards</button>
+        <button v-if="showCards" @click="showCards = false">Hide Cards</button>
+        
+        <!-- Cards List -->
+        <div v-if="showCards">
+            <p>Cards:</p>
+            <ul>
+                <li v-for="c in cards">{{ c.suit }}</li>
+                <li v-for="c in cards">{{ c.rank }} of {{ c.suit }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@2"></script>
+    <script>
+        var vueHeading = new Vue({
+            el: '#heading',
+            data: {
+                header: "Vue is ready to use!",
+                names: ["Joe", "Arun", "Ouwen", "Anh", "Sue"],
+                cards: [
+                    { suit: "H", rank: "3" },
+                    { suit: "S", rank: "K" },
+                    { suit: "D", rank: "7" }
+                ],
+                newName: '',
+                showCards: false, // State variable for showing/hiding cards
+            },
+            
+            methods: {
+                saveName: function() {
+                    if (this.newName.trim() !== '') { 
+                        this.names.push(this.newName);
+                        this.newName = '';
+                    }
+                },
+                deleteName: function(index) {
+                    this.names.splice(index, 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
