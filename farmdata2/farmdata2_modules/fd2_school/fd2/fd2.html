@@ -19,9 +19,14 @@
             <br>
             <br>
             <label for=”crops”>Crop:</label>
-            <select id="crops" name="crops" v-model="reportCrop" data-cy="select-crop">
-                <option v-for="crop in crops">{{crop}}</option>
-            </select>
+            <UL>
+                <dropdown-with-all id="crops" name="crops" v-model="reportCrop" data-cy="select-crop" 
+                    includes-all 
+                    :selected-val="reportCrop"
+                    :dropdown-list=crops
+                    @selection-changed="cropChange">
+                </dropdown-with-all>
+            </UL>
             <label for=”fields”>Area:</label>
             <select id="fields" name="fields">
                 <option v-for="area in areas">{{area}}</option>
@@ -68,7 +73,7 @@
                 reportTitle: "",
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
-                reportCrop: "Kale",
+                reportCrop: "All",
                 crops:[],
                 areas:["All","Chuau-1","SQ7"],
                 reportLogs:[],
@@ -77,6 +82,9 @@
                 language:"",
                 idToCropMap: new Map(),
                 datedLogs:[],
+            },
+            components: {
+                'dropdown-with-all': DropdownWithAllComponent,
             },
             created() {
 	            console.log("HarvestReport Vue instance created!")
@@ -90,6 +98,9 @@
                     })
             },
             methods: {
+                cropChange(newCrop) {
+                    this.reportCrop = newCrop
+                },
                 generateReport: function(){
                     axios.get('/farm.json')  // this line sends the request.
                         .then((response) => {
