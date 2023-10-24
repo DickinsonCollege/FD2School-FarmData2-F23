@@ -23,7 +23,7 @@
                 <dropdown-with-all id="crops" name="crops" v-model="reportCrop" data-cy="select-crop" 
                     includes-all 
                     :selected-val="reportCrop"
-                    :dropdown-list=crops
+                    :dropdown-list="cropNames"
                     @selection-changed="cropChange">
                 </dropdown-with-all>
             </UL>
@@ -129,6 +129,7 @@
             computed: {
                 cropNames(){
                     this.crops=Array.from(this.idToCropMap.values())
+                    return Array.from(this.idToCropMap.values())
                 },
                 harvestReportRows() {
                     let tableRows = []
