@@ -58,7 +58,7 @@
       <li data-cy="farm-name"><b>Farm:</b> {{ Farm }}</li>
       <li data-cy="user-name"><b>User:</b> {{ User }}</li>
       <li><b>Language:</b> <span data-cy="language-check"> {{ Language }} </span> </li>
-<br>
+    <br>
       <li><b>Start:</b> {{ rStartDate }}</li>
       <li><b>End:</b> {{ rEndDate }}</li>
       <li><b>Crop:</b> {{ selectedCrop }}</li>
@@ -148,7 +148,6 @@
             harvestReportRows() {
 	            let tableRows = []
 	            for(let log of this.APIAllPageData) {
-                if(this.idToCropMap.get(log.data.crop_tid) === this.selectedCrop){
                   let tableRow = {
 			            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
                   area: log.area[0].name,
@@ -156,6 +155,10 @@
                   units: log.quantity[0].unit.name,
                   crop: this.idToCropMap.get(log.data.crop_tid)
                 }
+                if(this.selectedCrop == "All"){
+                tableRows.push(tableRow)
+		            }
+                else if(tableRow.crop == this.selectedCrop){
                 tableRows.push(tableRow)
 		            }
 		            
