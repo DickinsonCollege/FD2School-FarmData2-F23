@@ -124,21 +124,19 @@
           },
           
           harvestReportRows() {
-                 let tableRows = [];
-
-                    for (let log of this.allHarvestLogs) {
-                      let area = log.area[0];
-                    let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
-                    let cropName = this.idToCropMap.get(log.data.crop_tid);
-
-      if (this.selectedCrop === "All" || cropName === this.selectedCrop) {
-        let tableRow = {
-          date: dayjs(log.timestamp * 1000).format("MM/DD/YYYY"),
-          area: log.name,
-          crop: cropName,
-          yield: harvestQuantity.value,
-          units: harvestQuantity.units,
-        };
+            let tableRows = [];
+            for (let log of this.allHarvestLogs) {
+                let area = log.area[0];
+                let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
+                let cropName = this.idToCropMap.get(log.data.crop_tid);
+            if (this.selectedCrop === "All" || cropName === this.selectedCrop) {
+                let tableRow = {
+                date: dayjs(log.timestamp * 1000).format("MM/DD/YYYY"),
+                area: log.name,
+                crop: cropName,
+                yield: harvestQuantity.value,
+                units: harvestQuantity.units,
+             };
         tableRows.push(tableRow);
       }
     }
