@@ -46,25 +46,13 @@
                 <li><b>End:</b>{{reportEndDate}}</li>
                 <li><b>Crop:</b>{{reportCrop}}</li>
             </ul>
-            <table border="1">
-                <tr v-if="harvestReportRows.length!=0">
-                    <th>Row</th>
-                    <th>Date</th>
-                    <th>Area</th>
-                    <th>Crop</th>
-                    <th>Yield</th>
-                    <th>Units</th>
-                </tr>
-                <tr v-else>No matching records</tr>
-                <tr v-for="(log,index) in harvestReportRows">
-                    <td>{{index+1}}</td>
-                    <td >{{log.date}}</td>
-                    <td>{{log.area}}</td>
-                    <td>{{log.crop}}</td>
-                    <td>{{log.yield}}</td>
-                    <td>{{log.units}}</td>
-                </tr>
-            </table>
+            <UL>
+                <custom-table data-cy="report-table"
+                    :columns="columns"
+                    :rows="componentReportRows"
+                    >
+                </custom-table>
+            </UL>
         </div>
     <script>
         var report = new Vue({
@@ -82,9 +70,17 @@
                 language:"",
                 idToCropMap: new Map(),
                 datedLogs:[],
+                columns:[
+                    {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+                ],
             },
             components: {
                 'dropdown-with-all': DropdownWithAllComponent,
+                'custom-table': CustomTableComponent,
             },
             created() {
 	            console.log("HarvestReport Vue instance created!")
@@ -127,28 +123,33 @@
                 },
             },
             computed: {
-                cropNames(){
-                    this.crops=Array.from(this.idToCropMap.values())
-                    return Array.from(this.idToCropMap.values())
-                },
-                harvestReportRows() {
+                componentReportRows(){
                     let tableRows = []
                     for(let log of this.datedLogs) {
                         let tableRow = {
-                            date: dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
-                            area: log.area[0].name,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid)
+                            id: log.data.crop_tid,
+                            data: [
+                                dayjs.unix(log.timestamp).format('DD/MM/YYYY'),
+                                log.area[0].name,
+                                this.idToCropMap.get(log.data.crop_tid),
+                                log.quantity[0].value,
+                                log.quantity[0].unit.name,
+                                
+                            ]
+                            
                         }
                         if(this.reportCrop=="All"){
                             tableRows.push(tableRow)
                         }
-                        else if(tableRow.crop==this.reportCrop){
+                        else if(tableRow.data[2]==this.reportCrop){
                             tableRows.push(tableRow)
                         }
                     }
                     return tableRows
+                },
+                cropNames(){
+                    this.crops=Array.from(this.idToCropMap.values())
+                    return Array.from(this.idToCropMap.values())
                 },
 
             },
