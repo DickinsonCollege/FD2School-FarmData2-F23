@@ -9,9 +9,13 @@
         <label for="language">Language</label>
         <input type="text" data-cy="user-lang"id="language" v-model="language" placeholder="Enter language.">
       <label for="crops">Crop:</label>
-      <select name="crops" id="crops" v-model="selectedCrop" data-cy="crop-dropdown">
-        <option v-for="crop in cropNames" :value="crop">{{ crop }}</option>
-      </select>
+      <dropdown-with-all
+        data-cy="crop-dropdown"
+        :selected-val="selectedCrop"
+        :dropdown-list="cropNamesWithAll"
+        @selection-changed="cropChangeHandler"
+        :disabled="false"
+      ></dropdown-with-all>
       <label for="area">Area:</label>
       <select name="area" id="area">
         <option v-for="area in areas" :value="area">{{ area }}</option>
@@ -93,12 +97,15 @@
               console.log(error);
             })
         },
+        components: {
+            'dropdown-with-all': DropdownWithAllComponent,
+        },
 
         data: {
           reportTitle: "",
           startDate: "05/05/2020",
           endDate: "05/15/2020",
-          selectedCrop: "kale",
+          selectedCrop: "All",
           crops: ["broccoli", "kale", "peas"],
           areas: ["all", "chuahu-1", "sq7"],
           harvestLogs: [],
@@ -112,31 +119,33 @@
           cropNames: function() {
             return Array.from(this.idToCropMap.values());
           },
+          cropNamesWithAll: function() {
+            return ["All"].concat(this.cropNames);
+          },
           
-            harvestReportRows() {
-                let tableRows = [];
-                for (let log of this.allHarvestLogs) {
-                    let area=log.area[0];
-                    let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
-                    
-                    if(harvestQuantity){
-                        let cropName = this.idToCropMap.get(log.data.crop_tid);
-                        if(cropName == this.selectedCrop){
-                        let tableRow = {
-                            date: dayjs(log.timestamp * 1000).format("MM/DD/YYYY"), // Convert timestamp to a human-friendly date
-                            area: log.name,
-                            crop: cropName,
-                            yield: harvestQuantity.value,
-                            units: harvestQuantity.units,
-                        };
-                        tableRows.push(tableRow);
-                        }
-                    }
-                }
+          harvestReportRows() {
+                 let tableRows = [];
 
-                return tableRows;
-            },
-        },
+                    for (let log of this.allHarvestLogs) {
+                      let area = log.area[0];
+                    let harvestQuantity = log.quantity.find((q) => q.label === "Harvest");
+                    let cropName = this.idToCropMap.get(log.data.crop_tid);
+
+      if (this.selectedCrop === "All" || cropName === this.selectedCrop) {
+        let tableRow = {
+          date: dayjs(log.timestamp * 1000).format("MM/DD/YYYY"),
+          area: log.name,
+          crop: cropName,
+          yield: harvestQuantity.value,
+          units: harvestQuantity.units,
+        };
+        tableRows.push(tableRow);
+      }
+    }
+
+    return tableRows;
+  },
+},
         methods: {
           generateReport: function () {
             this.farm = "Sample Farm";
