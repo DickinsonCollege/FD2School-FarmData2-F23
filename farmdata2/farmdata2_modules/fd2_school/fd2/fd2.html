@@ -18,9 +18,13 @@
             <br>
             <p>
                 <label for="crop">Crop:</label>
-                <select data-cy="crop-selection" id="crop" name="crop" v-model="crop">
-                    <option v-for="crop in cropNames">{{ crop }}</option>
-                </select>
+                <dropdown-with-all id="crop" name="crop" v-model="crop" data-cy="crop-selection" 
+                    includes-all 
+                    :selected-val='crop'
+                    :dropdown-list='cropNames'
+                    @selection-changed="cropChange"
+                >
+                </dropdown-with-all>  
                 <label for="field">Area:</label>
                 <select id="field" name="field" v-model="area">
                     <option v-for="area in areas">{{ area }}</option>
@@ -78,6 +82,9 @@
                 })
             },
             el: '#sample-report',
+            components: {
+                'dropdown-with-all': DropdownWithAllComponent,
+            },
             data: {
                 title: '',
                 Farm: '',
@@ -85,7 +92,7 @@
                 Language: '',
                 startDate: '2020-05-05',
                 endDate: '2020-05-15',
-                crop: '',
+                crop: 'All',
                 idToCropMap: new Map(),
                 area: 'All',
                 areas: [
@@ -145,7 +152,10 @@
                         console.log("Error occurred");
                         console.log(error);
                     })
-                }
+                },
+                cropChange(newCrop) {
+                this.crop = newCrop
+                },
             }
         })
         Vue.config.devtools = true;
