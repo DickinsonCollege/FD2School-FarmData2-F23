@@ -13,4 +13,14 @@ describe("Test the harvest report default values", () => {
         cy.get("[data-cy=h4]").should("have.text","Units")
         cy.get("[data-cy=table-headers").children().should("have.length","5")
     })
+
+    it("Checks that crop filtering works", () => {
+        cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input]").select("ASPARAGUS")
+        cy.get("[data-cy=table-body").children().should("have.length","5")
+        cy.get("[data-cy=td-r0c2").contains("ASPARAGUS")
+        cy.get("[data-cy=td-r1c2").contains("ASPARAGUS")
+        cy.get("[data-cy=td-r2c2").contains("ASPARAGUS")
+        cy.get("[data-cy=td-r3c2").contains("ASPARAGUS")
+        cy.get("[data-cy=td-r4c2").contains("ASPARAGUS")
+    })
 })
