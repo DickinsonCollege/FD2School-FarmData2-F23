@@ -25,11 +25,16 @@
     
         </br>
        
-        <label for="crop">Crop: </label>
-        <select data-cy="crop-check" id="crop" name="crop" v-model ="crop">
-            
-            <option v-for="crop in cropNames"> {{ crop }}</option>
-          </select>  
+        <label for="crop">Crop: </label> 
+
+        <dropdown-with-all id="crop" name="crop" v-model="crop" data-cy="crop-check" 
+        includes-all 
+        :selected-val='crop'
+        :dropdown-list='cropNames'
+        @selection-changed="cropChange"
+        >
+        </dropdown-with-all>
+       
           
         
     
@@ -133,11 +138,15 @@
                                     console.log("Error occurred!")
                                 })
                         },
+
+                        components: {
+                            'dropdown-with-all': DropdownWithAllComponent,
+                        },
                         data: {
                             header: 'My Sample Harvest Report',
                             start: '2020-05-01',
                             end: '2020-05-15',
-                            crop: '',
+                            crop: 'All',
                             idToCropMap: new Map(),
                             area: 'All',
                             areas: [
@@ -218,7 +227,10 @@
                                     console.log(err)
                                 })
 
-                                }
+                                },
+                                cropChange(newCrop) {
+                                    this.crop = newCrop
+                                },
 
                             }
                     
