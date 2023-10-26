@@ -15,5 +15,17 @@ describe("Test contents of report table", () => {
             .should("have.length",6)
     })
 
+    it("Check table headers", () => {
+        cy.get("[data-cy=crop-check] > [data-cy=dropdown-input]")
+            .select(2)
+        cy.get("[data-cy=gen-report]").click()
+        cy.get("[data-cy=table-body]").children().should("have.length",6)
+        cy.get("[data-cy=table-body]").children().eq(0).should("contain.text","ASPARAGUS")
+        cy.get("[data-cy=table-body]").children().eq(1).should("contain.text","ASPARAGUS")
+        cy.get("[data-cy=table-body]").children().eq(2).should("contain.text","ASPARAGUS")
+        cy.get("[data-cy=table-body]").children().eq(3).should("contain.text","ASPARAGUS")
+        cy.get("[data-cy=table-body]").children().eq(4).should("contain.text","ASPARAGUS")
+    })
+
 
 })
