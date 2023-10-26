@@ -192,11 +192,19 @@
                                                 crop: this.idToCropMap.get(log.data.crop_tid)
                                             }
                                             tableRows.push(tableRow)
-                                    }
+                                    } else if (this.crop === "All") {
+                                        let tableRow = {
+                                            date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                                            area: log.area[0].name,
+                                            yield: log.quantity[0].value,
+                                            units: log.quantity[0].unit.name,
+                                            crop: this.idToCropMap.get(log.data.crop_tid)
+                                        }
+                                        tableRows.push(tableRow)
                                 }
-                                return tableRows
-                            },
-                                    
+                                
+                            }
+                            return tableRows     
                         },
                         methods: {
                             saveReport: function() {
