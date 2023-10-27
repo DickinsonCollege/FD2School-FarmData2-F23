@@ -46,12 +46,17 @@
      </ul>
     </p>
 
-    <custom-table data-cy="harvestReport-table"
-        :columns="columns"
-        :rows="compReportRows" 
-        
-        >
-     </custom-table>
+    <div v-if="compReportRows.length > 0">    
+        <custom-table data-cy="harvestReport-table"
+            :columns="columns"
+            :rows="compReportRows" 
+            
+            >
+        </custom-table>
+    </div>
+    <div v-else>
+        <p>No Matching Records<p>
+    </div>
 </div>
 
 <script>
