@@ -13,4 +13,8 @@ describe("Test the output after generate report", () => {
       cy.get("[data-cy=h4]").should("have.text","Units")
     }) 
 
+    it("Check number of columns", () => {
+      cy.get("[data-cy=table-headers]").children().should("have.length", 5)
+    })
+
 })
