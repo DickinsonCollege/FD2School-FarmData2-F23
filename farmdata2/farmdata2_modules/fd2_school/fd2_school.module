@@ -43,10 +43,70 @@ function fd2_school_menu() {
   $items = array();
 
   // Define the tab for the module.
-  $items['farm/fd2-school'] = array(                 // Put the school in the farm menu
-    'title' => 'FD2 School',                         // Put FD2 School on the tab
+  $items['farm/fd2-school/html'] = array(                 // Put the school in the farm menu
+    'title' => 'HTML',                         // Put FD2 School on the tab
     'page callback' => 'fd2_school_view',            // The function that will provide the content
-    'page arguments' => array('info'),               // The html file with the default content for the tab
+    'page arguments' => array('html'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/vue1'] = array(                 // Put the school in the farm menu
+    'title' => 'Vue1',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('vue1'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/vue2'] = array(                 // Put the school in the farm menu
+    'title' => 'Vue2',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('vue2'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/api'] = array(                 // Put the school in the farm menu
+    'title' => 'API',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('api'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/api2'] = array(                 // Put the school in the farm menu
+    'title' => 'API2',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('api2'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/e2e'] = array(                 // Put the school in the farm menu
+    'title' => 'e2e',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('e2e'),               // The html file with the default content for the tab
+    'access arguments' => array('view fd2 school'),  // permissions required to view the tab
+    'type' => MENU_LOCAL_TASK,                        // Put it on the menu
+    'weight' => -30,                                  // larger weights appear further right.
+  );
+
+  // Define the tab for the module.
+  $items['farm/fd2-school/fd2'] = array(                 // Put the school in the farm menu
+    'title' => 'FD2',                         // Put FD2 School on the tab
+    'page callback' => 'fd2_school_view',            // The function that will provide the content
+    'page arguments' => array('fd2'),               // The html file with the default content for the tab
     'access arguments' => array('view fd2 school'),  // permissions required to view the tab
     'type' => MENU_LOCAL_TASK,                        // Put it on the menu
     'weight' => -30,                                  // larger weights appear further right.
