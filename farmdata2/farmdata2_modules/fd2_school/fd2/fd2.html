@@ -134,9 +134,9 @@
                             data: [
                                 dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                                 log.area[0].name,
+                                this.idToCropMap.get(log.data.crop_tid),
                                 log.quantity[0].value,
-                                log.quantity[0].unit.name,
-                                log.data.crop_tid
+                                log.quantity[0].unit.name
                             ]
                         } 
                         tableRows.push(tableRow) }}

@@ -17,4 +17,15 @@ describe("Test the output after generate report", () => {
       cy.get("[data-cy=table-headers]").children().should("have.length", 5)
     })
 
+    it("Check filtering by crops", () => {
+      cy.get("[data-cy=crop-dropdown] > [data-cy=dropdown-input]").select(1)
+      cy.get("[data-cy=generate-report-button]").click()
+      cy.get("[data-cy=table-body]").children().should("have.length", 4)
+      cy.get("[data-cy=table-body]").children().eq(0).should("contain.text","ARUGULA")
+      cy.get("[data-cy=table-body]").children().eq(1).should("contain.text","ARUGULA")
+      cy.get("[data-cy=table-body]").children().eq(2).should("contain.text","ARUGULA")
+      cy.get("[data-cy=table-body]").children().eq(3).should("contain.text","ARUGULA")
+    })
+    
+
 })
