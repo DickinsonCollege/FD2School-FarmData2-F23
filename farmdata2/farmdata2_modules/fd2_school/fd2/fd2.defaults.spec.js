@@ -14,10 +14,15 @@ describe("Test the harvest report default values", () => {
     })
 
     it("Check the crop dropdown", () => {
-        cy.get("[data-cy=crop]").children().eq(0).should("have.text", "All")
-        cy.get("[data-cy=crop]").children().eq(4).should("have.text", "BEAN-DRY")
-        cy.get("[data-cy=crop]").children().eq(111).should("have.text", "ZUCCHINI")
-        cy.get("[data-cy=crop]").children().should("have.length", "112")
+        // cy.get("[data-cy=crop]").children().eq(0).should("have.text", "All")
+        // cy.get("[data-cy=crop]").children().eq(4).should("have.text", "BEAN-DRY")
+        // cy.get("[data-cy=crop]").children().eq(111).should("have.text", "ZUCCHINI")
+        // cy.get("[data-cy=crop]").children().should("have.length", "112")
+
+        cy.get("[data-cy=crop] > [data-cy=dropdown-input] > [data-cy=option0]").should("have.text", "All")
+        cy.get("[data-cy=crop] > [data-cy=dropdown-input] > [data-cy=option4]").should("have.text", "BEAN-DRY")
+        cy.get("[data-cy=crop] > [data-cy=dropdown-input] > [data-cy=option111]").should("have.text", "ZUCCHINI")
+        cy.get("[data-cy=crop] > [data-cy=dropdown-input]").children().should("have.length", "112")
     })
 
     it("Check the area dropdown", () => {
