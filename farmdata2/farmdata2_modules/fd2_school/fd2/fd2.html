@@ -55,7 +55,12 @@
             <li><strong>End:</strong>{{reportEndDate}}</li>
             <li><strong>Crop:</strong>{{reportCrop}}</li>
         </ul>
-        <table v-if="harvestReportRows.length>0" border=1>
+        <custom-table data-cy="test-table"
+            :columns="columns"
+            :rows="harvestReportRows" 
+            >
+        </custom-table>
+        <!--<table v-if="harvestReportRows.length>0" border=1>
             <tr>
                 <th>Row</th>
                 <th>Date</th>
@@ -74,14 +79,15 @@
                 <td>{{t.units}}</td>
                 <td><button type="button" @click="deleteLog">Delete</button></td>
             </tr>
-        </table>
+        </table> -->
         <p v-else>No matching records</p>
       </div>
       <script>
         var vueData = new Vue({
             el:"#title",
             components: {
-                "dropdown-with-all": DropdownWithAllComponent
+                "dropdown-with-all": DropdownWithAllComponent,
+                "custom-table": CustomTableComponent,
             },
             data: {
                 Farm: "",
@@ -108,6 +114,15 @@
                 {date: "2018-05-02", area: "Chuau-1", crop: "Kale", yield: 10, units: "Bunches"},
                 {date: "2018-05-05", area: "SQ7", crop: "Kale", yield: 7, units: "Bunches"}],
                 harvestLogs: [],
+                columns: [
+            {"header": 'ID', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Date', "visible": true, "inputType": {'type': 'text'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'dropdown','value': ['S', 'M', 'L']}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'dropdown','value': ['Green', 'Blue', 'Black', 'Red']}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'regex', 'regex': '^[1-9]+[0-9]*$'}},
+            {"header": 'Units', "visible": true, "inputType": {'type': 'date'}},
+            //{"header": "Delete", "visible": true, "inputType": {'type': 'boolean'}},
+        ],
             },
             created() { 
 
@@ -145,7 +160,7 @@
                     return Array.from(this.idToAreaMap.keys())
                 },
 
-                harvestReportRows() {  
+                /**harvestReportRows() {  
                     let tableRows = []
                     for(let log of this.harvestLogsRequest) { 
                         if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop || this.reportCrop=="All") 
@@ -159,7 +174,29 @@
                          } 
                         tableRows.push(tableRow)} 
                     }
-                        return tableRows} 
+                        return tableRows},*/
+                        
+                harvestReportRows() {  
+                    let tableRows = []
+                    i = 0
+                    for(let log of this.harvestLogsRequest) { 
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop || this.reportCrop=="All") 
+                        {
+                            i = i+1
+                        let tableRow = { 
+                            id: i,
+                            data: [
+                            log.data.crop_tid,
+                            dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
+                            log.area[0].name,
+                            this.idToCropMap.get(log.data.crop_tid),
+                            log.quantity[0].value,
+                            log.quantity[0].unit.name, ]    
+                         } 
+                        tableRows.push(tableRow)} 
+                    }
+                        return tableRows},
+                
                     },
 
             methods: {
