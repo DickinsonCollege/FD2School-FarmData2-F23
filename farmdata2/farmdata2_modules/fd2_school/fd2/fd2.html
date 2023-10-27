@@ -28,10 +28,14 @@
           </label>
         </form>
         <br>
-        <label for="crop">Crop</label>
-        <select data-cy="crop-dropdown" id="crop" v-model="reportCrop">
-          <option v-for="crop in cropNamesArray">{{crop}}</option>
-        </select>
+        <dropdown-with-all data-cy="crop-dropdown" 
+            includes-all
+            :selected-val="reportCrop"
+            :dropdown-list="cropNamesArray"
+            @selection-changed="cropChange"
+            :disabled=false> 
+        Crop: 
+        </dropdown-with-all>
         <label for="field">Area</label>
         <select id="field" name="field">
           <option v-for="area in areaNamesArray">{{area}}</option>
@@ -76,6 +80,9 @@
       <script>
         var vueData = new Vue({
             el:"#title",
+            components: {
+                "dropdown-with-all": DropdownWithAllComponent
+            },
             data: {
                 Farm: "",
                 User: "",
@@ -86,7 +93,7 @@
                 reportTitle: "My Sample Harvest Report",
                 reportStartDate: "2020-05-05",
                 reportEndDate: "2020-05-15",
-                reportCrop: "KALE",
+                reportCrop: "All",
                 // crops: [
                 //   "Broccoli",
                 //   "Kale",
@@ -121,7 +128,7 @@
                     console.log("Error");
                 })
 
-                getAllPages("/log.json?type=farm_harvest",this.harvestLogsRequest)
+                getAllPages("/log.json?type=farm_harvest",arr=[])
                 .then(()=>{
                     
                 })
@@ -141,7 +148,8 @@
                 harvestReportRows() {  
                     let tableRows = []
                     for(let log of this.harvestLogsRequest) { 
-                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop) {
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop || this.reportCrop=="All") 
+                        {
                         let tableRow = { 
                             date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                             area: log.area[0].name,
@@ -149,8 +157,10 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid),     
                          } 
-                        tableRows.push(tableRow)} }
-                        return tableRows}},
+                        tableRows.push(tableRow)} 
+                    }
+                        return tableRows} 
+                    },
 
             methods: {
                 generateReportButton: function (){
@@ -184,6 +194,9 @@
                 } 
 
             },
+                cropChange(newCrop){
+                    this.reportCrop = newCrop
+                },
                 deleteLog: function(Index) { 
                     this.harvestLogs.splice(Index, 1); } 
             },
