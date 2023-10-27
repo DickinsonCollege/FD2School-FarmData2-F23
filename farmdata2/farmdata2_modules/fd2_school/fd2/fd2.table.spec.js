@@ -19,4 +19,16 @@ describe("Test if the CustomTableComponent works", () => {
         cy.get("[data-cy=table-headers]").children()
             .should("have.length",5)
     })
+
+    it("Check everything works", () => {
+        cy.get("[data-cy=crop-selection] > [data-cy=dropdown-input]")
+            .select(1)
+        cy.get("[data-cy=Generate-Report-Button]").click()
+        cy.get("[data-cy=table-body]").children()
+            .should("have.length",4)
+        cy.get("[data-cy=table-body]").children().eq(0).should("contain.text","ARUGULA")
+        cy.get("[data-cy=table-body]").children().eq(1).should("contain.text","ARUGULA")
+        cy.get("[data-cy=table-body]").children().eq(2).should("contain.text","ARUGULA")
+        cy.get("[data-cy=table-body]").children().eq(3).should("contain.text","ARUGULA")
+    })
 })
