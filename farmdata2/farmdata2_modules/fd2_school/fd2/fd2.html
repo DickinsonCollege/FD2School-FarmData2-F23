@@ -13,9 +13,13 @@
     
     <br><br>
     <label for="rptCrop">Crop</label> 
-    <select  v-model="rptCrop" data-cy="crop-dropdown">
-        <option v-for="crop in cropNames">{{crop}}</option>
-    </select>
+    <dropdown-with-all  v-model="rptCrop" data-cy="crop-dropdown" 
+        includes-all
+        :selected-val="rptCrop"
+        :dropdown-list="cropNames"
+        @selection-changed="cropChange" 
+    >
+    </dropdown-with-all>
 
     <label for="rptField">Area</label>
     <select v-model="rptField">
@@ -83,16 +87,13 @@
                 this.idToCropMap = theMap
             })
             .catch((err) => {
-                console.log("Error Occurred")
-                console.log(err)
-
             })
         },
         data: {
             rptTitle: "My Sample Harvest Report",
             rptStartDate: "2020-05-05",
             rptEndDate: "2020-05-15",
-            rptCrop: "KALE",
+            rptCrop: "All",
             rptField: "All",
             fields: ["All", "Chuau-1", "SQ7"],
             hstLogs: [],
@@ -102,11 +103,13 @@
             idToCropMap: new Map(),
             allLogs: [],
         },
+        components: {
+        'dropdown-with-all': DropdownWithAllComponent,
+        },   
         computed:{
             cropNames(){
                 return Array.from(this.idToCropMap.values())
             },
-
             harvestReportRows(){
                 let tableRows = []
                 i = 0;
@@ -120,7 +123,10 @@
                         units: log.quantity[0].unit.name,
                     }
 
-                    if(this.rptCrop == (tableRow.crop)){
+                    if(this.rptCrop == "All"){
+                        tableRows.push(tableRow)
+                    }
+                    else if (this.rptCrop == (tableRow.crop)){
                         tableRows.push(tableRow)
                     }
                 }
@@ -130,7 +136,9 @@
         }
         ,
         methods: {
-            
+            cropChange(newCrop) {
+                this.rptCrop = newCrop
+            },
             savehstLogs: function(){
                 axios.get("/farm.json")
                 .then ((response) => {
