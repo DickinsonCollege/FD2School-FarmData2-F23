@@ -4,16 +4,13 @@ describe("Test the output after generate report", () => {
         cy.visit("/farm/fd2-school/fd2")
     })
   
-    it("Test the generate report button", () => { 
-      cy.get("[data-cy=report-title]").should("not.exist")
+    it("Test table headers", () => { 
       cy.get("[data-cy=generate-report-button]").click()
-      cy.get("[data-cy=report-title]").should("be.visible")
+      cy.get("[data-cy=h0]").should("have.text","Date")
+      cy.get("[data-cy=h1]").should("have.text","Area")
+      cy.get("[data-cy=h2]").should("have.text","Crop")
+      cy.get("[data-cy=h3]").should("have.text","Yield")
+      cy.get("[data-cy=h4]").should("have.text","Units")
     }) 
-  
-    it("Check name of farm, user, language", () => {
-      cy.get("[data-cy=generate-report-button]").click()
-      cy.get("[data-cy=farm-name]").should("have.text","Farm:Sample Farm")
-      cy.get("[data-cy=user-name]").should("contain.text","manager1")
-      cy.get("[data-cy=lang-name]").should("have.text","English")
-    })
-  })
+
+})

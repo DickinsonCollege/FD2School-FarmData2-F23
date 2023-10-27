@@ -68,31 +68,7 @@
                 :columns = "columns"
                 :rows = "harvestReportRows" 
             ></custom-table>
-            
-            <!-- <table v-if="harvestReportRows.length>0" border=1>
-                <thead>
-                     <th>Row</th>
-                     <th>Date</th>
-                     <th>Area</th>
-                     <th>Crop</th>
-                     <th>Yield</th>
-                     <th>Units</th>
-                     <th>Delete</th>
-                 </thead>
-                 <tbody>
-                    <tr v-for="(t,index) in harvestReportRows">
-                         <td>{{index+1}}</td>
-                         <td>{{t.date}}</td>
-                         <td>{{t.area}}</td>
-                         <td>{{t.crop}}</td>
-                         <td>{{t.yield}}</td>
-                         <td>{{t.units}}</td>
-                         <td>
-                            <button type="button" @click="deleteLog">Delete</button>
-                        </td>
-                     </tr>
-                 </tbody>
-             </table> -->
+
              <p v-else>No matching records</p>
         </div>
         <script>
@@ -114,12 +90,7 @@
                         "Chuau-1",
                         "SQ7"
                     ],
-                    table: [
-                        {date: "2018-05-02", area:"Chuau-1", crop:"Kale", yield: 10, units: "Bunches"},
-                        {date: "2018-05-22", area:"SQ7", crop:"Peas", yield: 5, units: "Bunches"}],
-                        harvestLogs: [],
                     columns:[
-                        {"header": 'ID', "visible": true, "inputType": {'type': 'no input'}},
                         {"header": 'Date', "visible": true, "inputType": {'type': 'text'}},
                         {"header": 'Area', "visible": true, "inputType": {'type': 'dropdown', 'value':["All", "Chuau-1","SQ7"]}},
                         {"header": 'Crop', "visible": true, "inputType": {'type': 'dropdown', 'value':['Kale', 'Peas', 'Arugula']}},
@@ -159,9 +130,7 @@
                     let tableRows = [] 
                     for(let log of this.harvestLogsRequest) {
                         if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop||this.reportCrop=="All") {
-                        i = i + 1
                         let tableRow = { 
-                            id: i,
                             data: [
                                 dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                                 log.area[0].name,
