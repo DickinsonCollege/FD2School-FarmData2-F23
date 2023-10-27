@@ -14,36 +14,41 @@
                 <input type="text" id="reportTitle" value="My Sample Harvest Report" v-model="reportTitle" />
             </p>
             <p>
-            <label for="start">Start:</label>
-            <input 
-                data-cy="start-date"
-                type="date" 
-                id="start" 
-                v-model="reportStartDate" 
-                value="05/05/2020" 
-                min="2014-01-01" :disabled="reportStartDate > reportEndDate"
-                max="2022-01-01" :disabled="reportStartDate > reportEndDate"
-            >
-            <label for="end">End:</label>
-            <input 
-                data-cy="end-date"
-                type="date" 
-                id="end" 
-                v-model="reportEndDate" 
-                value="05/15/2020" 
-                min="2020-05-05" :disabled="reportStartDate > reportEndDate"
-                max="2022-01-01" :disabled="reportStartDate > reportEndDate"
-            >
-            </p>
-            <p>
-            <label for="crop">Crop:</label>
-            <select data-cy="crop-dropdown" id="crop" v-model="reportCrop">
-                <option v-for="crop in cropNamesArray">{{crop}}</option>
-            </select>
-            <label for="area">Area:</label>
-            <select id="area" name="area">
-                <option v-for="area in areas">{{area}}</option>
-            </select>
+                <label for="start">Start:</label>
+                <input 
+                    data-cy="start-date"
+                    type="date" 
+                    id="start" 
+                    v-model="reportStartDate" 
+                    value="05/05/2020" 
+                    min="2014-01-01" :disabled="reportStartDate > reportEndDate"
+                    max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+                >
+                <label for="end">End:</label>
+                <input 
+                    data-cy="end-date"
+                    type="date" 
+                    id="end" 
+                    v-model="reportEndDate" 
+                    value="05/15/2020" 
+                    min="2020-05-05" :disabled="reportStartDate > reportEndDate"
+                    max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+                >
+                <p>
+                    <dropdown-with-all data-cy="crop-dropdown"
+                    includes-all 
+                    :selected-val = "reportCrop"
+                    :dropdown-list = cropNamesArray
+                    @selection-changed = "cropChange"
+                    :disabled = false>
+                    Crop:
+                    </dropdown-with-all>
+            
+                    <label for="area">Area:</label>
+                    <select id="area" name="area">
+                        <option v-for="area in areas">{{area}}</option>
+                    </select>
+                </p>
             </p>
             <input data-cy="generate-report-button" type="button" value="Generate Report" @click="generateReportButton"/>
             <hr>
@@ -108,6 +113,11 @@
                         {date: "2018-05-22", area:"SQ7", crop:"Peas", yield: 5, units: "Bunches"}],
                         harvestLogs: [],
                 },
+
+                components: {
+                    'dropdown-with-all': DropdownWithAllComponent
+                },
+
                 created() {
                     console.log("HarvestReport Vue instance created!")
                     getIDToCropMap()
@@ -117,7 +127,7 @@
                     .catch((error)=>{
                         console.log("Error");
                     })
-                    getAllPages("/log.json?type=farm_harvest", this.harvestLogsRequest)
+                    getAllPages("/log.json?type=farm_harvest", arr=[])
                     .then(()=>{
 
                     })
@@ -133,7 +143,7 @@
                     harvestReportRows() { 
                     let tableRows = [] 
                     for(let log of this.harvestLogsRequest) {
-                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop) {
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop||this.reportCrop=="All") {
                         let tableRow = { 
                             date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
                             area: log.area[0].name,
@@ -146,6 +156,10 @@
                 },
 
                 methods: { 
+                    cropChange(newCrop) {
+                        this.reportCrop = newCrop
+                    },
+
                     generateReportButton: function (){
                         this.showReportTitle = true;
                         let timestampStart = dayjs(this.reportStartDate).unix() 
