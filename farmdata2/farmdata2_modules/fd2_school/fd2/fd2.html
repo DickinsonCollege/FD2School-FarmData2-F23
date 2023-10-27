@@ -46,35 +46,12 @@
      </ul>
     </p>
 
-    <div v-if="harvestReportRows.length > 0">      
-        <table border="1">
-            <tr>
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-            </tr>
-            <tr v-for="log in harvestReportRows">
-                <td>{{log.row}}</td>
-                <td>{{log.date}}</td>
-                <td>{{log.area}}</td>
-                <td>{{log.crop}}</td>
-                <td>{{log.yield}}</td>
-                <td>{{log.units}}</td>
-            </tr>
-        </table>
-
-
-    </div>
-    <div v-else>
-        <p>No Matching Records<p>
-    </div>
-
-    
+    <custom-table data-cy="test-table"
+        :columns="columns"
+        :rows="compReportRows" 
         
-       
+        >
+     </custom-table>
 </div>
 
 <script>
@@ -102,31 +79,42 @@
             language: "",
             idToCropMap: new Map(),
             allLogs: [],
+            columns: [
+            {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+            {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+            ],
         },
         components: {
         'dropdown-with-all': DropdownWithAllComponent,
+        'custom-table': CustomTableComponent,
         },   
         computed:{
             cropNames(){
                 return Array.from(this.idToCropMap.values())
             },
-            harvestReportRows(){
+            compReportRows(){
                 let tableRows = []
                 i = 0;
                 for (let log of this.allLogs){
                     let tableRow = {
-                        row: i += 1,
-                        date: dayjs.unix(log.timestamp).format("MM/DD/YYYY"),
-                        crop: this.idToCropMap.get(log.data.crop_tid),
-                        area: log.area[0].name,
-                        yield: log.quantity[0].value ,
-                        units: log.quantity[0].unit.name,
+                        id: log.data.crop_tid,
+                        data: [
+                        dayjs.unix(log.timestamp).format("MM/DD/YYYY"),
+                        this.idToCropMap.get(log.data.crop_tid),
+                        log.area[0].name,
+                        log.quantity[0].value ,
+                        log.quantity[0].unit.name,                   
+                        ]
+
                     }
 
                     if(this.rptCrop == "All"){
                         tableRows.push(tableRow)
                     }
-                    else if (this.rptCrop == (tableRow.crop)){
+                    else if (this.rptCrop == (tableRow.data[1])){
                         tableRows.push(tableRow)
                     }
                 }
@@ -167,5 +155,3 @@
 
     Vue.config.devtools = true;
 </script>
-
-
