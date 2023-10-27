@@ -18,10 +18,14 @@
         <input data-cy="end-date" type="date" id="end-date" name="end-date" :min="reportStartDate" max="reportEndDate" v-model="reportEndDate"/>
         <br>
         <br>
-        <label for="crop">Crop:</label>
-        <select id="crop" name="crop" v-model="reportCrop" data-cy="crop">
-            <option v-for="crop in cropNames">{{ crop }}</option>
-        </select>
+        <!-- <label for="crop">Crop:</label> -->
+        <dropdown-with-all data-cy="crop"
+            includes-all
+            :selected-val="reportCrop"
+            :dropdown-list="cropNames"
+            @selection-changed="cropChange">
+        Crop:
+        </dropdown-with-all>
         <label for="field">Area:</label>
         <select id="field" name="field" v-model="reportArea" data-cy="area">
             <option v-for="area in areaNames">{{ area }}</option>
@@ -70,6 +74,9 @@
     <script>
         var report = new Vue ({
             el: "#report",
+            components: {
+                "dropdown-with-all": DropdownWithAllComponent,
+            },
             data: {
                 reportTitle: "My Sample Harvest Report",
                 reportStartDate: "2020-05-05",
@@ -90,7 +97,6 @@
             computed: {
                 cropNames() {
                     let arr = Array.from(this.idToCropMap.values());
-                    arr.unshift("All");
                     return arr;
                 },
                 areaNames() {
@@ -116,7 +122,7 @@
                         }
                     }
                     return tableRows;
-                }
+                },
             },
             methods: {
                 generateReport: function() {
@@ -151,6 +157,9 @@
                 },
                 deleteRow: function(rowIndex) {
                     this.harvestLogs.splice(rowIndex, 1);
+                },
+                cropChange(newCrop) {
+                    this.reportCrop = newCrop;
                 },
             },
             created() {
