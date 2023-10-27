@@ -63,7 +63,13 @@
                 <li><strong>End:</strong>{{reportEndDate}}</li>
                 <li><strong>Crop:</strong>{{reportCrop}}</li>
             </ul>
-            <table v-if="harvestReportRows.length>0" border=1>
+
+            <custom-table data-cy="testing-table"
+                :columns = "columns"
+                :rows = "harvestReportRows" 
+            ></custom-table>
+            
+            <!-- <table v-if="harvestReportRows.length>0" border=1>
                 <thead>
                      <th>Row</th>
                      <th>Date</th>
@@ -86,7 +92,7 @@
                         </td>
                      </tr>
                  </tbody>
-             </table>
+             </table> -->
              <p v-else>No matching records</p>
         </div>
         <script>
@@ -112,10 +118,19 @@
                         {date: "2018-05-02", area:"Chuau-1", crop:"Kale", yield: 10, units: "Bunches"},
                         {date: "2018-05-22", area:"SQ7", crop:"Peas", yield: 5, units: "Bunches"}],
                         harvestLogs: [],
+                    columns:[
+                        {"header": 'ID', "visible": true, "inputType": {'type': 'no input'}},
+                        {"header": 'Date', "visible": true, "inputType": {'type': 'text'}},
+                        {"header": 'Area', "visible": true, "inputType": {'type': 'dropdown', 'value':["All", "Chuau-1","SQ7"]}},
+                        {"header": 'Crop', "visible": true, "inputType": {'type': 'dropdown', 'value':['Kale', 'Peas', 'Arugula']}},
+                        {"header": 'Yield', "visible": true, "inputType": {'type': 'regex', 'regex': '^[1-9]+[0-9]*$'}},
+                        {"header": 'Units', "visible": true, "inputType": {'type': 'date'}},
+                    ],
                 },
 
                 components: {
-                    'dropdown-with-all': DropdownWithAllComponent
+                    'dropdown-with-all': DropdownWithAllComponent,
+                    'custom-table': CustomTableComponent
                 },
 
                 created() {
@@ -144,12 +159,16 @@
                     let tableRows = [] 
                     for(let log of this.harvestLogsRequest) {
                         if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop||this.reportCrop=="All") {
+                        i = i + 1
                         let tableRow = { 
-                            date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
-                            area: log.area[0].name,
-                            yield: log.quantity[0].value,
-                            units: log.quantity[0].unit.name,
-                            crop: this.idToCropMap.get(log.data.crop_tid)
+                            id: i,
+                            data: [
+                                dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
+                                log.area[0].name,
+                                log.quantity[0].value,
+                                log.quantity[0].unit.name,
+                                log.data.crop_tid
+                            ]
                         } 
                         tableRows.push(tableRow) }}
                     return tableRows }
