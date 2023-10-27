@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Vue sub tab</title>
+    </head>
+    <body>
+        <div id="report-title" v-cloak>
+            <br>
+            <h1 data-cy="page-header">Harvest Report</h1>
+            <p>This page is a <i>mockup</i> simplified harvest report</p>
+            <p>
+                <label for="title">Title:</label>
+                <input type="text" id="reportTitle" value="My Sample Harvest Report" v-model="reportTitle" />
+            </p>
+            <p>
+                <label for="start">Start:</label>
+                <input 
+                    data-cy="start-date"
+                    type="date" 
+                    id="start" 
+                    v-model="reportStartDate" 
+                    value="05/05/2020" 
+                    min="2014-01-01" :disabled="reportStartDate > reportEndDate"
+                    max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+                >
+                <label for="end">End:</label>
+                <input 
+                    data-cy="end-date"
+                    type="date" 
+                    id="end" 
+                    v-model="reportEndDate" 
+                    value="05/15/2020" 
+                    min="2020-05-05" :disabled="reportStartDate > reportEndDate"
+                    max="2022-01-01" :disabled="reportStartDate > reportEndDate"
+                >
+                <p>
+                    <dropdown-with-all data-cy="crop-dropdown"
+                    includes-all 
+                    :selected-val = "reportCrop"
+                    :dropdown-list = cropNamesArray
+                    @selection-changed = "cropChange"
+                    :disabled = false>
+                    Crop:
+                    </dropdown-with-all>
+            
+                    <label for="area">Area:</label>
+                    <select id="area" name="area">
+                        <option v-for="area in areas">{{area}}</option>
+                    </select>
+                </p>
+            </p>
+            <input data-cy="generate-report-button" type="button" value="Generate Report" @click="generateReportButton"/>
+            <hr>
+            <h1 data-cy="report-title" v-if="showReportTitle">{{ reportTitle ? reportTitle : 'Mock Harvest Report' }}</h1>
+            <p>Details:</p>
+            <ul>
+                <li data-cy="farm-name"><strong>Farm:</strong>{{Farm}}</li>
+                <li data-cy="user-name"><strong>User:</strong>{{User}}</li>
+                <li><strong>Language:</strong><span data-cy="lang-name">{{ Language }}</span></li>
+                <br>
+                <li><strong>Start:</strong>{{reportStartDate}}</li>
+                <li><strong>End:</strong>{{reportEndDate}}</li>
+                <li><strong>Crop:</strong>{{reportCrop}}</li>
+            </ul>
+
+            <custom-table data-cy="testing-table"
+                :columns = "columns"
+                :rows = "harvestReportRows" 
+            ></custom-table>
+
+             <p v-else>No matching records</p>
+        </div>
+        <script>
+            var vueDate = new Vue({
+                el:'#report-title',
+                data: {
+                    showReportTitle: false,
+                    Farm:"",
+                    User:"",
+                    Language:"",
+                    reportTitle:"",
+                    reportStartDate: '2020-05-05',
+                    reportEndDate: '2020-05-15',
+                    reportCrop: 'All',
+                    idToCropMap: new Map(),
+                    harvestLogsRequest: [],
+                    areas: [
+                        "All",
+                        "Chuau-1",
+                        "SQ7"
+                    ],
+                    columns:[
+                        {"header": 'Date', "visible": true, "inputType": {'type': 'text'}},
+                        {"header": 'Area', "visible": true, "inputType": {'type': 'dropdown', 'value':["All", "Chuau-1","SQ7"]}},
+                        {"header": 'Crop', "visible": true, "inputType": {'type': 'dropdown', 'value':['Kale', 'Peas', 'Arugula']}},
+                        {"header": 'Yield', "visible": true, "inputType": {'type': 'regex', 'regex': '^[1-9]+[0-9]*$'}},
+                        {"header": 'Units', "visible": true, "inputType": {'type': 'date'}},
+                    ],
+                },
+
+                components: {
+                    'dropdown-with-all': DropdownWithAllComponent,
+                    'custom-table': CustomTableComponent
+                },
+
+                created() {
+                    console.log("HarvestReport Vue instance created!")
+                    getIDToCropMap()
+                    .then((theMap)=>{
+                        this.idToCropMap=theMap;
+                    })
+                    .catch((error)=>{
+                        console.log("Error");
+                    })
+                    getAllPages("/log.json?type=farm_harvest", arr=[])
+                    .then(()=>{
+
+                    })
+                    .catch((err)=>{
+
+                    })
+                },
+                computed: {
+                    cropNamesArray (){
+                        return Array.from(this.idToCropMap.values())
+                    },
+
+                    harvestReportRows() { 
+                    let tableRows = [] 
+                    for(let log of this.harvestLogsRequest) {
+                        if (this.idToCropMap.get(log.data.crop_tid)==this.reportCrop||this.reportCrop=="All") {
+                        let tableRow = { 
+                            data: [
+                                dayjs.unix(log.timestamp).format("YYYY-MM-DD"), 
+                                log.area[0].name,
+                                this.idToCropMap.get(log.data.crop_tid),
+                                log.quantity[0].value,
+                                log.quantity[0].unit.name
+                            ]
+                        } 
+                        tableRows.push(tableRow) }}
+                    return tableRows }
+                },
+
+                methods: { 
+                    cropChange(newCrop) {
+                        this.reportCrop = newCrop
+                    },
+
+                    generateReportButton: function (){
+                        this.showReportTitle = true;
+                        let timestampStart = dayjs(this.reportStartDate).unix() 
+                        let timestampEnd = dayjs(this.reportEndDate).unix()
+                        console.log(timestampStart)
+                        console.log(timestampEnd)
+                        request = "/log.json?type=farm_harvest&timestamp[ge]="+timestampStart+"&timestamp[le]="+timestampEnd
+                        console.log(request)
+                        getAllPages(request,this.harvestLogsRequest)
+
+                        axios 
+                        .get("/farm.json")
+                        .then((response) => {
+                            // Block A:
+                            this.Farm = response.data.name,
+                            this.User = response.data.user.name 
+                            this.Language = response.data.languages.en.name
+                        })
+                        .catch((error) => {
+                            // Block B:
+                            console.log("Error Occurred")
+                            console.log(error)
+                        })
+                        // Block C:
+                        if (this.harvestLogs.length==0) { 
+                            this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Kale", yield: 12, units: "Bunches"}); 
+                        } else if (this.harvestLogs.length==1) {
+                            this.harvestLogs.push({date: "2020-05-01", area: "Orion-1", crop: "Carrot", yield: 12, units: "Bunches"}); 
+                        } else if (this.harvestLogs.length==2) { 
+                            this.harvestLogs.push({date: "2018-05-01", area: "Orion-3", crop: "Cucumber", yield: 9, units: "Bunches"}); 
+                        } 
+                    },
+                
+                    deleteLog: function(Index) { 
+                        this.harvestLogs.splice(Index, 1); 
+                    } 
+                }
+            });
+            Vue.config.devtools = true;
+        </script>
+        
+    </body>
+</html>
