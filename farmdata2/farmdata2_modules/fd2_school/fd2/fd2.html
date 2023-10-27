@@ -114,10 +114,10 @@
                             units: log.quantity[0].unit.name,
                             crop: this.idToCropMap.get(log.data.crop_tid),
                         }
-                        if (tableRow.crop === this.reportCrop && tableRow.area === this.reportArea) {
+                        if (tableRow.crop === this.reportCrop) {
                             tableRows.push(tableRow);
                         }
-                        else if (this.reportCrop === "All" && this.reportArea === "All") {
+                        else if (this.reportCrop === "All") {
                             tableRows.push(tableRow);
                         }
                     }
