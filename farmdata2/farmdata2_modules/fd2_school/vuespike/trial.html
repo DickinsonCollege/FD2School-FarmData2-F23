@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js Form Binding</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Report</h1>
+    <form>
+      <label for="startDate">Start Date:</label>
+      <input type="date" id="startDate" v-model="startDate"><br>
+
+      <label for="endDate">End Date:</label>
+      <input type="date" id="endDate" v-model="endDate"><br>
+
+      <label for="crop">Select Crop:</label>
+      <select id="crop" v-model="selectedCrop">
+        <option v-for="crop in crops" :value="crop">{{ crop }}</option>
+      </select><br>
+
+      <label for="area">Select Area:</label>
+      <select id="area" v-model="selectedArea">
+        <option v-for="area in areas" :value="area">{{ area }}</option>
+      </select>
+    </form>
+
+    <div>
+        <h2>Report:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Area</th>
+              <th>Crop</th>
+              <th>Yield</th>
+              <th>Units</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="harvestLog in harvestLogs" :key="harvestLog.date">
+              <td>{{ harvestLog.date }}</td>
+              <td>{{ harvestLog.area }}</td>
+              <td>{{ harvestLog.crop }}</td>
+              <td>{{ harvestLog.yield }}</td>
+              <td>{{ harvestLog.units }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          harvestLogs: [
+            { date: '2018-05-02', area: 'Chuau-1', crop: 'Kale', yield: 10, units: 'Bunches' },
+            { date: '2018-05-05', area: 'Chuau-2', crop: 'Tomato', yield: 20, units: 'Pounds' }
+            // Add more harvest log objects as needed
+          ],
+          startDate: '',
+          endDate: '',
+          selectedCrop: '',
+          selectedArea: '',
+          crops: ['Crop 1', 'Crop 2', 'Crop 3'], // Array of crop options
+          areas: ['Area 1', 'Area 2', 'Area 3']  // Array of area options
+        }
+      });
+    </script>
+  </body>
+  </html>
