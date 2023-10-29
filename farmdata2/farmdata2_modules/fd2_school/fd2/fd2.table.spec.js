@@ -14,4 +14,11 @@ describe("Test the contents of the harvest report table", () => {
         cy.get("[data-cy=h5]").should("have.text", "Units")
         cy.get("[data-cy=table-headers]").children().should("have.length", "6")
     })
+
+    it("Test filtering by crop", () => {
+        cy.get("[data-cy=generate-report-button]").click()
+        cy.get("[data-cy=crop] > [data-cy=dropdown-input]").select("ASPARAGUS")
+        cy.get("[data-cy=table-body]").children().should("have.length", "5")
+        cy.get("[data-cy=td-r1c3]").should("have.text", "ASPARAGUS     ")
+    })
 })
