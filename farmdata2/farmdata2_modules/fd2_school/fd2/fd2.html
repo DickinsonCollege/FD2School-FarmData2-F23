@@ -50,7 +50,8 @@
         <br>
         <custom-table data-cy="test-table"
             :columns="columns"
-            :rows="harvestReportRows">
+            :rows="harvestReportRows"
+            v-if="hasTable">
 
         </custom-table>
         <p v-if="harvestReportRows.length === 0" data-cy="no-record-message">There are no matching records!</p>
