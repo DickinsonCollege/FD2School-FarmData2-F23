@@ -14,9 +14,13 @@
         <br/>
 
         <label for="crop">Crop:</label>
-        <select data-cy="crop-dropdown" id="crop" name="crop" v-model="reportCrop">
-            <option v-for="crop in cropNames"> {{crop}} </option>
-        </select>
+        <dropdown-with-all data-cy="crop-dropdown"
+            includes-all 
+            :selected-val='reportCrop'
+            :dropdown-list='cropNames'
+            @selection-changed="cropChange">
+            Pick a Crop: 
+        </dropdown-with-all>
 
         <label for="field">Area:</label>
         <select id="field" name="field" v-model="reportField">
@@ -61,6 +65,9 @@
     <script>
         var report = new Vue({
             el: '#report',
+            components: {
+                'dropdown-with-all': DropdownWithAllComponent
+            },
             created() {
                 getIDToCropMap()
                 .then((theMap) => {
@@ -76,7 +83,7 @@
                 reportTitle: 'My Sample Harvest Report',
                 reportStartDate: '2020-05-05',
                 reportEndDate: '2020-05-15',
-                reportCrop: 'Kale',
+                reportCrop: 'All',
                 reportField: 'All',
                 reportFields: [
                     'All',
@@ -133,7 +140,10 @@
                         console.log("Error Occurred")
                         console.log(error)
                     })
-              }
+              },
+            cropChange(newCrop) {
+                this.reportCrop = newCrop
+            }
             }
         })
         Vue.config.devtools = true;
