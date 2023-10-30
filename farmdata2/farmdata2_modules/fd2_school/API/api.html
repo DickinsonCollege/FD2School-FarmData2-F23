@@ -48,9 +48,9 @@
         <p>Details:</p>
 
         <ul>
-        <li><strong>Farm:</strong>technologists</li>
-        <li><strong>User:</strong>manager1</li>
-        <li><strong>Language:</strong>English</li>
+        <li><strong>Farm:</strong>{{ farm }}</li>
+        <li><strong>User:</strong>{{ user }}</li>
+        <li><strong>Language:</strong>{{ language }}</li>
         </ul>
 
         <br>
@@ -91,6 +91,9 @@
     var vueSpike = new Vue({
       el: "#vue_spike2",
       data: {
+          farm: "",
+          user: "",
+          language: "",
           state: "nullReport",
           title: "My Sample Harvest Report",
           startDate: "2020-05-05",
