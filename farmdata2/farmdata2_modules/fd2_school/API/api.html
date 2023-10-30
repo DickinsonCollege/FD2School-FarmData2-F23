@@ -48,9 +48,9 @@
         <p>Details:</p>
 
         <ul>
-        <li><strong>Farm:</strong>{{ farm }}</li>
-        <li><strong>User:</strong>{{ user }}</li>
-        <li><strong>Language:</strong>{{ language }}</li>
+        <li><strong>Farm:</strong> {{ farm }}</li>
+        <li><strong>User:</strong> {{ user }}</li>
+        <li><strong>Language:</strong> {{ language }}</li>
         </ul>
 
         <br>
@@ -91,7 +91,8 @@
     var vueSpike = new Vue({
       el: "#vue_spike2",
       data: {
-          farm: "",
+         love: ""
+          ,farm: "",
           user: "",
           language: "",
           state: "nullReport",
@@ -106,10 +107,14 @@
       methods: {
             saveReport: function(){
                 this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+                this.language = "English";
+                this.user = "manager1";
+                this.farm = "Sample Farm";
             },
             changeState: function(newState){
-                this.state = newState
+                this.state = newState;
             }
+            
 
         }
     })
