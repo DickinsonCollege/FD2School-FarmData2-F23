@@ -45,28 +45,20 @@
             <li><strong>Crop:</strong>{{ reportCrop }}</li>
         </ul>
 
-        <table border=1>
-            <tr v-if="harvestReportRows.length != 0">
-                <th>Row</th>
-                <th>Date</th>
-                <th>Area</th>
-                <th>Crop</th>
-                <th>Yield</th>
-                <th>Units</th>
-            </tr>
-
-            <p v-if="harvestReportRows.length == 0"> no harvest logs to be displayed </p>
-
-            <tr v-for="(logs, index) in harvestReportRows"> <td>{{index + 1}}</td><td v-for="item in logs">{{item}}</td></tr>
-        </table>
-              
+        <UL>
+            <custom-table data-cy="test-table"
+                :columns="columns"
+                :rows="harvestReportRows">
+            </custom-table>
+        </UL>
     </div>
     
     <script>
         var report = new Vue({
             el: '#report',
             components: {
-                'dropdown-with-all': DropdownWithAllComponent
+                'dropdown-with-all': DropdownWithAllComponent,
+                'custom-table': CustomTableComponent
             },
             created() {
                 getIDToCropMap()
@@ -94,7 +86,15 @@
                 user: '',
                 language: '',
                 idToCropMap: new Map(),
-                getAllPagesResult: []
+                getAllPagesResult: [],
+                columns: [
+                    {"header": 'Row', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Date', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Area', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Crop', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Yield', "visible": true, "inputType": {'type': 'no input'}},
+                    {"header": 'Units', "visible": true, "inputType": {'type': 'no input'}},
+                ]
             },
             computed: {
                 cropNames() {
@@ -102,19 +102,26 @@
                 },
                 harvestReportRows() {
                     let tableRows = []
+                    let counter = 1
                     for(let log of this.getAllPagesResult) {
                         let tableRow = {
-                                date: dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
-                                area: log.area[0].name,
-                                crop: this.idToCropMap.get(log.data.crop_tid),
-                                yield: log.quantity[0].value,
-                                units: log.quantity[0].unit.name
+                            id: log.id,
+                            data: [
+                                    counter,
+                                    dayjs.unix(log.timestamp).format("YYYY-MM-DD"),
+                                    log.area[0].name,
+                                    this.idToCropMap.get(log.data.crop_tid),
+                                    log.quantity[0].value,
+                                    log.quantity[0].unit.name
+                                ]
                             }
-                        if(this.idToCropMap.get(log.data.crop_tid) == this.reportCrop) {
+                        if(tableRow.data[3] == this.reportCrop) {
                             tableRows.push(tableRow)
+                            counter = counter + 1
                         }
-                        if(this.reportCrop == "All") {
+                        else if(this.reportCrop == "All") {
                             tableRows.push(tableRow)
+                            counter = counter + 1
                         }
                     }
                     return tableRows
