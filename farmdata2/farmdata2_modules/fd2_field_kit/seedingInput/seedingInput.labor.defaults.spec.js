@@ -10,6 +10,10 @@ describe('Test the seeding input page', () => {
            .should("have.text", "minutes")
         cy.get("[data-cy=time-unit] > [data-cy=dropdown-input] > [data-cy=option1]")
             .should("have.text", "hours")
+        
+        //Checks minutes is the default time units for labor data entry
+        cy.get("[data-cy=time-unit] > [data-cy=dropdown-input] option:selected")
+        .should("have.text", "minutes")
 
     })
 
