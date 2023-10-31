@@ -106,10 +106,23 @@
       },
       methods: {
             saveReport: function(){
-                this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
-                this.language = "English";
-                this.user = "manager1";
-                this.farm = "Sample Farm";
+
+
+                axios.get('/farm.json')  // this line sends the request.
+                .then((response) => {
+                    console.log("Got Response")
+                    console.log(response)
+
+                })
+                .catch((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+
+                })
+                    this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+                    this.language = "English";
+                    this.user = "manager1";
+                    this.farm = "Sample Farm";
             },
             changeState: function(newState){
                 this.state = newState;
