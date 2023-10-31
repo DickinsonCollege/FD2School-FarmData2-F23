@@ -85,6 +85,9 @@
           maxStartDate: "2022-01-01",
           minEndDate: "2020-05-05",
           maxEndDate: "2022-01-01",
+          startTimestamp: "",
+          endTimestamp: "",
+          APIAllDataPages: [],
           idToCropMap: new Map(),
           areas: ["All", "Chuau-1", "SQ7"],
           rowNum: 1,
@@ -126,6 +129,14 @@
                     console.log("Error Occurred")
                     console.log(error)
                })
+
+               let startTimestamp = dayjs(this.startDate).unix();
+               let endTimestamp = dayjs(this.endDate).unix();
+               console.log(startTimestamp);
+               console.log(endTimestamp);
+               console.log("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
+                            + "&timestamp[le]=" + endTimestamp);
+
                this.harvestList.push({Date:"2018-05-01",
                Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
                }),
@@ -133,6 +144,15 @@
                this.user="worker1";
                this.language="english";
 
+               getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
+                            + "&timestamp[le]=" + endTimestamp)
+              .then((res) => {
+                this.APIAllDataPages=res
+              })
+              .catch((err) => {
+                console.log("Error Occurred")
+                console.log(err)
+              })
           },
           generateReport: function(){
             if(this.newReport == ''){
