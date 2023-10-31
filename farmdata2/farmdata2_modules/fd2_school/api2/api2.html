@@ -23,7 +23,7 @@
      <br>
      <br>
      <label for="crops">Crop:</label>
-        <select v-model="crops" id="crops" name="crops">
+        <select v-model="selectedCrop" id="crops" name="crops">
             <option v-for="crops in getCropNames">{{ crops }}</option>
         </select>
      <label for="area">Area:</label>
