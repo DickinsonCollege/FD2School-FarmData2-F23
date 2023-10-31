@@ -91,6 +91,10 @@
     var vueSpike = new Vue({
       el: "#vue_spike2",
       data: {
+          harvestPages: [],
+          harvestRequest: "",
+          endTimestamp: "",
+          startTimestamp: "",
           farm: "",
           user: "",
           language: "",
@@ -111,13 +115,32 @@
                     this.language = response.data.languages.en.name;
                     this.user = response.data.user.name;
                     this.farm = response.data.name;
-
+                    
                 })
                 .catch((error) => {
                     console.log("Error Occurred")
                     console.log(error)
 
                 })
+
+               let startTimestamp = dayjs(this.startDate).unix();
+               let endTimestamp = dayjs(this.endDate).unix();
+                console.log(startTimestamp)
+                console.log(endTimestamp)
+               let harvestRequest = "/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
+                            + "&timestamp[le]=" + endTimestamp;
+               console.log(harvestRequest)
+
+               getAllPages(harvestRequest)
+                .then((res) => {
+                    this.harvestPages = res
+                })
+                .catch((err) => {
+                    console.log("Error Occurred Getting Pages")
+                    console.log(error)
+                })
+
+
 
                 this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
 
