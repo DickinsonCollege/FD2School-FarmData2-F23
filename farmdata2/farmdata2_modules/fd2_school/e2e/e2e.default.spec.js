@@ -9,11 +9,22 @@ describe("Test the harvest report default values", () => {
     .should("have.text", "Harvest Report")
   })
 
-it("Check the default start and end dates", () => {
-  cy.get("[data-cy=start-date]")
-    .should("have.value", "2020-05-05")
-  cy.get("[data-cy=end-date]")
-    .should("have.value","2020-05-15")
-})
+  it("Check the default start and end dates", () => {
+    cy.get("[data-cy=start-date]")
+     .should("have.value", "2020-05-05")
+    cy.get("[data-cy=end-date]")
+      .should("have.value","2020-05-15")
+  })
+  it("Check the crop list elements and length", () => {
+    cy.get("[data-cy=crop-list]").children().eq(0)
+      .should("have.text","ARUGULA")
+    cy.get("[data-cy=crop-list]").children().eq(5)
+      .should("have.text","BEAN-LIMA")
+    cy.get("[data-cy=crop-list]").children().eq(110)
+      .should("have.text","ZUCCHINI")
+    cy.get("[data-cy=crop-list]").children()
+      .should("have.length","111")
+    })
+
 
 })

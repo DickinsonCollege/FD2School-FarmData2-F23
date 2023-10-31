@@ -26,16 +26,26 @@
      
      <br>
      <br>
+
+
      <label for="crops">Crop:</label>
-        <select v-model="selectedCrop" id="crops" name="crops">
-            <option v-for="crops in getCropNames">{{ crops }}</option>
+
+        <select data-cy="crop-list" v-model="selectedCrop" id="crops" name="crops">
+            <option v-for="crops in getCropNames" :value="crops">{{ crops }}</option>
         </select>
+
+
      <label for="area">Area:</label>
+
      <select v-model="areas" id ="area" name="area">
           <option v-for="area in areas">{{ area }}</option>
      </select>
+
+
      <br>
      <br> 
+
+
      <div>
           <input v-model="newReport" type="text" placeholder="Generate a new report">
           <button class="btn btn-primary" @click='clickReport'>Generate Report</button>
