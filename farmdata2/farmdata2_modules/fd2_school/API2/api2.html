@@ -72,7 +72,7 @@
                   <th>Yield</th>
                   <th>Units</th>
                 </tr>
-               <tr v-for="(cell,index) in harvestLogs"> 
+               <tr v-for="(cell,index) in harvestReportRows"> 
                 <td>{{ index + 1 }}</td> 
                 <td>{{ cell.date }}</td> 
                 <td>{{ cell.area }}</td> 
@@ -142,7 +142,7 @@
 
 
 
-                this.harvestLogs.push({date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:12, units:"Bunches"});
+                this.harvestLogs.push({date:"", area:"", crop:"", yield:"", units:""});
 
             },
             changeState: function(newState){
@@ -155,7 +155,23 @@
         computed: {
             cropNames(){
                 return Array.from(this.idToCropMap.values());
-            }
+            },
+
+            harvestReportRows() {
+                let tableRows = []
+                for(let log of this.harvestPages) {
+                    let tableRow = {
+                        date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                        area: log.area[0].name,
+                        yield: log.quantity[0].value,
+                        units: log.quantity[0].unit.name,
+                        crop: this.idToCropMap.get(log.data.crop_tid)
+                    }
+                    tableRows.push(tableRow)
+                }
+                return tableRows
+            }                  
+
         },
 
       created() {
