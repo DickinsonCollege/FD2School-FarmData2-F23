@@ -26,7 +26,7 @@
         <div>
         <label for="crops">Crop:</label>
         <select v-model="crops" id="crops" name="crops">
-            <option v-for="crops in crops">{{ crops }}</option>
+            <option v-for="crops in cropNames">{{ crops }}</option>
         </select>
         
         <label for="area">Area:</label>
@@ -102,6 +102,7 @@
           areas: ["All", "Chuau-1", "SQ7"],
           harvestLogs: [
         ],
+          idToCropMap: new Map()
       },
       methods: {
             saveReport: function(){
@@ -126,7 +127,24 @@
             }
             
 
-        }
+        },
+
+        computed: {
+            cropNames(){
+                return Array.from(this.idToCropMap.values());
+            }
+        },
+
+      created() {
+      getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+
+            .catch((err) => {
+                console.log("error getting ID to CropMap")
+            })
+      },
     })
     Vue.config.devtools = true
   </script>
