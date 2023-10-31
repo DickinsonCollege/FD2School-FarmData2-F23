@@ -1,3 +1,5 @@
+const dayjs = require("dayjs")
+
 describe("Test the harvest report default values", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
@@ -21,6 +23,19 @@ describe("Test the harvest report default values", () => {
         })
 
     })
-
-
+    it("Checks that the default end date is the current date", () => {
+        let currentDate = dayjs().format("YYYY-MM-DD")
+        cy.get("[data-cy=date-select]")
+        .each(($el, index, $all) => {
+            if (index == 1) {
+                expect($el).to.have.value(currentDate)
+            }
+        })
+    })
+    it("Checks that the remainder of the report is not visible", () => {
+        cy.get("[data-cy=filters-panel]").should("not.exist")
+        cy.get("[data-cy=report-table").should("not.exist")
+        cy.get("[data-cy=direct-summary").should("not.exist")
+        cy.get("[data-cy=tray-summary").should("not.exist")
+    })
 })
