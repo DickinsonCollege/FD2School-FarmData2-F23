@@ -60,7 +60,7 @@
                          <th>Yield</th>
                          <th>Units</th>
                     </tr>
-                    <tr v-for="(cell,index) in harvestList">
+                    <tr v-for="(cell,index) in harvestReportRows">
                          <td>{{index + 1}}</td>
                          <td>{{ cell.Date }}</td>
                          <td>{{ cell.Area }}</td>
@@ -91,6 +91,7 @@
           idToCropMap: new Map(),
           areas: ["All", "Chuau-1", "SQ7"],
           rowNum: 1,
+          index: 0,
           harvestList: [],
           selectedCrop: "", // New data property for selected crop
           selectedArea: "", // New data property for selected area
@@ -114,8 +115,24 @@
        computed: {
           getCropNames(){
                return Array.from(this.idToCropMap.values());
-          }
-       },
+          },
+
+          harvestReportRows(){
+            let tableRows = []
+            for(let log of this.APIAllDataPages){
+                let tableRow = {
+                    Date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                    Area: log.area[0].name,
+                    Yield: log.quantity[0].value,
+                    Units: log.quantity[0].unit.name,
+                    Crop: this.idToCropMap.get(log.data.crop_tid)
+		            }
+		            tableRows.push(tableRow)
+	            }
+	            return tableRows
+            }
+
+        },
 
        methods: {
           clickReport: function(){
@@ -154,27 +171,8 @@
                 console.log(err)
               })
           },
-          generateReport: function(){
-            if(this.newReport == ''){
-              this.newReport = '';
-            }
-            else{
-              this.harvestList.push({
-               index: this.rowNum,
-               Date: "2018-05-01",
-               Area: "Orion-3",
-               Crop: "Kale",
-               Yield: "12",
-               Units: "Bunches"
-              });
-            }
-
-            this.newReport = '';
-            
-          }
         }
-
-       })
+     });
      Vue.config.devtools = true;
 </script>
 
