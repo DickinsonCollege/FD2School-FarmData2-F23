@@ -120,6 +120,7 @@
           harvestReportRows(){
             let tableRows = []
             for(let log of this.APIAllDataPages){
+            if(this.idToCropMap.get(log.data.crop_tid) === this.selectedCrop){
                 let tableRow = {
                     Date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
                     Area: log.area[0].name,
@@ -127,9 +128,10 @@
                     Units: log.quantity[0].unit.name,
                     Crop: this.idToCropMap.get(log.data.crop_tid)
 		            }
-		            tableRows.push(tableRow)
-	            }
-	            return tableRows
+		        tableRows.push(tableRow)
+            }
+	        }
+	        return tableRows
             }
 
         },
@@ -149,13 +151,9 @@
 
                let startTimestamp = dayjs(this.startDate).unix();
                let endTimestamp = dayjs(this.endDate).unix();
-               console.log(startTimestamp);
-               console.log(endTimestamp);
-               console.log("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
-                            + "&timestamp[le]=" + endTimestamp);
-
-               this.harvestList.push({Date:"2018-05-01",
-               Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
+               
+               this.harvestList.push({index: 0, Date:"",
+               Area:"", Crop:"", Yield:"",Units:""
                }),
                this.farm="Sample Farm";
                this.user="worker1";
