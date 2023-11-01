@@ -6,8 +6,9 @@
      <h1 data-cy="page-header">Harvest Report</h1>
      <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
      
-     <label for="title">Title:</label>
-     <input v-model="title" type="text" id="title" name="title"/>
+     <label for="headerInput">Title:</label>
+     <input v-model="headerInput" type="text" id="headerInput"
+      name="title" value="My Sample Harvest Report" />
  
      <br>
      <br>
@@ -47,18 +48,28 @@
 
 
      <div>
-          <input v-model="newReport" type="text" placeholder="Generate a new report">
+          <input data-cy="gen-report" v-model="newReport" type="text" placeholder="Generate a new report">
           <button class="btn btn-primary" @click='clickReport'>Generate Report</button>
      </div>
      <hr>
 
-     <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
+     <v-cloak>
+          
+          <h1 data-cy="title-check">{{ (headerInput== "") ? "Mock Harvest Report":headerInput }}</h1>
+     
+     </v-cloak>
+
      <p>Details:</p>
+
      <ul> 
-          <li><b>Farm:</b>{{ farm }}</li>
-          <li><b>User:</b>{{ user }}</li>
-          <li><b>Language:</b>{{ language }}</li>
+          <li data-cy="farm-name"><b>Farm:</b>{{ Farm }}</li>
+          <li data-cy="user-name"><b>User:</b>{{ User }}</li>
+
+          <li><b>Language:</b> <span data-cy="language-check">
+               {{ Language }}</span> </li>
+
           <br>
+
           <li><b>Start:</b>{{startDate}}</li>
           <li><b>End:</b>{{endDate}}</li>
           <li><b>Crop:</b>{{crops}}</li>
@@ -74,7 +85,7 @@
                          <th>Yield</th>
                          <th>Units</th>
                     </tr>
-                    <tr v-for="(cell,index) in harvestReportRows">
+                    <tr v-for="(cell) in harvestReportRows">
                          <td>{{index + 1}}</td>
                          <td>{{ cell.Date }}</td>
                          <td>{{ cell.Area }}</td>
@@ -110,9 +121,11 @@
           selectedCrop: "", // New data property for selected crop
           selectedArea: "", // New data property for selected area
           newReport: "",
-          farm: "",
-          user: "",
-          language: "",
+          Farm: "",
+          User: "",
+          Language: "",
+          header: "",
+          headerInput: "",
           
        },
        created() {
@@ -162,16 +175,17 @@
                     console.log("Error Occurred")
                     console.log(error)
                })
-
+               
                let startTimestamp = dayjs(this.startDate).unix();
                let endTimestamp = dayjs(this.endDate).unix();
                
                this.harvestList.push({index: 0, Date:"",
                Area:"", Crop:"", Yield:"",Units:""
                }),
-               this.farm="Sample Farm";
-               this.user="worker1";
-               this.language="english";
+               this.headerInput = "My Sample Harvest Report";
+               this.Farm="Sample Farm";
+               this.User="manager1";
+               this.Language="English";
 
                getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
                             + "&timestamp[le]=" + endTimestamp)
