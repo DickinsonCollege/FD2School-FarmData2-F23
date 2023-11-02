@@ -7,9 +7,17 @@ describe('test the Seeding Input Form Data defaults', () => {
   })
 
   //Ally's Tests
-  it("", () => {
+  it("Check default value of date input element", () => {
+    cy.get("[data-cy=date-selection] > [data-cy=date-select]")
+      .should("have.value","2023-11-01")
+  })
+
+  it("Check that crop drop down is enabled", () => {
+    cy.get("[data-cy=crop-selection]")
+      .should("exist")
 
   })
+
 
   //Charlie's Tests
   it("Checks if crop drop down is correct", () => {
