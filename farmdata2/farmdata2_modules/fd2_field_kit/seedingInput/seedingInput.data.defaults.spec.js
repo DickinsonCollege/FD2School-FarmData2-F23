@@ -8,8 +8,9 @@ describe('test the Seeding Input Form Data defaults', () => {
 
   //Ally's Tests
   it("Check default value of date input element", () => {
+    const dayjs = require('dayjs')
     cy.get("[data-cy=date-selection] > [data-cy=date-select]")
-      .should("have.value","2023-11-01")
+      .should("have.value",dayjs().format('YYYY-MM-DD').toString())
   })
 
   it("Check that crop drop down is enabled", () => {
