@@ -22,4 +22,20 @@ describe('Test the seeding input page', () => {
 
     })
 
+    it("Test the number of workers field", () => {
+        //Check the field of number of workers should be empty and enabled
+        cy.get("[data-cy=num-worker-input]").should('exist').should("have.value", "")
+    })
+
+    it("Test the time worked field", () => {
+        //Check the field of number of time worked should be empty and enabled
+        cy.get("[data-cy=minute-input]").should('exist').should("have.value", "")
+        cy.get("[data-cy=hour-input]").should('exist').should("have.value", "")
+    })
+
+    it("Test the time unit dropdown", () => {
+        //Check the dropdown for the time units is enabled
+        cy.get("[data-cy=time-unit] > [data-cy=dropdown-input] option:selected").should('exist')
+    })
+
 })
