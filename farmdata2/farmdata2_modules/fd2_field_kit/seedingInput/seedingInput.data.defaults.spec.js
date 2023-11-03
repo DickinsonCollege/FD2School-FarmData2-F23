@@ -36,6 +36,12 @@ describe('test the Seeding Input Form Data defaults', () => {
   })
 
   //Trang's Tests
+  it("Check if it has the header 'Data", () => {
+    cy.get("[data-cy=data_header]")
+      .should("have.text", "Data")
+
+  })
+
   it("", () => {
 
   })
