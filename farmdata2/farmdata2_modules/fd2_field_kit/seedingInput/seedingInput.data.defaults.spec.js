@@ -42,8 +42,10 @@ describe('test the Seeding Input Form Data defaults', () => {
 
   })
 
-  it("", () => {
-
+  it("Check date input element is enabled", () => {
+    cy.get("data-cy=date-selection")
+    .should("exist")
+    
   })
 
   })
