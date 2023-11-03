@@ -22,4 +22,19 @@ describe("Test the harvest report default values", () => {
     })
 
 
+    it("Check the crops in crop dropdown", () => {
+
+        cy.get("[data-cy=crop-drop]").children().eq(0)
+            .should("have.text", "ARUGULA")
+
+        cy.get("[data-cy=crop-drop]").children().eq(4)
+            .should("have.text", "BEAN-FAVA")
+            
+        cy.get("[data-cy=crop-drop]").children().eq(110)
+            .should("have.text", "ZUCCHINI")
+
+        cy.get("[data-cy=crop-drop]").children()
+            .should("have.length", "111")
+    })
+
 })
