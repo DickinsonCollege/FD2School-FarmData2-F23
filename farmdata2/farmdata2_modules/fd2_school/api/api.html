@@ -1,0 +1,161 @@
+<html>
+
+
+<body>
+<div id="vue_spike1" v-cloak>
+     <h1>Harvest Report</h1>
+     <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+     
+     <label for="title">Title:</label>
+     <input v-model="title" type="text" id="title" name="title"/>
+ 
+     <br>
+     <br>
+     
+     <div>
+     <label for="startdate">Start:</label>
+
+     <input type="date" id="startdate" :min="minStartDate" :max="endDate"
+     v-model="startDate"/>
+     <input type="date" id="enddate" :min="startDate" max="maxEndDate"
+     v-model="endDate"/>
+     
+     <br>
+     <br>
+     <label for="crops">Crop:</label>
+        <select v-model="crops" id="crops" name="crops">
+            <option v-for="crops in getCropNames">{{ crops }}</option>
+        </select>
+     <label for="area">Area:</label>
+     <select v-model="areas" id ="area" name="area">
+          <option v-for="area in areas">{{ area }}</option>
+     </select>
+     <br>
+     <br> 
+     <div>
+          <input v-model="newReport" type="text" placeholder="Generate a new report">
+          <button class="btn btn-primary" @click='clickReport'>Generate Report</button>
+     </div>
+     <hr>
+
+     <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
+     <p>Details:</p>
+     <ul> 
+          <li><b>Farm:</b>{{ farm }}</li>
+          <li><b>User:</b>{{ user }}</li>
+          <li><b>Language:</b>{{ language }}</li>
+          <br>
+          <li><b>Start:</b>{{startDate}}</li>
+          <li><b>End:</b>{{endDate}}</li>
+          <li><b>Crop:</b>{{crops}}</li>
+     </ul>
+          <div>
+               
+               <table border = "1">
+                    <tr v-if="harvestList.length > 0">
+                         <th>Row</th>
+                         <th>Date</th>
+                         <th>Area</th>
+                         <th>Crop</th>
+                         <th>Yield</th>
+                         <th>Units</th>
+                    </tr>
+                    <tr v-for="(cell,index) in harvestList">
+                         <td>{{index + 1}}</td>
+                         <td>{{ cell.Date }}</td>
+                         <td>{{ cell.Area }}</td>
+                         <td>{{ cell.Crop }}</td>
+                         <td>{{ cell.Yield }}</td>
+                         <td>{{ cell.Units }}</td>
+                    </tr>
+               </table>
+                
+          </div>   
+</body>
+</div>
+ 
+<script>
+     var vueSpike = new Vue({
+       el: "#vue_spike1",
+       data: {
+          title: "My Sample Harvest Report",
+          startDate: "2020-05-05",
+          endDate: "2020-05-15",
+          minStartDate: "2014-01-01",
+          maxStartDate: "2022-01-01",
+          minEndDate: "2020-05-05",
+          maxEndDate: "2022-01-01",
+          idToCropMap: new Map(),
+          areas: ["All", "Chuau-1", "SQ7"],
+          rowNum: 1,
+          harvestList: [],
+          selectedCrop: "", // New data property for selected crop
+          selectedArea: "", // New data property for selected area
+          newReport: "",
+          farm: "",
+          user: "",
+          language: "",
+          
+       },
+       created() {
+	     getIDToCropMap()
+          .then((theMap) => {
+               this.idToCropMap=theMap
+          })
+
+          .catch((err) => {
+               console.log("error with IDtoCropMap")
+          })
+          },
+       
+       computed: {
+          getCropNames(){
+               return Array.from(this.idToCropMap.values());
+          }
+       },
+
+       methods: {
+          clickReport: function(){
+               axios.get('/farm.json')
+               .then((response) => {
+                    this.farm=response.data.name;
+                    this.user=response.data.user.name;
+                    this.language=response.data.languages.en.name;
+               })
+               .catch ((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+               })
+               this.harvestList.push({Date:"2018-05-01",
+               Area:"Orion-3", Crop:"Kale", Yield:"12",Units:"Bunches"
+               }),
+               this.farm="Sample Farm";
+               this.user="worker1";
+               this.language="english";
+
+          },
+          generateReport: function(){
+            if(this.newReport == ''){
+              this.newReport = '';
+            }
+            else{
+              this.harvestList.push({
+               index: this.rowNum,
+               Date: "2018-05-01",
+               Area: "Orion-3",
+               Crop: "Kale",
+               Yield: "12",
+               Units: "Bunches"
+              });
+            }
+
+            this.newReport = '';
+            
+          }
+        }
+
+       })
+     Vue.config.devtools = true;
+</script>
+
+</html>    
