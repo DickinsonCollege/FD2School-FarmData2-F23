@@ -29,11 +29,14 @@
      <br>
 
 
-     <label for="crops">Crop:</label>
+     <label for="crop">Crop:</label>
 
-        <select data-cy="crop-list" v-model="selectedCrop" id="crops" name="crops">
-            <option v-for="crops in getCropNames" :value="crops">{{ crops }}</option>
-        </select>
+    <dropdown-with-all data-cy="crop-dropdown" 
+            includes-all
+            :selected-val='selectedCrop' 
+            :dropdown-list='getCropNames' 
+            @selection-changed="changeCrop">
+    </dropdown-with-all>
 
 
      <label for="area">Area:</label>
@@ -73,7 +76,7 @@
 
           <li><b>Start:</b>{{startDate}}</li>
           <li><b>End:</b>{{endDate}}</li>
-          <li><b>Crop:</b>{{crops}}</li>
+          <li><b>Crop:</b>{{selectedCrop}}</li>
      </ul>
           <div>
                
@@ -119,7 +122,7 @@
           rowNum: 1,
           index: 0,
           harvestList: [],
-          selectedCrop: "", // New data property for selected crop
+          selectedCrop: "All", // New data property for selected crop
           selectedArea: "", // New data property for selected area
           newReport: "",
           Farm: "",
@@ -156,7 +159,7 @@
                     Units: log.quantity[0].unit.name,
                     Crop: this.idToCropMap.get(log.data.crop_tid)
 		            }
-		        tableRows.push(tableRow)
+                    tableRows.push(tableRow)
             }
 	        }
 	        return tableRows
@@ -164,8 +167,19 @@
 
         },
 
+        components: {
+            'dropdown-with-all': DropdownWithAllComponent,
+        },
+
+
        methods: {
-          clickReport: function(){
+          
+        changeCrop(newCrop) {
+            this.selectedCrop = newCrop
+        },
+        
+        
+        clickReport: function(){
                axios.get('/farm.json')
                .then((response) => {
                     this.Farm=response.data.name;
