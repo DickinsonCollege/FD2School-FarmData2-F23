@@ -151,7 +151,6 @@
           harvestReportRows(){
             let tableRows = []
             for(let log of this.APIAllDataPages){
-            if(this.idToCropMap.get(log.data.crop_tid) === this.selectedCrop){
                 let tableRow = {
                     Date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
                     Area: log.area[0].name,
@@ -159,8 +158,13 @@
                     Units: log.quantity[0].unit.name,
                     Crop: this.idToCropMap.get(log.data.crop_tid)
 		            }
-                    tableRows.push(tableRow)
-            }
+                    if(this.selectedCrop == "All"){
+                         tableRows.push(tableRow)
+                    }
+                    else if(tableRow.Crop == this.selectedCrop){
+                         tableRows.push(tableRow)
+                    }
+                    
 	        }
 	        return tableRows
             }
