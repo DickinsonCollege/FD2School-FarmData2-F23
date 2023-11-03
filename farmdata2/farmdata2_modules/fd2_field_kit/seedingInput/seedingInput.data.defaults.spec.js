@@ -6,22 +6,24 @@ describe('test the Seeding Input Form Data defaults', () => {
     cy.visit('/farm/fd2-field-kit/seedingInput')
   })
 
-  //Ally's Tests
+
   it("Check default value of date input element", () => {
+    //check that date input element is enabled
+    cy.get("[data-cy=date-selection]")
+      .should("exist")
+
+    //check that default value is correct
     const dayjs = require('dayjs')
     cy.get("[data-cy=date-selection] > [data-cy=date-select]")
       .should("have.value",dayjs().format('YYYY-MM-DD').toString())
   })
 
-  it("Check that crop drop down is enabled", () => {
-    cy.get("[data-cy=crop-selection]")
-      .should("exist")
 
-  })
-
-
-  //Charlie's Tests
   it("Checks if crop drop down is correct", () => {
+    //check that drop down is enabled
+    cy.get("[data-cy=crop-selection]")
+    .should("exist")
+
     //Checks if the drop down has a selected value; it should not
     cy.get("[data-cy=crop-selection]")
       .should("have.value","")
@@ -35,17 +37,11 @@ describe('test the Seeding Input Form Data defaults', () => {
       .should("have.text","ZUCCHINI")
   })
 
-  //Trang's Tests
   it("Check if it has the header 'Data", () => {
     cy.get("[data-cy=data_header]")
       .should("have.text", "Data")
 
   })
 
-  it("Check date input element is enabled", () => {
-    cy.get("data-cy=date-selection")
-    .should("exist")
-    
-  })
 
   })
