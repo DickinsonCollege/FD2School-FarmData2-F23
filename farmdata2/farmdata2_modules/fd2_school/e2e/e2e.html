@@ -1,0 +1,206 @@
+<html>
+
+
+<body>
+<div id="vue_spike1" v-cloak>
+     <h1 data-cy="page-header">Harvest Report</h1>
+     <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+     
+     <label for="headerInput">Title:</label>
+     <input v-model="headerInput" type="text" id="headerInput"
+      name="title" value="My Sample Harvest Report" />
+ 
+     <br>
+     <br>
+     
+     <div>
+     <label for="startdate">Start:</label>
+
+     <input data-cy ="start-date" type="date" id="startdate" :min="minStartDate" :max="endDate"
+     v-model="startDate"/>
+
+
+     <label for="enddate">End:</label>
+     
+     <input data-cy ="end-date" type="date" id="enddate" :min="startDate" max="maxEndDate"
+     v-model="endDate"/>
+     
+     <br>
+     <br>
+
+
+     <label for="crops">Crop:</label>
+
+        <select data-cy="crop-list" v-model="selectedCrop" id="crops" name="crops">
+            <option v-for="crops in getCropNames" :value="crops">{{ crops }}</option>
+        </select>
+
+
+     <label for="area">Area:</label>
+
+     <select v-model="areas" id ="area" name="area">
+          <option v-for="area in areas">{{ area }}</option>
+     </select>
+
+
+     <br>
+     <br> 
+
+
+     <div>
+          <input  v-model="newReport" type="text" placeholder="Generate a new report">
+          <button data-cy="gen-report" class="btn btn-primary"
+           @click='clickReport' type="button">Generate Report</button>
+     </div>
+     <hr>
+
+     <v-cloak>
+          
+          <h1 data-cy="title-check">{{ (headerInput== "") ? "Mock Harvest Report":headerInput }}</h1>
+     
+     </v-cloak>
+
+     <p>Details:</p>
+
+     <ul> 
+          <li data-cy="farm-name"><b>Farm:</b>{{ Farm }}</li>
+          <li data-cy="user-name"><b>User:</b>{{ User }}</li>
+
+          <li><b>Language:</b> <span data-cy="language-check">
+               {{ Language }} </span> </li>
+
+          <br>
+
+          <li><b>Start:</b>{{startDate}}</li>
+          <li><b>End:</b>{{endDate}}</li>
+          <li><b>Crop:</b>{{crops}}</li>
+     </ul>
+          <div>
+               
+               <table border = "1">
+                    <tr v-if="harvestList.length > 0">
+                         <th>Row</th>
+                         <th>Date</th>
+                         <th>Area</th>
+                         <th>Crop</th>
+                         <th>Yield</th>
+                         <th>Units</th>
+                    </tr>
+                    <tr v-for="(cell) in harvestReportRows">
+                         <td>{{index + 1}}</td>
+                         <td>{{ cell.Date }}</td>
+                         <td>{{ cell.Area }}</td>
+                         <td>{{ cell.Crop }}</td>
+                         <td>{{ cell.Yield }}</td>
+                         <td>{{ cell.Units }}</td>
+                    </tr>
+               </table>
+                
+          </div>   
+</body>
+</div>
+ 
+<script>
+     var vueSpike = new Vue({
+       el: "#vue_spike1",
+       data: {
+          title: "My Sample Harvest Report",
+          startDate: "2020-05-05",
+          endDate: "2020-05-15",
+          minStartDate: "2014-01-01",
+          maxStartDate: "2022-01-01",
+          minEndDate: "2020-05-05",
+          maxEndDate: "2022-01-01",
+          startTimestamp: "",
+          endTimestamp: "",
+          APIAllDataPages: [],
+          idToCropMap: new Map(),
+          areas: ["All", "Chuau-1", "SQ7"],
+          rowNum: 1,
+          index: 0,
+          harvestList: [],
+          selectedCrop: "", // New data property for selected crop
+          selectedArea: "", // New data property for selected area
+          newReport: "",
+          Farm: "",
+          User: "",
+          Language: "",
+          header: "",
+          headerInput: "",
+          
+       },
+       created() {
+	     getIDToCropMap()
+          .then((theMap) => {
+               this.idToCropMap=theMap
+          })
+
+          .catch((err) => {
+               console.log("error with IDtoCropMap")
+          })
+          },
+       
+       computed: {
+          getCropNames(){
+               return Array.from(this.idToCropMap.values());
+          },
+
+          harvestReportRows(){
+            let tableRows = []
+            for(let log of this.APIAllDataPages){
+            if(this.idToCropMap.get(log.data.crop_tid) === this.selectedCrop){
+                let tableRow = {
+                    Date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                    Area: log.area[0].name,
+                    Yield: log.quantity[0].value,
+                    Units: log.quantity[0].unit.name,
+                    Crop: this.idToCropMap.get(log.data.crop_tid)
+		            }
+		        tableRows.push(tableRow)
+            }
+	        }
+	        return tableRows
+            }
+
+        },
+
+       methods: {
+          clickReport: function(){
+               axios.get('/farm.json')
+               .then((response) => {
+                    this.Farm=response.data.name;
+                    this.User=response.data.user.name;
+                    this.Language=response.data.languages.en.name;
+               })
+               .catch ((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+               })
+               
+               let startTimestamp = dayjs(this.startDate).unix();
+               let endTimestamp = dayjs(this.endDate).unix();
+               
+               this.harvestList.push({index: 0, Date:"",
+               Area:"", Crop:"", Yield:"",Units:""
+               }),
+               this.headerInput = "My Sample Harvest Report";
+               this.Farm=" Sample Farm";
+               this.User="manager1";
+               this.Language="English";
+
+               getAllPages("/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
+                            + "&timestamp[le]=" + endTimestamp)
+              .then((res) => {
+                this.APIAllDataPages=res
+              })
+              .catch((err) => {
+                console.log("Error Occurred")
+                console.log(err)
+              })
+          },
+        }
+     });
+     Vue.config.devtools = true;
+</script>
+
+</html>    
