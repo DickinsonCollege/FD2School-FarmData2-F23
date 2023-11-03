@@ -1,6 +1,6 @@
 const dayjs = require("dayjs")
 
-describe("Test the harvest report default values", () => {
+describe("Test the seeding report summary values values", () => {
     beforeEach(() => {
         cy.login("manager1", "farmdata2")
         cy.visit("/farm/fd2-barn-kit/seedingReport")
@@ -9,7 +9,7 @@ describe("Test the harvest report default values", () => {
         cy.get('[data-cy=generate-rpt-btn').click()
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('BEAN')
     })
-    it("", () => {
-  
+    it("Tests total row feet planted summary value", () => {
+        cy.get('[data-cy=direct-total-hours').should('have.text',.06)
     })
 })
