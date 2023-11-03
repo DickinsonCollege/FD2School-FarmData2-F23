@@ -37,17 +37,16 @@
 
         <br>
 
-        <button type="button" v-on:click="saveReport" @click='changeState("activeReport")'>Generate Report</button>
+        <button data-cy="generate-report-button" type="button" v-on:click="saveReport" @click='changeState("activeReport")'>Generate Report</button>
 
         <hr>
 
-        
-        <v-cloak><h1>{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
+        <v-cloak><h1 v-if='state === "activeReport"' data-cy="title-element" >{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
     
 
-        <p>Details:</p>
+        <p v-if='state === "activeReport"'>Details:</p>
 
-        <ul>
+        <ul v-if='state === "activeReport"'>
         <li><strong>Farm:</strong> {{ farm }}</li>
         <li><strong>User:</strong> {{ user }}</li>
         <li><strong>Language:</strong> {{ language }}</li>
@@ -55,7 +54,7 @@
 
         <br>
         
-        <ul>
+        <ul v-if='state === "activeReport"'>
             <li><strong>Start:</strong> {{ startDate }}</li>
             <li><strong>End:</strong> {{ endDate }}</li>
             <li><strong>Crop:</strong> {{ crops }}</li>
