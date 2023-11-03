@@ -25,10 +25,13 @@
 
         <div>
         <label for="crops">Crop:</label>
-        <select data-cy="crop-drop" v-model="crops" id="crops" name="crops">
-            <option v-for="crops in cropNames">{{ crops }}</option>
-        </select>
-        
+        <dropdown-with-all data-cy="crop-drop" 
+        includes-all
+        :selected-val='pickedCrop' 
+        :dropdown-list='cropNames' 
+        @selection-changed="cropChange">
+        </dropdown-with-all>
+
         <label for="area">Area:</label>
         <select v-model="areas" id ="area" name="area">
             <option v-for="area in areas">{{ area }}</option>
@@ -88,6 +91,10 @@
 
 <script>
     var vueSpike = new Vue({
+        components: {
+            
+        'dropdown-with-all': DropdownWithAllComponent
+    },
       el: "#vue_spike2",
       data: {
           harvestPages: [],
@@ -102,6 +109,7 @@
           startDate: "2020-05-05",
           endDate: "2020-05-15",
           crops: ["Kale", "Peas", "Broccoli"],
+          pickedCrop : "All",
           areas: ["All", "Chuau-1", "SQ7"],
           harvestLogs: [
         ],
@@ -146,6 +154,11 @@
             },
             changeState: function(newState){
                 this.state = newState;
+            },
+
+            cropChange(newCrop) {
+                 this.pickedCrop = newCrop
+                 
             }
             
 
@@ -166,11 +179,16 @@
                         units: log.quantity[0].unit.name,
                         crop: this.idToCropMap.get(log.data.crop_tid)
                     }
-                    tableRows.push(tableRow)
-                }
-                return tableRows
-            }                  
-
+                if(this.pickedCrop == "All"){
+                         tableRows.push(tableRow)
+                    }
+                    else if(tableRow.crop == this.pickedCrop){
+                         tableRows.push(tableRow)
+                    }
+            }    
+        
+            return tableRows      
+            }        
         },
 
       created() {
