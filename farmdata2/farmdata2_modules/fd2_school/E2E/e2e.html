@@ -46,10 +46,10 @@
 
         <p v-if='state === "activeReport"'>Details:</p>
 
-        <ul v-if='state === "activeReport"'>
+        <ul data-cy="report-info" v-if='state === "activeReport"'>
         <li><strong>Farm:</strong> {{ farm }}</li>
         <li><strong>User:</strong> {{ user }}</li>
-        <li><strong>Language:</strong> {{ language }}</li>
+        <li><strong>Language:</strong> <span data-cy="language">{{ language }}</span></li>
         </ul>
 
         <br>

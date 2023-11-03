@@ -16,6 +16,21 @@ describe("Test  values after clicking Generate Report", () => {
 
         
     })
+    it("Check Report Info", () => {
+
+        cy.get("[data-cy=generate-report-button]").click()
+
+        cy.get("[data-cy=report-info]").children().eq(0)
+            .should("contain.text", "Sample Farm")
+
+        cy.get("[data-cy=report-info]").children().eq(1)
+            .should("contain.text", "manager1")
+
+        cy.get("[data-cy=language]")
+            .should("contain.text", "English")
+        
+    })
+
 
 
 })
