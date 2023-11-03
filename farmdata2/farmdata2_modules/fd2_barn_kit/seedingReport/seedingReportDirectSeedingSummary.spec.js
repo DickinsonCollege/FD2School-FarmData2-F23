@@ -9,7 +9,19 @@ describe("Test the seeding report summary values values", () => {
         cy.get('[data-cy=generate-rpt-btn').click()
         cy.get('[data-cy=crop-dropdown] > [data-cy=dropdown-input]').select('BEAN')
     })
-    it("Tests total row feet planted summary value", () => {
+    it("Tests total row feet planted", () => {
+        cy.get('[data-cy=direct-total-rowft').should('have.text',210)
+    })
+    it("Tests total bed feet planted summary value", () => {
+        cy.get('[data-cy=direct-total-bedft').should('have.text',105)
+    })
+    it("Tests total hours summary value", () => {
         cy.get('[data-cy=direct-total-hours').should('have.text',.06)
+    })
+    it("Tests Average row feet/hr summary value", () => {
+        cy.get('[data-cy=direct-total-rowft-hour').should('have.text',3500)
+    })
+    it("Tests Average bed feet/hr summary value", () => {
+        cy.get('[data-cy=direct-total-bedfr-hour').should('have.text',1750)
     })
 })
