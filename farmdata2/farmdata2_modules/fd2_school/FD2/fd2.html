@@ -111,7 +111,6 @@
             {"header": "Yield", "visible": true, "inputType":{"type":"no input"}},
             {"header": "Units", "visible": true, "inputType":{"type":"no input"}},
           ],
-          index: 0,
       
       
         },
@@ -170,26 +169,29 @@
             },
 
             harvestReportRows() {
+                index = 1
                 let tableRows = []
                 for(let log of this.harvestPages) {
                     let tableRow = {
-                        id:log.data.crop_tid,
+                    id:log.data.crop_tid,
                     data:[
-                         this.index,
+                         index,
                          dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
                          log.area[0].name,
-                         log.quantity[0].value,
+                         this.idToCropMap.get(log.data.crop_tid),
                          log.quantity[0].unit.name,
-                         this.idToCropMap.get(log.data.crop_tid)
+                         log.quantity[0].value
                     ]
                     }
                 if(this.pickedCrop == "All"){
                          tableRows.push(tableRow)
                     }
-                else if(tableRow.data[1] == this.selectedCrop){
+                else if(tableRow.data[3] == this.pickedCrop){
                          tableRows.push(tableRow)
                     }
-                this.index = this.index+1
+
+                index++
+                
             }    
         
             return tableRows      
