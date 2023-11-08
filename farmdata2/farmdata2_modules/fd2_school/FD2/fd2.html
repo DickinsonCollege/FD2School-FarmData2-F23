@@ -1,0 +1,215 @@
+<html>
+
+<div id="vue_spike2" v-cloak>
+    <body>
+        <p>
+        <h1 data-cy="page-header">Harvest Report</h1>
+        <p>This page is a <i>mockup</i> of a simplified harvest report.</p>
+
+        
+        <label for="title">Title:</label>
+        <input v-model="title" type="text" id="title" name="title"/>
+        
+        <br>
+
+        <div>
+        <label for="startdate">Start:</label>
+        <input data-cy="start-date" type="date" id="startdate" name="start_date" 
+            v-model ="startDate" min="2014-01-01" :max="endDate"/>
+        <label for="enddate">End:</label>
+        <input data-cy="end-date"  type="date" id="enddate" name="end_date" 
+            v-model ="endDate"  :min="startDate" max="2022-01-01"/>
+        </div>
+
+        <br>
+
+        <div>
+        <label for="crops">Crop:</label>
+        <dropdown-with-all data-cy="crop-drop" 
+        includes-all
+        :selected-val='pickedCrop' 
+        :dropdown-list='cropNames' 
+        @selection-changed="cropChange">
+        </dropdown-with-all>
+
+        <label for="area">Area:</label>
+        <select v-model="areas" id ="area" name="area">
+            <option v-for="area in areas">{{ area }}</option>
+          </select>
+        </div>
+
+        <br>
+
+        <button data-cy="generate-report-button" type="button" v-on:click="saveReport" @click='changeState("activeReport")'>Generate Report</button>
+
+        <hr>
+
+        <v-cloak><h1 v-if='state === "activeReport"' data-cy="title-element" >{{ title ? title : "Mock Harvest Report" }}</h1></v-cloak>
+    
+
+        <p v-if='state === "activeReport"'>Details:</p>
+
+        <ul data-cy="report-info" v-if='state === "activeReport"'>
+        <li><strong>Farm:</strong> {{ farm }}</li>
+        <li><strong>User:</strong> {{ user }}</li>
+        <li><strong>Language:</strong> <span data-cy="language">{{ language }}</span></li>
+        </ul>
+
+        <br>
+        
+        <ul v-if='state === "activeReport"'>
+            <li><strong>Start:</strong> {{ startDate }}</li>
+            <li><strong>End:</strong> {{ endDate }}</li>
+            <li><strong>Crop:</strong> {{ crops }}</li>
+            </ul>
+
+        <p v-if='state === "nullReport" || harvestLogs.length === 0'>There are no matching records</p>
+        <div v-if='state === "activeReport" && !(harvestLogs.length === 0)' >
+            <ul>     
+                <custom-table data-cy ="report-table"
+                     :columns="columns"
+                     :rows = "harvestReportRows"
+                ></custom-table>     
+           </ul>   
+        </div>
+    </body>
+</div>
+
+<script>
+    var vueSpike = new Vue({
+        components: {
+            
+        'dropdown-with-all': DropdownWithAllComponent,
+
+        'custom-table': CustomTableComponent,
+    },
+      el: "#vue_spike2",
+      data: {
+          harvestPages: [],
+          harvestRequest: "",
+          endTimestamp: "",
+          startTimestamp: "",
+          farm: "",
+          user: "",
+          language: "",
+          state: "nullReport",
+          title: "My Sample Harvest Report",
+          startDate: "2020-05-05",
+          endDate: "2020-05-15",
+          crops: ["Kale", "Peas", "Broccoli"],
+          pickedCrop : "All",
+          areas: ["All", "Chuau-1", "SQ7"],
+          harvestLogs: [
+        ],
+          idToCropMap: new Map(),
+
+          columns: [
+            {"header": "Row", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Date", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Area", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Crop", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Yield", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Units", "visible": true, "inputType":{"type":"no input"}},
+          ],
+      
+      
+        },
+      methods: {
+            saveReport: function(){
+                axios.get('/farm.json')  // this line sends the request.
+                .then((response) => {
+                    this.language = response.data.languages.en.name;
+                    this.user = response.data.user.name;
+                    this.farm = response.data.name;
+                    
+                })
+                .catch((error) => {
+                    console.log("Error Occurred")
+                    console.log(error)
+
+                })
+
+               let startTimestamp = dayjs(this.startDate).unix();
+               let endTimestamp = dayjs(this.endDate).unix();
+                console.log(startTimestamp)
+                console.log(endTimestamp)
+               let harvestRequest = "/log.json?type=farm_harvest&timestamp[ge]=" + startTimestamp 
+                            + "&timestamp[le]=" + endTimestamp;
+               console.log(harvestRequest)
+
+               getAllPages(harvestRequest)
+                .then((res) => {
+                    this.harvestPages = res
+                })
+                .catch((err) => {
+                    console.log("Error Occurred Getting Pages")
+                    console.log(error)
+                })
+
+
+
+                this.harvestLogs.push({date:"", area:"", crop:"", yield:"", units:""});
+
+            },
+            changeState: function(newState){
+                this.state = newState;
+            },
+
+            cropChange(newCrop) {
+                 this.pickedCrop = newCrop
+                 
+            }
+            
+
+        },
+
+        computed: {
+            cropNames(){
+                return Array.from(this.idToCropMap.values());
+            },
+
+            harvestReportRows() {
+                index = 1
+                let tableRows = []
+                for(let log of this.harvestPages) {
+                    let tableRow = {
+                    id:log.data.crop_tid,
+                    data:[
+                         index,
+                         dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                         log.area[0].name,
+                         this.idToCropMap.get(log.data.crop_tid),
+                         log.quantity[0].unit.name,
+                         log.quantity[0].value
+                    ]
+                    }
+                if(this.pickedCrop == "All"){
+                         tableRows.push(tableRow)
+                    }
+                else if(tableRow.data[3] == this.pickedCrop){
+                         tableRows.push(tableRow)
+                    }
+
+                index++
+                
+            }    
+        
+            return tableRows      
+            }        
+        },
+
+      created() {
+      getIDToCropMap()
+            .then((theMap) => {
+                this.idToCropMap = theMap;
+            })
+
+            .catch((err) => {
+                console.log("error getting ID to CropMap")
+            })
+      },
+    })
+    Vue.config.devtools = true
+  </script>
+
+  </html>
