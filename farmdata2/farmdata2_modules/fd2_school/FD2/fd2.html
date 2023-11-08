@@ -65,26 +65,12 @@
 
         <p v-if='state === "nullReport" || harvestLogs.length === 0'>There are no matching records</p>
         <div v-if='state === "activeReport" && !(harvestLogs.length === 0)' >
-            <table border=1>
-                <tr>
-                  <th>Row</th>
-                  <th>Date</th>
-                  <th>Area</th>
-                  <th>Crop</th>
-                  <th>Yield</th>
-                  <th>Units</th>
-                </tr>
-               <tr v-for="(cell,index) in harvestReportRows"> 
-                <td>{{ index + 1 }}</td> 
-                <td>{{ cell.date }}</td> 
-                <td>{{ cell.area }}</td> 
-                <td>{{ cell.crop }}</td> 
-                <td>{{ cell.yield }}</td> 
-                <td>{{ cell.units }}</td>
-              </tr>
-              </table>
-              
-
+            <ul>     
+                <custom-table data-cy="report-table"
+                     :columns="columns"
+                     :rows = "harvestReportRows"
+                ></custom-table>     
+           </ul>   
         </div>
     </body>
 </div>
@@ -93,7 +79,9 @@
     var vueSpike = new Vue({
         components: {
             
-        'dropdown-with-all': DropdownWithAllComponent
+        'dropdown-with-all': DropdownWithAllComponent,
+
+        'custom-table': CustomTableComponent,
     },
       el: "#vue_spike2",
       data: {
@@ -113,8 +101,20 @@
           areas: ["All", "Chuau-1", "SQ7"],
           harvestLogs: [
         ],
-          idToCropMap: new Map()
-      },
+          idToCropMap: new Map(),
+
+          columns: [
+            {"header": "Row", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Date", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Area", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Crop", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Yield", "visible": true, "inputType":{"type":"no input"}},
+            {"header": "Units", "visible": true, "inputType":{"type":"no input"}},
+          ],
+          index: 0,
+      
+      
+        },
       methods: {
             saveReport: function(){
                 axios.get('/farm.json')  // this line sends the request.
@@ -173,18 +173,23 @@
                 let tableRows = []
                 for(let log of this.harvestPages) {
                     let tableRow = {
-                        date: dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
-                        area: log.area[0].name,
-                        yield: log.quantity[0].value,
-                        units: log.quantity[0].unit.name,
-                        crop: this.idToCropMap.get(log.data.crop_tid)
+                        id:log.data.crop_tid,
+                    data:[
+                         this.index,
+                         dayjs.unix(log.timestamp).format('MM/DD/YYYY'),
+                         log.area[0].name,
+                         log.quantity[0].value,
+                         log.quantity[0].unit.name,
+                         this.idToCropMap.get(log.data.crop_tid)
+                    ]
                     }
                 if(this.pickedCrop == "All"){
                          tableRows.push(tableRow)
                     }
-                    else if(tableRow.crop == this.pickedCrop){
+                else if(tableRow.data[1] == this.selectedCrop){
                          tableRows.push(tableRow)
                     }
+                this.index = this.index+1
             }    
         
             return tableRows      
