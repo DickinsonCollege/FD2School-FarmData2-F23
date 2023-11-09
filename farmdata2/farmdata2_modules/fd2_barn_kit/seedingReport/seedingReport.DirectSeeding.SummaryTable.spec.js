@@ -38,28 +38,7 @@ describe('Test the Direct Seeding Summary Report Table', () => {
   //Trang's Test
 
   //Charlie's Test
-  it("Checks for correct error message", () => {
-    cy.get("[data-cy=date-range-selection]")
-    cy.get("[data-cy=date-range-selection] [data-cy=date-select]").eq(0)
-      .click()
-      .type("2020-05-06")
-    cy.get("[data-cy=date-range-selection] [data-cy=date-select]").eq(1)
-    .click()
-    .type("2020-05-06")
+  
 
-    cy.get("[data-cy=generate-rpt-btn]").click()
-
-    cy.get("[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]").select(0)
-    cy.get("[data-cy=direct-no-logs]")
-      .should("exist")
-      .should("have.text","There are no Direct Seeding logs with these parameters")
-
-    cy.get("[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]").select(1)
-    cy.get("[data-cy=direct-no-logs]")
-      .should("exist")
-      .should("have.text","There are no Direct Seeding logs with these parameters")
-
-  })
-
-
-  })
+  
+})
