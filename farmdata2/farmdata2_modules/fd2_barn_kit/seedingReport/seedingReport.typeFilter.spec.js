@@ -16,7 +16,7 @@ describe('Test the seeding input page', () => {
                 .click()
 
         //select All for the type of seeding
-        cy.get("[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]").select("All")
+        cy.get("[data-cy=seeding-type-dropdown]>[data-cy=dropdown-input]").select("All")
 
         //check if table has both direct and tray seedings
     })
@@ -26,33 +26,22 @@ describe('Test the seeding input page', () => {
 
     //when "Tray" is selected the table shows only tray seedings. 
     it("Check table showing only tray seedings", () => {
-                //Choose a specific date range
-                cy.get('[data-cy=start-date-select]')
+        //Choose a specific date range
+        cy.get('[data-cy=start-date-select]')
                 .type('2019-01-01')
         cy.get('[data-cy=end-date-select]')
-                .type('2019-03-01')
+                .type('2019-02-15')
         cy.get('[data-cy=generate-rpt-btn]')
                 .click()
         cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select("Tray Seedings")
 
-        cy.get('[data-cy=r1-Area]')
-        .should("have.text", "SEEDING BENCH")
+        let rows = ["0", "1", "2"]
+        for (let i=0; i < rows.length; i++){
+                cy.get('[data-cy=r'+ rows[i] +'-Area]')
+                .should("have.text", "SEEDING BENCH")
+        }
     })
 
-        //when "Tray" is selected the table shows only tray seedings. 
-        it("Check table showing only tray seedings", () => {
-                //Choose a specific date range
-                cy.get('[data-cy=start-date-select]')
-                .type('2019-01-01')
-        cy.get('[data-cy=end-date-select]')
-                .type('2019-03-01')
-        cy.get('[data-cy=generate-rpt-btn]')
-                .click()
-        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select("Tray Seedings")
-
-        cy.get('[data-cy=r1-Area]')
-        .should("have.text", "SEEDING BENCH")
-    })
 
         //Only the seeding types available in the date range are shown in the dropdown 
         it("Check available seeding types are shown in dropdown in date range", () => {
