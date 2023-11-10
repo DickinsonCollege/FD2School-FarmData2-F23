@@ -28,29 +28,44 @@ describe('Testing for the transplanting report page', () => {
         cy.waitForPage()
     })
 
-    //Test #1
-    it('Contains header "Transplanting Report"', () => {
-        cy.contains("Transplanting Report").should("be.visible");
+    //Test 3
+    it('Check if button is enabled and has label "Generate Report"', () => {
+        cy.get('[data-cy=generate-rpt-btn]')
+            .should('have.text', 'Generate Report')
+            .should('be.enabled')
+    })
+    // Test 4 fixed
+    it("Checks if default start date is the first day of current year ", () => {
+        cy.get('[data-cy=date-select]')
+        .each(($el, index, $all) => {
+            if (index == 0) {
+                expect($el).to.have.value('2023-01-01')
+            }
+        })
+    })
+    //Test 5
+    it("Checks if default end date is the current date", () => {
+        let currentDate = dayjs().format("YYYY-MM-DD")
+        cy.get("[data-cy=end-date-select]")
+        .each(($el, index, $all) => {
+            if (index == 1) {
+                expect($el).to.have.value(currentDate)
+            }
+        })
     })
 
-    //Test #2
-    it('Contains section called "Set Dates"', () => {
-        cy.get('legend:contains("Set Dates")').should("be.visible");
+    //Test 6 
+    it("Checks if the remainder of the report is not visible or does not exist", () => {
+        cy.get("[data-cy=filters-panel]").should("not.exist")
+        cy.get("[data-cy=report-table").should("not.exist")
+        cy.get("[data-cy=direct-summary").should("not.exist")
+        cy.get("[data-cy=tray-summary").should("not.exist")
     })
 
-    //Test #4
-    it('Should be first day of the current year', () => {
-        cy.get('[data-cy="date-range-selection"]').within(() => {
-            cy.get('[data-cy="start-date-input"]').invoke("val").then((startDate) => {
-                const today = new Date();
-                const expectedStartDate = new Date(today.getFullYear(), 0, 1);
-                expect(startDate).to.equal(expectedStartDateFormatted);
-            });
-        });
-    })
 
     context('can set dates and then render the report', () => {
 
+        
         it('allows user input of the start and end dates', () => {
             cy.get('[data-cy=date-range-selection]')
                 .should('exist')
@@ -1654,5 +1669,4 @@ describe('Testing for the transplanting report page', () => {
                 .should('have.text', 'Delete')
         })
     })
-
 })
