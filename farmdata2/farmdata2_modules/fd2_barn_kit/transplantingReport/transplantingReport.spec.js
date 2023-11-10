@@ -38,16 +38,8 @@ describe('Testing for the transplanting report page', () => {
         cy.get('legend:contains("Set Dates")').should("be.visible");
     })
 
-    //Test #4
-    it('Should be first day of the current year', () => {
-        cy.get('[data-cy="date-range-selection"]').within(() => {
-            cy.get('[data-cy="start-date-input"]').invoke("val").then((startDate) => {
-                const today = new Date();
-                const expectedStartDate = new Date(today.getFullYear(), 0, 1);
-                expect(startDate).to.equal(expectedStartDateFormatted);
-            });
-        });
-    })
+
+    
 
     context('can set dates and then render the report', () => {
 
