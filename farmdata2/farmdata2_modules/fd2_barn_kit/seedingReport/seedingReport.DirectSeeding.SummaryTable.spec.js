@@ -36,6 +36,26 @@ describe('Test the Direct Seeding Summary Report Table', () => {
   })
 
   //Trang's Test
+  it("Checks that table does not exists or is not visible when Tray seeding is selected ", () => {
+    
+    //select dates
+    cy.get("[data-cy=date-range-selection]")
+    cy.get("[data-cy=date-range-selection] [data-cy=date-select]").eq(0)
+      .click()  
+      .type("2019-11-24")
+    cy.get("[data-cy=date-range-selection] [data-cy=date-select]").eq(1)
+      .click()  
+      .type("2019-11-26")
+
+    //Generate report button
+    cy.get("[data-cy=generate-rpt-btn]").click()
+
+    //check when tray seeding is selected
+    cy.get("[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]").select(2)
+    cy.get("[data-cy= report-table]")
+      .should("not.exist")
+      .should("not.visible")
+  })
 
   //Charlie's Test
   it("Checks that the correct error message is displayed", () => {
