@@ -37,6 +37,5 @@ describe('Check the JS vars defined by the BarnKit module', () => {
     cy.window().its('fd2UserID').should('equal',5);
     cy.window().its('fd2UserName').should('equal','worker1');
   })
-
   // Currently guest users cannot see any FD2 tabs so no check for them.
 })
