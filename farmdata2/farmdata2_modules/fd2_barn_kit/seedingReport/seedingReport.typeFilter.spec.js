@@ -11,17 +11,61 @@ describe('Test the seeding input page', () => {
         cy.get('[data-cy=start-date-select]')
                 .type('2019-01-01')
         cy.get('[data-cy=end-date-select]')
-                .type('2019-03-01')
+                .type('2019-02-15')
         cy.get('[data-cy=generate-rpt-btn]')
                 .click()
 
-        //select All for the type of seeding
-        cy.get("[data-cy=seeding-type-dropdown]>[data-cy=dropdown-input]").select("All")
-
         //check if table has both direct and tray seedings
+        let typeSeeding = null
+        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]')
+            .select('All')
+            .should('have.value', 'All')
+
+        for(let r = 0; r < 6; r++){
+            cy.get('[data-cy=r' + r + '-Seeding')
+                .invoke('text')
+                .then(seeding => {
+                    typeSeeding = seeding
+                    expect(typeSeeding, 'Direct')
+                })
+        }
+
+        for(let r = 6; r < 9; r++){
+            cy.get('[data-cy=r' + r + '-Seeding')
+                .invoke('text')
+                .then(seeding => {
+                    typeSeeding = seeding
+                    expect(typeSeeding, 'Tray')
+                })
+        }
+
     })
 
     //when “Direct” is selected the table shows only direct seedings.
+    it("Check table showing only direct seedings", () => {
+        //Choose a specific date range
+        cy.get('[data-cy=start-date-select]')
+                .type('2019-01-01')
+        cy.get('[data-cy=end-date-select]')
+                .type('2019-02-15')
+        cy.get('[data-cy=generate-rpt-btn]')
+                .click()
+
+        //check if table has only direct seedings
+        let typeSeeding = null
+        cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]')
+            .select('Direct Seedings')
+            .should('have.value', 'Direct Seedings')
+
+        for(let r = 0; r < 6; r++){
+            cy.get('[data-cy=r' + r + '-Seeding')
+                .invoke('text')
+                .then(seeding => {
+                    typeSeeding = seeding
+                    expect(typeSeeding, 'Direct')
+                })
+        }
+    })
 
 
     //when "Tray" is selected the table shows only tray seedings. 
