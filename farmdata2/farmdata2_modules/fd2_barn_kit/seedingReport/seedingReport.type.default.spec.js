@@ -20,6 +20,18 @@ describe("Testing for Area Filter", () => {
         cy.get('[data-cy=td-r66c2]').contains('ALF-3')
     })
 
+    //Test #2
+    it("Check when specific area is selected that table only contains seeding logs for that area", () => {
+        cy.get('[data-cy=start-date-select] > [data-cy=date-select]').type('2020-01-01').blur()
+        cy.get('[data-cy=end-date-select] > [data-cy=date-select]').type('2020-05-01').blur()
+        cy.get('[data-cy=generate-rpt-btn]').click()
+        //we are selecting area M for testing
+        cy.get('[data-cy=area-dropdown] > [data-cy=dropdown-input] > [data-cy=option1]')
+
+        //Checking if each row displays the correct area
+        cy.get("[data-cy=td-r0c2]").contains("M")
+
+    })
     //Test #3
     it("Check that area filter only contains areas where there are seeding logs", () => {
         cy.get('[data-cy=start-date-select] > [data-cy=date-select]').type('2020-05-05').blur();
@@ -38,4 +50,6 @@ describe("Testing for Area Filter", () => {
                 cy.wrap($children.eq(0)).should('have.value', 'All');
             });
     });
+
+
 })
