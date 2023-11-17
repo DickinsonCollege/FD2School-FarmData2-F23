@@ -40,7 +40,7 @@ describe('Test the seeding input page', () => {
         }
 
     })
-
+    /*
     //when “Direct” is selected the table shows only direct seedings.
     it("Check table showing only direct seedings", () => {
         //Choose a specific date range
@@ -66,6 +66,23 @@ describe('Test the seeding input page', () => {
                 })
         }
     })
+    */
+        //when "Direct" is selected the table shows only tray seedings. 
+        it("Check table showing only direct seedings", () => {
+                //Choose a specific date range
+                cy.get('[data-cy=start-date-select]')
+                        .type('2019-01-01')
+                cy.get('[data-cy=end-date-select]')
+                        .type('2019-03-20')
+                cy.get('[data-cy=generate-rpt-btn]')
+                        .click()
+                cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select("Direct Seedings")
+
+                for (let i=0; i < 7; i++){
+                        cy.get('[data-cy=r'+ i +'-Area]')
+                        .should("not.have.text", "SEEDING BENCH")
+                }
+                })
 
 
     //when "Tray" is selected the table shows only tray seedings. 
@@ -74,14 +91,14 @@ describe('Test the seeding input page', () => {
         cy.get('[data-cy=start-date-select]')
                 .type('2019-01-01')
         cy.get('[data-cy=end-date-select]')
-                .type('2019-02-15')
+                .type('2019-03-01')
         cy.get('[data-cy=generate-rpt-btn]')
                 .click()
         cy.get('[data-cy=seeding-type-dropdown] > [data-cy=dropdown-input]').select("Tray Seedings")
 
         let rows = ["0", "1", "2"]
-        for (let i=0; i < rows.length; i++){
-                cy.get('[data-cy=r'+ rows[i] +'-Area]')
+        for (let i=0; i < 27; i++){
+                cy.get('[data-cy=r'+ i +'-Area]')
                 .should("have.text", "SEEDING BENCH")
         }
     })
