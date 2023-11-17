@@ -1,4 +1,5 @@
-//ADD TEST DESCRIPTION HERE, FULL IN DETAIL
+//This test edits the data in a row of the seeding report, then cancels these changes. 
+//This test ultimately tests that the cancel button does not effect the API.
 
 
 describe("Test the harvest report default values", () => {
