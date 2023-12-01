@@ -307,6 +307,12 @@
                     if (this.submitInProgress == true){
                         return true
                     }
+                    if (this.selectedDate === null || this.selectedDate === dayjs().format('YYYY-MM-DD').toString()) {
+                        return true;
+                    }
+                    if (!dayjs(this.selectedDate, 'YYYY-MM-DD', true).isValid()) {
+                        return true;
+                    }
                     if(this.selectedCrop == null){
                         return true
                     }
