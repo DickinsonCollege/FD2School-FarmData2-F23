@@ -28,13 +28,13 @@
         </select>
         <br>
         
-        <button type="button" @click="generateReport">Generate Report</button>
+        <button data-cy="generate-report-button" type="button" @click="generateReport">Generate Report</button>
         <hr>
 
-        <h1>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
+        <h1 data-cy="report-title" v-if="hasTitle">{{ reportTitle }}</h1>
 
         <p>Details:</p>
-        <ul>
+        <ul data-cy="details" v-if="hasDetails">
             <li><strong>Farm</strong>:{{ farm }}</li>
             <li><strong>User</strong>:{{ user }}</li>
             <li><strong>Language</strong>:{{ language }}</li>
@@ -44,7 +44,7 @@
             <li><strong>Crop</strong>:{{ reportCrop }}</li>
         </ul>
         <br>
-        <table border="1">
+        <table border="1" data-cy="harvest-report-table" v-if="hasTable">
             <tr v-if="harvestReportRows.length !== 0">
                 <th>Row</th>
                 <th>Date</th>
@@ -82,6 +82,9 @@
                 idToCropMap: new Map(),
                 idToAreaMap: new Map(),
                 result: [],
+                hasTitle: false,
+                hasDetails: false,
+                hasTable: false,
             },
             computed: {
                 cropNames() {
@@ -138,6 +141,10 @@
                             console.log("Error Occurred");
                             console.log(error);
                          })
+                    
+                    this.hasTitle = true;
+                    this.hasDetails = true;
+                    this.hasTable = true;
                 },
                 deleteRow: function(rowIndex) {
                     this.harvestLogs.splice(rowIndex, 1);
