@@ -18,8 +18,8 @@ describe("Test the harvest report default values", () => {
         cy.get('[data-cy=r0-cancel-button]').click()
         cy.request('GET', 'http://fd2_farmdata2//log.json?type=farm_seeding&id=231')
         .should((response) => {
-        expect(response.status).to.equal(200);
-        expect(response.body).to.have.nested.property("list.0.name").that.includes("2020-05-05 BEET K");
+        expect(response.body).to.have.nested.property("list.0.movement.area.0.name").that.includes("K");
+        expect(response.body).to.have.nested.property("list.0.data").that.contains("146");
         })
     })
 
