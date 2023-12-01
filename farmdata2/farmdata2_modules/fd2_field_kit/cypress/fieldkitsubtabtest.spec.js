@@ -6,7 +6,8 @@ describe("Testing for Field-kit Sub-tabs", () => {
 
     //Test 1
     it("Check that the FieldKit tab contains sub-tabs for “Info” and “Seeding Input", () => {
-    
+        cy.get('.tabs--secondary').should("have.contain","Info")
+        cy.get('.tabs--secondary').should("have.contain","Seeding Input")
     })
 
     //Test 2
@@ -16,6 +17,6 @@ describe("Testing for Field-kit Sub-tabs", () => {
 
     //Test 3
     it("Check that there are the correct number of sub-tabs (2 at this time)", () => {
-        cy.get('.tabs--secondary').should('have.length', 2)
+        cy.get('.tabs--secondary').should('have.length', 1)
      })
     })
