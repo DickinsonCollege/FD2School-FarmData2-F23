@@ -13,17 +13,17 @@
         <br>
         
         <label for="start-date">Start:</label>
-        <input type="date" id="start-date" name="start-date" :min="reportStartDate" :max="reportEndDate" v-model="reportStartDate" />
+        <input data-cy="start-date" type="date" id="start-date" name="start-date" :min="reportStartDate" :max="reportEndDate" v-model="reportStartDate"/>
         <label for="end-date">End:</label>
-        <input type="date" id="end-date" name="end-date" :min="reportStartDate" max="reportEndDate" v-model="reportEndDate" />
+        <input data-cy="end-date" type="date" id="end-date" name="end-date" :min="reportStartDate" max="reportEndDate" v-model="reportEndDate"/>
         <br>
         
         <label for="crop">Crop:</label>
-        <select id="crop" name="crop" v-model="reportCrop">
+        <select id="crop" name="crop" v-model="reportCrop" data-cy="crop">
             <option v-for="crop in cropNames">{{ crop }}</option>
         </select>
         <label for="field">Area:</label>
-        <select id="field" name="field" v-model="reportArea">
+        <select id="field" name="field" v-model="reportArea" data-cy="area">
             <option v-for="area in areaNames">{{ area }}</option>
         </select>
         <br>
