@@ -11,7 +11,9 @@ describe("Testing for Field-kit Sub-tabs", () => {
 
     //Test 2
     it("Check that the order of the tabs is “Info” and then “Seeding Input", () => {
-    
+      cy.get('.tabs--secondary > :nth-child(1) > a').should("have.contain","Info")
+      cy.get('.tabs--secondary > :nth-child(2) > a').should("have.contain","Seeding Input")
+
     })
 
     //Test 3
