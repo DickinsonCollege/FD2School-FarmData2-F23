@@ -29,13 +29,26 @@ describe('Check that tray seeding log is added to database', () => {
         cy.get('[data-cy=hour-input]')
             .type('1')
         cy.get('[data-cy=comments]')
-            .type('This is a test log')
-        //click button eventually
+            .type('This is a test log - DELETE ME')
+        cy.get('[data-cy=submit-button]').click()
+        cy.get('[data-cy=confirm-button]').click()
     })
 
-    it('Check to see if report shows in database', () => {
+  
+    it('Check the database', () => {
+        cy.request('GET', 'http://fd2_farmdata2/log.json?type=farm_seeding&timestamp[ge]=1698811200&timestamp[le]=1698811200').then((response) => {
+        expect(response.status).to.eq(200)
+        expect(response.body.list[0].movement.area[0].name).to.eq("CHUAU") //checks correct area name
+        expect(response.body.list[0].quantity[0].value).to.eq('5') //checks correct number of seeds planted per cell
+        expect(response.body.list[0].quantity[1].value).to.eq('2') //checks correct number of trays 
+        expect(response.body.list[0].quantity[2].value).to.eq('20') //checks correct number of cells per tray
+        expect(response.body.list[0].quantity[3].value).to.eq('1') //checks correct number of hours
+        expect(response.body.list[0].name).to.eq('2023-11-01 ARUGULA CHUAU') //checks correct date of seeding
+        expect(response.body.list[0].timestamp).to.eq('1698811200') //checks correct UNIX date
+        })
+    })
+
 
     })
-  
-  
-    })
+
+    
