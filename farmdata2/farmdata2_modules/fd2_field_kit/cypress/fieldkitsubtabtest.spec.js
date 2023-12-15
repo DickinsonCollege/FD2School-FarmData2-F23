@@ -19,6 +19,6 @@ describe("Testing for Field-kit Sub-tabs", () => {
 
     //Test 3
     it("Check that there are the correct number of sub-tabs (2 at this time)", () => {
-        cy.get('.tabs--secondary').should('have.length', 2)
+        cy.get('.tabs--secondary').children().should("have.length",2)
      })
     })
