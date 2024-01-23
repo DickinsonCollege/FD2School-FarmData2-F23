@@ -1,0 +1,133 @@
+<body>
+    <div id="test">
+      <input type="text" v-model="reportTitle" placeholder="Enter report title">
+      <h1 v-cloak>{{ reportTitle ? reportTitle : "Mock Harvest Report" }}</h1>
+        <label for="farm">Farm:</label>
+        <input type="text" id="farm" v-model="farm" placeholder="Enter your farm here.">
+        <label for="user">User:</label>
+        <input type="text" id="user" v-model="user" placeholder="Enter user name.">
+        <label for="language">Language</label>
+        <input type="text" id="language" v-model="language" placeholder="Enter language.">
+      <label for="crops">Crop:</label>
+      <select name="crops" id="crops" v-model="selectedCrop">
+        <option v-for="crop in cropNames" :value="crop">{{ crop }}</option>
+      </select>
+      <label for="area">Area:</label>
+      <select name="area" id="area">
+        <option v-for="area in areas" :value="area">{{ area }}</option>
+      </select>
+      <h1 v-cloak>Harvest Report</h1>
+      <button class="btn btn-primary" @click="generateReport">Generate Report</button>
+
+      <table border=1>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Area</th>
+            <th>Crop</th>
+            <th>Yield</th>
+            <th>Units</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="log in harvestLogs">
+            <td>{{ log.date }}</td>
+            <td>{{ log.area }}</td>
+            <td>{{ log.crop }}</td>
+            <td>{{ log.yield }}</td>
+            <td>{{ log.units }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- move here -->
+
+    <title>Title Field Example</title>
+    <h1>Harvest Report</h1>
+    <p>This page is a <em>mockup</em> of a simplified harvest report</p>
+    <label for="start">Start Date:</label>
+    <input type="date" id="start" name="start-date" v-model="startDate" min="2014-01-01" max="2022-01-01" />
+    <label for="end">End Date:</label>
+    <input type="date" id="end" name="end-date" v-model="endDate" value="20202-05-15" min="2020-05-05" max="2022-01-01" /><br />
+    <hr />
+    <h1>My Sample Harvest:</h1>
+    <p>Details:</p>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" placeholder="Enter the title" />
+    
+    <table border="1">
+      <tr>
+        <th>Date</th>
+        <th>Area</th>
+        <th>Crop</th>
+        <th>Field</th>
+        <th>Units</th>
+      </tr>
+    </table>
+    </div>
+   
+
+    
+    <script>
+      var test = new Vue({
+        el: "#test",
+        created() {
+	        console.log("HarvestReport Vue instance created!")
+          getIDToCropMap()
+            .then((theMap) => {
+              this.idToCropMap = theMap;
+            }) 
+            .catch((error) => {
+              console.log("Error occurred while fetching map.");
+              console.log(error);
+            })
+        },
+
+        data: {
+          reportTitle: "",
+          startDate: "2020-05-05",
+          endDate: "2020-05-15",
+          selectedCrop: "kale",
+          crops: ["broccoli", "kale", "peas"],
+          areas: ["all", "chuahu-1", "sq7"],
+          harvestLogs: [],
+          farm:"",
+          user:"",
+          language:"",
+          idToCropMap: new Map(),
+        },
+        computed: {
+          cropNames: function() {
+            return Array.from(this.idToCropMap.values());
+          },
+        },
+        methods: {
+          generateReport: function () {
+            this.farm = "Sample Farm";
+            this.user = "manager1";
+            this.language = "English";
+
+            this.harvestLogs.push({
+              date: "2018-05-01",
+              area: "Orion-3",
+              crop: "Kale",
+              yield: "12",
+              units: "Bunches",
+            });
+
+            axios.get("/farm.json") 
+                .then((response) => {
+                    this.farm = response.data.name;
+                    this.farm = response.data.user.name;
+                    this.language = response.data.user.language;
+                })
+                .catch((error) => {
+                    console.log("Error Occurred");
+                    console.log(error);
+                })
+          },
+        },
+      });
+      Vue.config.devtools = true;
+    </script>
+  </body>
